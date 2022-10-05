@@ -42,3 +42,6 @@ a {
   position: static !important;
 }
 
+.video-responsive{
+  align-content: center;
+}
