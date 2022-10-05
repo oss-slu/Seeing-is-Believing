@@ -39,11 +39,6 @@ const getSections = (t) => [
 				path: "/student/grades",
 				icon: <GradesIcon fontSize="small" />,
 			},
-			{
-				title: t("Instructions"),
-				path: "/student/instructions",
-				icon: <GradesIcon fontSize="small" />,
-			},
 		],
 	}
 ];
