@@ -336,7 +336,7 @@ export const FirebaseRegister = (props) => {
 	);
 };
 
-const status = [{title: "Student"}, {title: "Teacher"}];
+const status = [{title: "Student"}, {title: "Teacher"}, {title: "Administrator"}];
 
 const organizations = [
 	{title: "Bradley University"},
