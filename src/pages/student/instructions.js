@@ -35,7 +35,11 @@ const Overview = () => {
 	const [fetchedClasses,setFetchedClasses]=useState(null)
 	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
-	const [showHelpForm,setShowHelpForm]=useState(false);   
+	const [showHelpForm,setShowHelpForm]=useState(false);
+	const youtubeStyle={
+		alignItems:"center",
+		margin:100,
+	};
     const YoutubeEmbed = ({ embedId }) => (
         <div className="video-responsive" >
           <iframe
@@ -46,6 +50,7 @@ const Overview = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title="Embedded youtube"
+			style={youtubeStyle}
           />
         </div>
       );
