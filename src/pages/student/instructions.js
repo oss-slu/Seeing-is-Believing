@@ -35,9 +35,13 @@ const Overview = () => {
 	const [fetchedClasses,setFetchedClasses]=useState(null)
 	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
-	const [showHelpForm,setShowHelpForm]=useState(false);   
+	const [showHelpForm,setShowHelpForm]=useState(false);
+	const youtubeStyle={
+		alignItems:"center",
+		margin:100,
+	};
     const YoutubeEmbed = ({ embedId }) => (
-        <div className="video-responsive" >
+        <div className="video-responsive">
           <iframe
             width="853"
             height="480"
@@ -46,10 +50,11 @@ const Overview = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             title="Embedded youtube"
+			style={youtubeStyle}
           />
         </div>
       );
-      
+
   const fetchDataClasses= async()=>{
     const collection = await db.collection("classes");
     const results=[]
@@ -69,7 +74,7 @@ const Overview = () => {
 			setIsFetching(false)
 		}
   },[fetchedClasses])
-  
+
 	useEffect(() => {
 		gtm.push({event: "page_view"});
 		fetchDataClasses();
@@ -88,14 +93,14 @@ const Overview = () => {
 					pb: 8,
 				}}
 			>
-                
+
       <YoutubeEmbed embedId="_FatxGN3vAM" />
 
 				<Container maxWidth="xl">
 					<Grid container>
-						
-						
-						
+
+
+
 
 						<Grid item sx={{mt: 6}} xs={12}>
 							<Card>
