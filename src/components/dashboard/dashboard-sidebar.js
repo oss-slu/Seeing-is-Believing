@@ -25,6 +25,7 @@ const getSectionsStudent = (t) => [
 	{
 		title: t("General"),
 		items: [
+
 			{
 				title: t("Home"),
 				path: "/student",
@@ -102,11 +103,23 @@ const getSectionsTeacher = (t) => [
 const getSectionsAdministrator = (t) => [
 	{
 		title: t("General"),
-		items: [
+		/*items: [
 			{
 				title: t("General"),
+				items: [
+					{
+						title: t("Home"),
+						path: "/administrator",
+						icon: <HomeIcon fontSize="small" />,
+					},
+					{
+						title: t("Add a Langage"),
+						path: "/administrator/language",
+						icon: <LanguageIcon fontSize="small" />,
+					},
+				]
 			}
-		]
+		]*/
 	}
 
 ];
@@ -122,13 +135,13 @@ export const DashboardSidebar = (props) => {
 	//const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
 	const sections = useMemo(() => {
 		if (user.status === "student") {
-			getSectionsStudent(t)
-		} else if (user.staus === "teacher") {
-			getSectionsTeacher(t);
+			return getSectionsStudent(t)
 		} else if (user.status === "administrator") {
-			getSectionsAdministrator(t);
+			return getSectionsAdministrator(t);
+		} else {
+			return getSectionsTeacher(t);
 		}
-	});
+	}, [t]);
 
 	const handleLogout = async () => {
 		try {
