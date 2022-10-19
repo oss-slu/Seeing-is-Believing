@@ -38,7 +38,7 @@ const Overview = () => {
 	const [showHelpForm,setShowHelpForm]=useState(false);
 	const youtubeStyle={
 		alignItems:"center",
-		margin:100,
+		margin:50,
 	};
     const YoutubeEmbed = ({ embedId }) => (
         <div className="video-responsive">
