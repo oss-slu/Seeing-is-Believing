@@ -1,4 +1,3 @@
-import {useState,useEffect} from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -17,7 +16,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
-import firebase from '../../lib/firebase'
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
