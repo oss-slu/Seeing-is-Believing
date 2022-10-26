@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-import {gtm} from "../../lib/gtm";
+//import {gtm} from "../../lib/gtm";
 import OverviewClasses from "../../components/teacher/OverviewClasses";
 import {useAuth} from "../../hooks/use-auth.js";
 import {db} from "../../lib/firebase";
@@ -45,7 +45,7 @@ const Homework = () => {
   },[fetchedClasses])
   
 	useEffect(() => {
-		gtm.push({event: "page_view"});
+		//gtm.push({event: "page_view"});
 		fetchDataClasses();
 	}, []);
 

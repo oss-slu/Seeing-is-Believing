@@ -13,8 +13,7 @@ import { SettingsButton } from '../components/settings-button';
 import { SplashScreen } from '../components/splash-screen';
 import { SettingsConsumer, SettingsProvider } from '../contexts/settings-context';
 import { AuthConsumer, AuthProvider } from '../contexts/firebase-auth-context';
-import { gtmConfig } from '../config';
-import { gtm } from '../lib/gtm';
+//import { gtmConfig } from '../config';
 import { createTheme } from '../theme';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import '../styles/globals.css';
@@ -30,9 +29,9 @@ const App = (props) => {
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  useEffect(() => {
+  /*useEffect(() => {
     gtm.initialize(gtmConfig);
-  }, []);
+  }, []);*/
 
   return (
     <CacheProvider value={emotionCache}>

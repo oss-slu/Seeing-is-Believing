@@ -16,7 +16,7 @@ import {
 import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
 import OverviewClasses from "../../../components/student/grades/OverviewClasses";
-import { gtm } from "../../../lib/gtm";
+//import { gtm } from "../../../lib/gtm";
 import { db } from "../../../lib/firebase";
 import { useAuth } from "../../../hooks/use-auth.js";
 import { format } from "date-fns";
@@ -53,7 +53,7 @@ const Overview = () => {
 	}, [fetchedClasses]);
 
 	useEffect(() => {
-		gtm.push({ event: "page_view" });
+		//gtm.push({ event: "page_view" });
 		fetchDataClasses();
 	}, []);
 
