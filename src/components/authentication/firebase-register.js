@@ -67,7 +67,7 @@ export const FirebaseRegister = (props) => {
 			confirmPassword: Yup.string()
 				.required("Required *")
 				.oneOf([Yup.ref("password"), null], "Password doesn't match"),
-			status: Yup.string().required("Required *"),
+			status: Yup.string().required("Required *"),     
 			code: Yup.string().required("Required *"),
 			organizations: Yup.string().required("Required *"),
 			policy: Yup.boolean().oneOf([true], "This field must be checked"),
