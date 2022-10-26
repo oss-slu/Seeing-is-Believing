@@ -20,7 +20,6 @@ import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Search as SearchIcon } from '../../icons/search';
 import { Users as UsersIcon } from '../../icons/users';
 import {useAuth} from '../../hooks/use-auth'
-import firebase from '../../lib/firebase'
 
 
 const languages = {

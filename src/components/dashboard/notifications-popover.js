@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { format, subDays, subHours } from 'date-fns';
 import {
   Avatar,
   Box,
@@ -19,8 +18,6 @@ import { MailOpen as MailOpenIcon } from '../../icons/mail-open';
 import { X as XIcon } from '../../icons/x';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Scrollbar } from '../scrollbar';
-
-const now = new Date();
 
 const data = [
 
