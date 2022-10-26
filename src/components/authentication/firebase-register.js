@@ -5,13 +5,11 @@ import {
 	Box,
 	Button,
 	Checkbox,
-	Divider,
 	FormHelperText,
 	Link,
 	Grid,
 	TextField,
 	Typography,
-	Autocomplete,
 	MenuItem,
 	InputLabel,
 	Select,
@@ -19,8 +17,6 @@ import {
 } from "@mui/material";
 import {useAuth} from "../../hooks/use-auth";
 import {useMounted} from "../../hooks/use-mounted";
-
-import firebase,{db}  from "../../lib/firebase";
 
 export const FirebaseRegister = (props) => {
 	const {codes}=props
