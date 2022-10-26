@@ -146,7 +146,12 @@ const Content = (props) => {
 												options={[
 													{
 														display:"See Homeworks",
-														link: `/teacher/homeworks?cl=${item.id}`,
+														link: `/teacher/homeworks?cl=${item.id}`
+					
+													},
+													{
+														display: "Edit Homework",
+														link: `/teacher/editHomework/${item.id}`,
 													}
 												]}
 											/>
