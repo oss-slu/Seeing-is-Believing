@@ -17,7 +17,7 @@ import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
 import { ChatSidebar } from "../../../components/dashboard/chat/chatsidebar_homework _teacher";
 import { MenuAlt4 as MenuAlt4Icon } from "../../../icons/menu-alt-4";
-import { gtm } from "../../../lib/gtm";
+//import { gtm } from "../../../lib/gtm";
 import { db } from "../../../lib/firebase";
 import { useAuth } from "../../../hooks/use-auth";
 import { Scrollbar } from "../../../components/scrollbar";
@@ -158,10 +158,10 @@ const Practice = () => {
 		}
 	}, [words]);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		gtm.push({ event: "page_view" });
 		//first time rendered component -->fetch the data
-	}, []);
+	}, []);*/
 
 	/* 	useEffect(() => {
 		if (!mdUp) {
