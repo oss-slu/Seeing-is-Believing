@@ -1,11 +1,9 @@
-import {useEffect, useState} from "react";
-import Router,{useRouter} from 'next/router';
+import {useState} from "react";
+import {useRouter} from 'next/router';
 import PropTypes from "prop-types";
 import {
 	Box,
 	Button,
-	Chip,
-	InputAdornment,
 	TextField,
     Select,
     MenuItem,
@@ -13,17 +11,12 @@ import {
 	Autocomplete
 } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
-import {db,storage} from '../../../lib/firebase'
+import {db} from '../../../lib/firebase'
 import toast from 'react-hot-toast';
-import { v4 as uuidv4 } from 'uuid';
 
 const EditClassForm = (props) => {
 	
-	const router=useRouter()
-	
 	const {languages,terms,refetch,students,classes,stepBack,...other} = props;
-    const [languageNames,setLanguageNames]=useState([]);
-	const [termNames,setTermNames]=useState([]);
 	const [arrayStudents,setArrayStudents]=useState([]);
     const [isLoading,setIsLoading]=useState(false);
     const [selectedLanguage,setSelectedLanguage]=useState({})	
@@ -227,12 +220,4 @@ EditClassForm.propTypes = {
 	onNext: PropTypes.func,
 };
 
-
 export default EditClassForm
-
-
-
-const studentsOptions=[
-	{id:'1',name:'hugo'},
-	{id:'3',name:'julio'}
-]
