@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import Router,{useRouter} from 'next/router';
+import {useState} from "react";
+import {useRouter} from 'next/router';
 import PropTypes from "prop-types";
 import {
 	Box,
@@ -24,8 +24,6 @@ const AddClassForm = (props) => {
 	const router=useRouter()
 	const {languages,terms,students,stepBack,...other} = props;
 	const [className,setClassName]=useState("")
-    const [languageNames,setLanguageNames]=useState([]);
-	const [termNames,setTermNames]=useState([]);
 	const [arrayStudents,setArrayStudents]=useState([]);
     const [isLoading,setIsLoading]=useState(false);
     const [selectedLanguage,setSelectedLanguage]=useState({})	
@@ -173,10 +171,3 @@ AddClassForm.propTypes = {
 
 
 export default AddClassForm
-
-
-
-const studentsOptions=[
-	{id:'1',name:'hugo'},
-	{id:'3',name:'julio'}
-]
