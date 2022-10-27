@@ -17,21 +17,13 @@ import {
 } from "@mui/material";
 import {useAuth} from "../../hooks/use-auth";
 import {useMounted} from "../../hooks/use-mounted";
+import {db} from '../../lib/firebase';
 
 export const FirebaseRegister = (props) => {
 	const {codes}=props
 	const isMounted = useMounted();
 	const router = useRouter();
 	const {createUserWithEmailAndPassword, getAuth} = useAuth();
-	const defaultPropsStatus = {
-		options: status,
-		getOptionLabel: (option) => option.title,
-	};
-
-	const defaultPropsOrganization = {
-		options: organizations,
-		getOptionLabel: (option) => option.title,
-	};
 
 	const formik = useFormik({
 		initialValues: {
