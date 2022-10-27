@@ -3,33 +3,37 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	//IconButton,
+	IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
 	Button,
 	Chip,
+	TextField,
+	Slider,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
-import { ChatSidebar } from "../../../components/dashboard/chat/chatsidebar_homework";
+import { ChatSidebar } from "../../../components/dashboard/chat/chatsidebar_homework _teacher";
 import { MenuAlt4 as MenuAlt4Icon } from "../../../icons/menu-alt-4";
 //import { gtm } from "../../../lib/gtm";
-import { db, storage } from "../../../lib/firebase";
+import { db } from "../../../lib/firebase";
 import { useAuth } from "../../../hooks/use-auth";
 import { Scrollbar } from "../../../components/scrollbar";
 import * as COLORMAPS from "../../../constants/colormaps";
-import toast from "react-hot-toast";
 import { useReactMediaRecorder } from "react-media-recorder"; //Library used for recording
-import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
-import { v4 as uuidv4 } from "uuid";
 import { LoadingButton } from "@mui/lab";
 import SpectrogramPlugin from "../../../utils/spectogramPlugin";
 import DOMPurify from "dompurify";
 
+/*------------------------------------Markup description------------------------------------*/
+const createMarkup = (html) => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
+};
 const ChatInner = styled("div", {
 	shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -66,201 +70,98 @@ const Practice = () => {
 	const router = useRouter();
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
-	//const specMainContainerRef = useRef(null);
-	//const specMainRef = useRef(null);
-	//const specRecordContainerRef = useRef(null);
-	//const specRecordRef = useRef(null);
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	/*const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
+	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
 		noSsr: false,
-	});*/
+	});
 	//Custom hooks
-	//const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
-	const [wordsIds, setWordsIds] = useState(null);
-	const [fetchedIds, setFetchedIds] = useState(false);
-	const [wordsFetched, setWordsFetched] = useState([]);
-	const [homework, setHomework] = useState(null);
-	const [loading, setLoading] = useState(false);
-	const [answers, setAnswers] = useState([]);
-	const [readyToSubmit, setReadyToSubmit] = useState(false);
-	const [uploadedAudio, setUploadedAudio] = useState(false);
+	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
+	const [hasBeenMarked, setHasBeenMarked] = useState(false);
+	const [answer, setAnswer] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [homework, setHomework] = useState(null);
+	const [feedback, setFeedback] = useState("");
+	const [grade, setGrade] = useState(0);
+	const [words, setWords] = useState(null);
+	const [studentId, setStudentId] = useState(null);
 
-	const fetchHomeworkDetails = async () => {
+	const fetchHomeworkDetails = async (id) => {
 		try {
 			await db
 				.collection("assignments")
 				.doc(homeworkId)
 				.get()
 				.then(async (docRef) => {
-					console.log(docRef.data());
-					setHomework(docRef.data());
-					const words = docRef.data().words;
-					setWordsIds(words);
+					const results = docRef.data();
+					setHomework(results);
 				});
-			setFetchedIds(true);
 		} catch (err) {
 			console.log(err.message);
 		}
-	};
-
-	const fetchWordsDetails = async () => {
-		try {
-			const results = [];
-			await db
-				.collection("words")
-				.where("__name__", "in", wordsIds)
-				.get()
-				.then(async (docRef) => {
-					docRef.forEach((doc) => {
-						results.push(doc.data());
-					});
-				});
-			setWordsFetched(results);
-		} catch (err) {
-			console.log(err.message);
-		}
-	};
-
-	const handleSetAnswer = async (obj) => {
-		const tmp = answers;
-		tmp[obj.position] = {
-			answerAudioUrl: obj.answerAudioBlob,
-			word: obj.word,
-		};
-
-		function checkArr(arr) {
-			const length = 0;
-			arr.forEach((el) => {
-				length += 1;
-			});
-			return length;
-		}
-		setAnswers(tmp);
-		if (tmp.length != 0 && checkArr(tmp) === wordsFetched.length) {
-			setReadyToSubmit(true);
-		}
-	};
-
-	const uploadAudiosRecorded = async () => {
-		const tmp_ = answers;
-		const tmp_answers = [];
-		tmp_.forEach(async (ans, pos) => {
-			const uuid = await uuidv4();
-			const uploadTask = storage.ref(`audio/${uuid}`).put(ans.answerAudioUrl);
-			uploadTask.on(
-				"state_changed",
-				(snapshot) => {},
-				(error) => {
-					console.log(error);
-				},
-				() => {
-					storage
-						.ref("audio")
-						.child(uuid)
-						.getDownloadURL()
-						.then(async (url) => {
-							tmp_answers.push({ ...ans, answerAudioUrl: url });
-							if (tmp_answers.length === answers.length) {
-								setAnswers(tmp_answers);
-								setUploadedAudio(true);
-							}
-						});
-				}
-			);
-		});
 	};
 
 	const handleSubmit = async () => {
 		try {
-			//Save first the files and get a urlAUdio
 			setIsSubmitting(true);
-			await uploadAudiosRecorded();
-			//Upload the audio first and will continue the submission once the urlAudio obtained
-			//--> useEffect on state uploadedAudio to check if upload is done
+			const updatedStudentsAssignments = homework.studentsAssignements.map(
+				(std) => {
+					if (std.idStudent === studentId) {
+						return {
+							idStudent: studentId,
+							answers: std.answers,
+							feedback,
+							grade,
+						};
+					} else {
+						return std;
+					}
+				}
+			);
+			await db.collection("assignments").doc(homeworkId).update({
+				studentsAssignements: updatedStudentsAssignments,
+			});
+			setIsSubmitting(false);
+			setView("blank");
 		} catch (err) {
 			console.error(err.message);
 		}
 	};
 
-	/*------------------------------------Markup description------------------------------------*/
-	const createMarkup = (html) => {
-		return {
-			__html: DOMPurify.sanitize(html),
-		};
+	const handleChooseStudent = async (std_id) => {
+		setStudentId(std_id);
+		setGrade(0);
+		setFeedback("");
+		setHasBeenMarked(false);
+		await fetchHomeworkDetails();
+		/* 
+		 setView("practice"); */
 	};
 
 	useEffect(() => {
-		const continueSubmit = async () => {
-			const tmp = {
-				idStudent: user.id,
-				answers,
-			};
-			let homework;
-			await db
-				.collection("assignments")
-				.doc(homeworkId)
-				.get()
-				.then((snapshot) => {
-					homework = snapshot.data();
-				});
-			console.log(tmp);
-			const updatedStudents = homework.students.map((std) => {
-				if (std.id === user.id) {
-					return { submitted: "yes", id: user.id };
-				} else {
-					return std;
-				}
-			});
-			const updatedStudentsAssignments = [
-				...homework.studentsAssignements,
-				tmp,
-			];
-			await db
-				.collection("assignments")
-				.doc(homeworkId)
-				.update({
-					students: updatedStudents.map((obj) => {
-						return Object.assign({}, obj);
-					}),
-					studentsAssignements: updatedStudentsAssignments.map((obj) => {
-						return Object.assign({}, obj);
-					}),
-				});
-			setIsSubmitting(false);
-			router.push(`/student/homeworks?cl=${homework.class}`);
-		};
-		if (uploadedAudio) {
-			continueSubmit();
-		}
-	}, [uploadedAudio]);
-
-	useEffect(() => {
-		if (fetchedIds) {
-			fetchWordsDetails();
-		}
-	}, [fetchedIds]);
-
-	useEffect(() => {
-		if (wordsFetched) {
-			setLoading(false);
-		}
-	}, [wordsFetched]);
-	useEffect(() => {
-		//gtm.push({ event: "page_view" });
-		//first time rendered component -->fetch the data
-		fetchHomeworkDetails();
-	}, []);
-
-	//Hook when component will be unmounted
-	useEffect(() => {
-		return () => {
-			if (status === "recording") {
-				toast.dismiss();
-				stopRecording();
+		if (homework) {
+			const std_assignment = homework.studentsAssignements.filter(
+				(el) => el.idStudent === studentId
+			);
+			setWords(std_assignment);
+			std_assignment = std_assignment[0];
+			if (std_assignment.grade && std_assignment.feedback) {
+				setGrade(std_assignment.grade);
+				setFeedback(std_assignment.feedback);
+				setHasBeenMarked(true);
 			}
-		};
-	});
+		}
+	}, [homework]);
+
+	useEffect(() => {
+		if (words) {
+			setView("practice");
+		}
+	}, [words]);
+
+	/*useEffect(() => {
+		gtm.push({ event: "page_view" });
+		//first time rendered component -->fetch the data
+	}, []);*/
 
 	/* 	useEffect(() => {
 		if (!mdUp) {
@@ -274,14 +175,19 @@ const Practice = () => {
 		setIsSidebarOpen(false);
 	};
 
+	const handleToggleSidebar = () => {
+		setIsSidebarOpen((prevState) => !prevState);
+	};
+
 	if (!router.isReady) {
 		return null;
 	}
 
+
 	return (
 		<>
 			<Head>
-				<title>Seeing is bieliving</title>
+				<title>Seeing is believing</title>
 				<script src="https://unpkg.com/wavesurfer.js"></script>
 			</Head>
 			<Box
@@ -309,43 +215,90 @@ const Practice = () => {
 						onClose={handleCloseSidebar}
 						open={isSidebarOpen}
 						homework={homeworkId}
+						chooseStudent={handleChooseStudent}
 					/>
-					{!loading && (
+					{view != "blank" && (
 						<ChatInner open={isSidebarOpen}>
+							<Box
+								sx={{
+									alignItems: "center",
+									backgroundColor: "background.paper",
+									borderBottomColor: "divider",
+									borderBottomStyle: "solid",
+									borderBottomWidth: 1,
+									display: "flex",
+									p: 2,
+								}}
+							>
+								<IconButton onClick={handleToggleSidebar}>
+									<MenuAlt4Icon fontSize="small" />
+								</IconButton>
+							</Box>
 							<Scrollbar sx={{ maxHeight: "100%", pb: 10 }}>
-								{homework && (
-									<Grid xs={12} px={3} mt={2} item>
-										<Typography variant="subtitle1" sx={{ display: "block" }}>
-											Homework description
-										</Typography>
-										<Grid md={10}>
-											<div
-												style={{ color: "#65748B" }}
-												dangerouslySetInnerHTML={createMarkup(
-													homework.description
-												)}
-											></div>
-										</Grid>
-									</Grid>
-								)}
-								{wordsFetched.map((word, pos) => (
+								{words.map((word, pos) => (
 									<SubSection
 										key={pos}
-										word={word}
+										answer={word.answers[0]}
 										position={pos}
-										setAnswer={handleSetAnswer}
 									/>
 								))}
-								<Grid xs={8.5} mx={3}>
-									<LoadingButton
-										fullWidth
-										loading={isSubmitting}
-										variant="contained"
-										disabled={!readyToSubmit}
-										onClick={handleSubmit}
+
+								<Grid xs={12} mx={3}>
+									<Typography
+										variant="subtitle1"
+										sx={{ display: "block", mt: 2 }}
 									>
-										Submit Homework
-									</LoadingButton>
+										Feedback
+									</Typography>
+									<TextField
+										multiline
+										minRows={3}
+										disabled={hasBeenMarked}
+										placeholder="Feedback ..."
+										sx={{
+											my: 1,
+											width: "100%",
+											fontSize: "0.5em",
+										}}
+										value={feedback}
+										onChange={(evt) => {
+											setFeedback(evt.target.value);
+										}}
+									/>
+									<Typography
+										variant="subtitle1"
+										sx={{ display: "block", mt: 3 }}
+									>
+										Grade :{" "}
+										<Chip
+											sx={{
+												fontStyle: "oblique",
+											}}
+											label={`${grade}/ ${homework.score} pts`}
+										/>
+									</Typography>
+									<Slider
+										disabled={hasBeenMarked}
+										valueLabelDisplay="auto"
+										value={grade}
+										onChange={(evt, val) => {
+											setGrade(val);
+										}}
+										min={0}
+										step={1}
+										max={homework.score}
+									/>
+									{!hasBeenMarked && (
+										<LoadingButton
+											sx={{ mt: 3 }}
+											fullWidth
+											loading={isSubmitting}
+											variant="contained"
+											onClick={handleSubmit}
+										>
+											Submit Grade
+										</LoadingButton>
+									)}
 								</Grid>
 							</Scrollbar>
 						</ChatInner>
@@ -357,7 +310,7 @@ const Practice = () => {
 };
 
 const SubSection = (props) => {
-	const { word, setAnswer, position } = props;
+	const { answer, grading, position } = props;
 	const specMainContainerRef = useRef(null);
 	const specMainRef = useRef(null);
 	const specMainNonNativeContainerRef = useRef(null);
@@ -366,9 +319,9 @@ const SubSection = (props) => {
 	const specRecordRef = useRef(null);
 	const [audioMain, setAudioMain] = useState("");
 	const [audioMainNonNative, setAudioMainNonNative] = useState("");
+	const [audioRecord, setAudioRecord] = useState(null);
 	const [isMainPlaying, setIsMainPlaying] = useState(false);
 	const [isMainNonNativePlaying, setIsMainNonNativePlaying] = useState(false);
-	const [audioRecord, setAudioRecord] = useState(null);
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
 	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
 		useReactMediaRecorder({ audio: true });
@@ -395,7 +348,7 @@ const SubSection = (props) => {
 				],
 			});
 			wavesurfer.empty();
-			wavesurfer.load(word.urlAudio);
+			wavesurfer.load(answer.word.urlAudio);
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -422,7 +375,7 @@ const SubSection = (props) => {
 				],
 			});
 			wavesurfer.empty();
-			wavesurfer.load(word.urlAudioNonNative);
+			wavesurfer.load(answer.word.urlAudioNonNative);
 		} catch (err) {
 			console.error(err.message);
 		}
@@ -467,21 +420,6 @@ const SubSection = (props) => {
 		});
 	};
 
-	const record = () => {
-		toast.loading(
-			<Typography color="textSecondary" fontSize="subtitle2">
-				Recording
-			</Typography>,
-			{ icon: "🛑" }
-		);
-		startRecording();
-	};
-
-	const stopRecord = () => {
-		toast.dismiss();
-		stopRecording();
-	};
-
 	const showSpectroRecord = async () => {
 		const wavesurfer = WaveSurfer.create({
 			container: specRecordContainerRef.current,
@@ -501,50 +439,23 @@ const SubSection = (props) => {
 			],
 		});
 		await wavesurfer.empty();
-		await wavesurfer.load(mediaBlobUrl);
+		await wavesurfer.load(answer.answerAudioUrl);
 	};
 
-	useEffect(() => {
-		const getRecorderAudio = async () => {
-			if (mediaBlobUrl && mediaBlobUrl != "") {
-				let blob = await fetch(mediaBlobUrl)
-					.then((r) => r.blob())
-					.then(
-						(blobFile) => new File([blobFile], "file", { type: "audio/wav" })
-					);
-				showSpectroRecord();
-				const audio = new Audio(mediaBlobUrl);
-				setAudioRecord(audio);
-				//pass the answer to upper state
-				setAnswer({
-					answerAudioBlob: blob,
-					position,
-					word,
-				});
-			}
-		};
-		getRecorderAudio();
-	}, [mediaBlobUrl]);
-
-	/*------------------------------------Markup description------------------------------------*/
-	const createMarkup = (html) => {
-		return {
-			__html: DOMPurify.sanitize(html),
-		};
-	};
 	useEffect(() => {
 		//update the component if a word is chosen
-		if (specMainContainerRef.current) {
+		if (answer) {
 			showSpectroMain();
-			const audio = new Audio(word.urlAudio);
-			setAudioMain(audio);
-		}
-		if (specMainNonNativeContainerRef.current) {
 			showSpectroMainNonNative();
-			const audioNonNative = new Audio(word.urlAudioNonNative);
-			setAudioMainNonNative(audioNonNative);
+			showSpectroRecord();
+			const audio1 = new Audio(answer.word.urlAudio);
+			setAudioMain(audio1);
+			const audio1NonNative = new Audio(answer.word.urlAudioNonNative);
+			setAudioMainNonNative(audio1NonNative);
+			const audio2 = new Audio(answer.answerAudioUrl);
+			setAudioRecord(audio2);
 		}
-	}, []);
+	}, [answer]);
 
 	return (
 		<Grid container xs={12} direction="column">
@@ -560,7 +471,7 @@ const SubSection = (props) => {
 					>
 						Word :&#160;
 						<Typography color="textSecondary" variant="subtitle1">
-							{word.name}
+							{answer.word.name}
 						</Typography>
 					</Typography>
 					<Typography
@@ -572,7 +483,7 @@ const SubSection = (props) => {
 					>
 						Dialect :&#160;
 						<Typography color="textSecondary" variant="subtitle1">
-							<em>{word.dialect} </em>
+							<em>{answer.word.dialect} </em>
 						</Typography>
 					</Typography>
 				</Grid>
@@ -583,7 +494,7 @@ const SubSection = (props) => {
 					<Grid md={10}>
 						<div
 							style={{ color: "#65748B" }}
-							dangerouslySetInnerHTML={createMarkup(word.description)}
+							dangerouslySetInnerHTML={createMarkup(answer.word.description)}
 						></div>
 					</Grid>
 				</Grid>
@@ -688,9 +599,8 @@ const SubSection = (props) => {
 							justifyContent: "flex-end",
 						}}
 					>
-						{mediaBlobUrl && (
+						{
 							<Button
-								sx={{ mr: 2 }}
 								onClick={playRecording}
 								disabled={isRecordedPlaying}
 								variant="contained"
@@ -698,28 +608,10 @@ const SubSection = (props) => {
 							>
 								Listen
 							</Button>
-						)}
-						{status === "recording" ? (
-							<Button
-								onClick={stopRecord}
-								variant="contained"
-								endIcon={<StopIcon sx={{ transform: "scale(1.2)" }} />}
-							>
-								Stop
-							</Button>
-						) : (
-							<Button
-								onClick={record}
-								variant="contained"
-								endIcon={<KeyboardVoiceIcon sx={{ transform: "scale(1.2)" }} />}
-							>
-								Record
-							</Button>
-						)}
+						}
 					</Box>
 				</Grid>
-
-				{mediaBlobUrl && (
+				{
 					<Grid
 						sx={{
 							maxWidth: "665px",
@@ -753,7 +645,7 @@ const SubSection = (props) => {
 							></div>
 						</Grid>
 					</Grid>
-				)}
+				}
 			</Grid>
 
 			<Grid item xs={6} pt={3} px={3} mb={5}>

@@ -12,7 +12,6 @@ import { db } from '../../lib/firebase';
 
 const Register = (props) => {
   const router = useRouter();
-  const { platform } = useAuth();
   const { disableGuard } = router.query;
  
   
@@ -146,9 +145,8 @@ Register.getLayout = (page) => (
 );
 
 
-export async function getServerSideProps(context) {
+/*export async function getServerSideProps(context) {
 	const collection = await db.collection("code");
-	const results = [];
   let codes;
 	await collection.get().then((snapshot) => {
 		if (snapshot) {
@@ -162,7 +160,7 @@ export async function getServerSideProps(context) {
 			codes
 		}, // will be passed to the page component as props
 	};
-}
+}*/
 
 
 export default Register;
