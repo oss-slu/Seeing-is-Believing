@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	//IconButton,
+	IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
@@ -13,17 +13,27 @@ import {
 	Slider,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { AuthGuard } from "../../components/authentication/auth-guard";
-import { DashboardLayout } from "../../components/dashboard/dashboard-layout";
-import { ChatSidebar } from "../../components/dashboard/chat/chatsidebar_homework _teacher";
-import { db } from "../../lib/firebase";
-import { useAuth } from "../../hooks/use-auth";
-import { Scrollbar } from "../../components/scrollbar";
-import * as COLORMAPS from "../../constants/colormaps";
+import { AuthGuard } from "../../../components/authentication/auth-guard";
+import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
+import { ChatSidebar } from "../../../components/dashboard/chat/chatsidebar_homework _teacher";
+import { MenuAlt4 as MenuAlt4Icon } from "../../../icons/menu-alt-4";
+//import { gtm } from "../../../lib/gtm";
+import { db } from "../../../lib/firebase";
+import { useAuth } from "../../../hooks/use-auth";
+import { Scrollbar } from "../../../components/scrollbar";
+import * as COLORMAPS from "../../../constants/colormaps";
 import { useReactMediaRecorder } from "react-media-recorder"; //Library used for recording
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SpectrogramPlugin from "../../utils/spectogramPlugin";
+import { LoadingButton } from "@mui/lab";
+import SpectrogramPlugin from "../../../utils/spectogramPlugin";
+import DOMPurify from "dompurify";
 
+/*------------------------------------Markup description------------------------------------*/
+const createMarkup = (html) => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
+};
 const ChatInner = styled("div", {
 	shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -55,19 +65,19 @@ const ChatInner = styled("div", {
 
 //Show spectogram of original audio
 
-const Page = () => {
+const Practice = () => {
 	const { user } = useAuth();
 	const router = useRouter();
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
 		noSsr: false,
 	});
 	//Custom hooks
 	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
-	//
 	const [hasBeenMarked, setHasBeenMarked] = useState(false);
+	const [answer, setAnswer] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [homework, setHomework] = useState(null);
 	const [feedback, setFeedback] = useState("");
@@ -117,6 +127,16 @@ const Page = () => {
 		}
 	};
 
+	const handleChooseStudent = async (std_id) => {
+		setStudentId(std_id);
+		setGrade(0);
+		setFeedback("");
+		setHasBeenMarked(false);
+		await fetchHomeworkDetails();
+		/* 
+		 setView("practice"); */
+	};
+
 	useEffect(() => {
 		if (homework) {
 			const std_assignment = homework.studentsAssignements.filter(
@@ -138,11 +158,10 @@ const Page = () => {
 		}
 	}, [words]);
 
-	useEffect(() => {
+	/*useEffect(() => {
+		gtm.push({ event: "page_view" });
 		//first time rendered component -->fetch the data
-		setStudentId(user.id);
-		fetchHomeworkDetails();
-	}, []);
+	}, []);*/
 
 	/* 	useEffect(() => {
 		if (!mdUp) {
@@ -164,10 +183,11 @@ const Page = () => {
 		return null;
 	}
 
+
 	return (
 		<>
 			<Head>
-				<title>Seeing is bieliving</title>
+				<title>Seeing is believing</title>
 				<script src="https://unpkg.com/wavesurfer.js"></script>
 			</Head>
 			<Box
@@ -195,9 +215,25 @@ const Page = () => {
 						onClose={handleCloseSidebar}
 						open={isSidebarOpen}
 						homework={homeworkId}
+						chooseStudent={handleChooseStudent}
 					/>
 					{view != "blank" && (
 						<ChatInner open={isSidebarOpen}>
+							<Box
+								sx={{
+									alignItems: "center",
+									backgroundColor: "background.paper",
+									borderBottomColor: "divider",
+									borderBottomStyle: "solid",
+									borderBottomWidth: 1,
+									display: "flex",
+									p: 2,
+								}}
+							>
+								<IconButton onClick={handleToggleSidebar}>
+									<MenuAlt4Icon fontSize="small" />
+								</IconButton>
+							</Box>
 							<Scrollbar sx={{ maxHeight: "100%", pb: 10 }}>
 								{words.map((word, pos) => (
 									<SubSection
@@ -217,7 +253,7 @@ const Page = () => {
 									<TextField
 										multiline
 										minRows={3}
-										disabled
+										disabled={hasBeenMarked}
 										placeholder="Feedback ..."
 										sx={{
 											my: 1,
@@ -242,7 +278,7 @@ const Page = () => {
 										/>
 									</Typography>
 									<Slider
-										disabled
+										disabled={hasBeenMarked}
 										valueLabelDisplay="auto"
 										value={grade}
 										onChange={(evt, val) => {
@@ -252,6 +288,17 @@ const Page = () => {
 										step={1}
 										max={homework.score}
 									/>
+									{!hasBeenMarked && (
+										<LoadingButton
+											sx={{ mt: 3 }}
+											fullWidth
+											loading={isSubmitting}
+											variant="contained"
+											onClick={handleSubmit}
+										>
+											Submit Grade
+										</LoadingButton>
+									)}
 								</Grid>
 							</Scrollbar>
 						</ChatInner>
@@ -269,13 +316,13 @@ const SubSection = (props) => {
 	const specMainNonNativeContainerRef = useRef(null);
 	const specMainNonNativeRef = useRef(null);
 	const specRecordContainerRef = useRef(null);
+	const specRecordRef = useRef(null);
 	const [audioMain, setAudioMain] = useState("");
 	const [audioMainNonNative, setAudioMainNonNative] = useState("");
+	const [audioRecord, setAudioRecord] = useState(null);
 	const [isMainPlaying, setIsMainPlaying] = useState(false);
 	const [isMainNonNativePlaying, setIsMainNonNativePlaying] = useState(false);
-	const [audioRecord, setAudioRecord] = useState(null);
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
-	const specRecordRef = useRef(null);
 	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
 		useReactMediaRecorder({ audio: true });
 
@@ -306,7 +353,6 @@ const SubSection = (props) => {
 			console.error(err.message);
 		}
 	};
-
 	const showSpectroMainNonNative = async () => {
 		try {
 			const container = specMainNonNativeContainerRef.current;
@@ -399,16 +445,15 @@ const SubSection = (props) => {
 	useEffect(() => {
 		//update the component if a word is chosen
 		if (answer) {
-			console.log(answer);
 			showSpectroMain();
 			showSpectroMainNonNative();
 			showSpectroRecord();
 			const audio1 = new Audio(answer.word.urlAudio);
 			setAudioMain(audio1);
+			const audio1NonNative = new Audio(answer.word.urlAudioNonNative);
+			setAudioMainNonNative(audio1NonNative);
 			const audio2 = new Audio(answer.answerAudioUrl);
 			setAudioRecord(audio2);
-			const audioNonNative = new Audio(answer.word.urlAudioNonNative);
-			setAudioMainNonNative(audioNonNative);
 		}
 	}, [answer]);
 
@@ -447,16 +492,10 @@ const SubSection = (props) => {
 						Description
 					</Typography>
 					<Grid md={10}>
-						<Typography
-							variant="body2"
-							color="textSecondary"
-							sx={{
-								display: "block",
-								mb: 1,
-							}}
-						>
-							{answer.word.description}
-						</Typography>
+						<div
+							style={{ color: "#65748B" }}
+							dangerouslySetInnerHTML={createMarkup(answer.word.description)}
+						></div>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -531,6 +570,7 @@ const SubSection = (props) => {
 					</Grid>
 				</Grid>
 			</Grid>
+
 			<Grid item xs={6} pt={3} px={3}>
 				<Grid
 					mt={2}
@@ -607,6 +647,7 @@ const SubSection = (props) => {
 					</Grid>
 				}
 			</Grid>
+
 			<Grid item xs={6} pt={3} px={3} mb={5}>
 				<Grid
 					mt={2}
@@ -683,9 +724,10 @@ const SubSection = (props) => {
 		</Grid>
 	);
 };
-Page.getLayout = (page) => (
+Practice.getLayout = (page) => (
 	<AuthGuard>
 		<DashboardLayout>{page}</DashboardLayout>
 	</AuthGuard>
 );
-export default Page;
+
+export default Practice;

@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	IconButton,
+	//IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
@@ -66,16 +66,16 @@ const Practice = () => {
 	const router = useRouter();
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
-	const specMainContainerRef = useRef(null);
-	const specMainRef = useRef(null);
-	const specRecordContainerRef = useRef(null);
-	const specRecordRef = useRef(null);
+	//const specMainContainerRef = useRef(null);
+	//const specMainRef = useRef(null);
+	//const specRecordContainerRef = useRef(null);
+	//const specRecordRef = useRef(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
+	/*const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
 		noSsr: false,
-	});
+	});*/
 	//Custom hooks
-	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
+	//const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
 	const [wordsIds, setWordsIds] = useState(null);
 	const [fetchedIds, setFetchedIds] = useState(false);
 	const [wordsFetched, setWordsFetched] = useState([]);
