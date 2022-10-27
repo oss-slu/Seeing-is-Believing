@@ -55,10 +55,10 @@ const Overview = () => {
 		}
   },[fetchedClasses])
   
-	useEffect(() => {
+	/*useEffect(() => {
 		gtm.push({event: "page_view"});
 		fetchDataClasses()
-	}, []);*/
+	}, []);
 
 	return (
 		<Box>
