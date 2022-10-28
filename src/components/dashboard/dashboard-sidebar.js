@@ -147,9 +147,9 @@ export const DashboardSidebar = (props) => {
 	});
 	//const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
 	const sections = useMemo(() => {
-		if (user.status === "student") {
+		if (user.status === "Student") {
 			return getSectionsStudent(t)
-		} else if (user.status === "administrator") {
+		} else if (user.status === "Administrator") {
 			return getSectionsAdministrator(t);
 		} else {
 			return getSectionsTeacher(t);
