@@ -82,6 +82,7 @@ const Practice = () => {
 	const [isMainPlaying, setIsMainPlaying] = useState(false);
 	const [isMainNonNativePlaying, setIsMainNonNativePlaying] = useState(false);
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
+	const [count, setCount] = useState(0);
 	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
 		useReactMediaRecorder({ audio: true });
 
@@ -219,6 +220,7 @@ const Practice = () => {
 	};
 
 	const record = () => {
+		setCount(count + 1);
 		toast.loading(
 			<Typography color="textSecondary" fontSize="subtitle2">
 				Recording
@@ -227,6 +229,7 @@ const Practice = () => {
 		);
 		startRecording();
 	};
+	
 
 	const stopRecord = () => {
 		toast.dismiss();
@@ -308,6 +311,7 @@ const Practice = () => {
 	if (!router.isReady) {
 		return null;
 	}
+	
 
 	return (
 		<>
@@ -535,19 +539,16 @@ const Practice = () => {
 														Stop
 													</Button>
 												) : (
-													<Button
-														onClick={record}
-														variant="contained"
-														endIcon={
-															<KeyboardVoiceIcon
+													<><Button
+															onClick={record}
+															variant="contained"
+															endIcon={<KeyboardVoiceIcon
 																sx={{
 																	transform: "scale(1.2)",
-																}}
-															/>
-														}
-													>
-														Record
-													</Button>
+																}} />}
+														>
+															Record
+														</Button><p>&nbsp;{count} attempts </p></>
 												)}
 											</Box>
 										</Grid>
