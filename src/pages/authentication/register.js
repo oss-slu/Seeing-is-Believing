@@ -12,6 +12,7 @@ import { db } from '../../lib/firebase';
 
 const Register = (props) => {
   const router = useRouter();
+  //const { platform} = useAuth();
   const { disableGuard } = router.query;
  
   
@@ -147,6 +148,7 @@ Register.getLayout = (page) => (
 
 export async function getServerSideProps(context) {
 	const collection = await db.collection("code");
+  //const resuts = [];
   let codes;
 	await collection.get().then((snapshot) => {
 		if (snapshot) {
