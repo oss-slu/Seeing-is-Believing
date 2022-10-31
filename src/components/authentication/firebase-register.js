@@ -95,7 +95,7 @@ export const FirebaseRegister = (props) => {
 					});
 				}
 				if (isMounted()) {
-					const returnUrl = router.query.returnUrl || "/student";
+					const returnUrl = router.query.returnUrl || "/authentication/login";
 					router.push(returnUrl);
 				}
 			} catch (err) {
