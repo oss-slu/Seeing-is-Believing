@@ -15,7 +15,7 @@ const reducer = (state, action) => {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user: ""
     };
   }
 

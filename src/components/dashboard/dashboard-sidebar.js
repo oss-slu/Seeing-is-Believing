@@ -161,7 +161,6 @@ export const DashboardSidebar = (props) => {
 			onClose?.();
 			await logout();
 			router.push("/");
-			user.status = "";
 		} catch (err) {
 			console.error(err);
 			toast.error("Unable to logout.");
