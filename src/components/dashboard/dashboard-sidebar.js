@@ -99,35 +99,19 @@ const getSectionsTeacher = (t) => [
 const getSectionsAdministrator = (t) => [
 	{
 		title: t("General"),
-		items: [
+		/*items: [
 			{
-				title: t("Home"),
-				path: "/administrator",
-				icon: <HomeIcon fontSize="small" />,
-			},
-			{
-				title: t("Add a Langage"),
-				path: "/administrator/language",
-				icon: <LanguageIcon fontSize="small" />,
-			},
-			{
-				title: t("Manage Words"),
-				path: "/administrator/word",
-				icon: <SaveIcon fontSize="small" />,
-			},
-			/*{
-				title: t("Homework"),
-				path: "/administrator/homework_portal",
-				icon: <DocumentIcon fontSize="small" />,
-			},*/
-			{
-				title: t("More"),
-				path: "/administrator/word-list",
-				icon: <DotsHorizontalIcon fontSize="small" />,
-				children: [
+				title: t("General"),
+				items: [
 					{
-						title: t("Words Library"),
-						path: '/administrator/wordlist'
+						title: t("Home"),
+						path: "/administrator",
+						icon: <HomeIcon fontSize="small" />,
+					},
+					{
+						title: t("Add a Langage"),
+						path: "/administrator/language",
+						icon: <LanguageIcon fontSize="small" />,
 					},
 					/*{
 						title: t('Manage Classes'),
@@ -138,8 +122,8 @@ const getSectionsAdministrator = (t) => [
 						path: '/administrator/addHomework'
 					},*/
 				]
-			},
-		]
+			}
+		]*/
 	}
 
 ];
@@ -154,9 +138,9 @@ export const DashboardSidebar = (props) => {
 	});
 	//const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
 	const sections = useMemo(() => {
-		if (user.status === "Student") {
+		if (user.status === "student") {
 			return getSectionsStudent(t)
-		} else if (user.status === "Administrator") {
+		} else if (user.status === "administrator") {
 			return getSectionsAdministrator(t);
 		} else {
 			return getSectionsTeacher(t);

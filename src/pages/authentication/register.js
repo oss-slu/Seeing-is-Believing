@@ -145,7 +145,7 @@ Register.getLayout = (page) => (
 );
 
 
-/*export async function getServerSideProps(context) {
+export async function getServerSideProps(context) {
 	const collection = await db.collection("code");
   let codes;
 	await collection.get().then((snapshot) => {
@@ -160,7 +160,7 @@ Register.getLayout = (page) => (
 			codes
 		}, // will be passed to the page component as props
 	};
-}*/
+}
 
 
 export default Register;
