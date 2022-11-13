@@ -25,6 +25,8 @@ import {useReactMediaRecorder} from "react-media-recorder"; //Library used for r
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SpectrogramPlugin from "../../utils/spectogramPlugin";
 import DOMPurify from "dompurify";
+import StopIcon from "@mui/icons-material/Stop";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 
 const ChatInner = styled("div", {shouldForwardProp: (prop) => prop !== "open"})(
 	({theme, open}) => ({
@@ -437,6 +439,7 @@ const WordList = () => {
 												</Button>
 											</Box>
 										</Grid>
+
 										<Grid
 											sx={{
 												maxWidth: "665px",
@@ -469,6 +472,120 @@ const WordList = () => {
 												></div>
 											</Grid>
 										</Grid>
+									</Grid>
+									<Grid item xs={6} pt={3} px={3}>
+										<Grid
+											mt={2}
+											mb={2}
+											item
+											sx={{
+												maxWidth: "680px",
+												display: "flex",
+												justifyContent: "space-between",
+												alignItems: "center",
+											}}
+										>
+											<Typography variant="subtitle1" sx={{ display: "block" }}>
+												Spectogram view : &#160;
+												<Chip
+													sx={{
+														fontStyle: "oblique",
+													}}
+													label="Recorded Speech"
+												/>
+											</Typography>
+											<Box
+												sx={{
+													maxWidth: "680px",
+													display: "flex",
+													justifyContent: "flex-end",
+												}}
+											>
+												{mediaBlobUrl && (
+													<Button
+														sx={{ mr: 2 }}
+														onClick={playRecording}
+														disabled={isRecordedPlaying}
+														variant="contained"
+														endIcon={
+															<PlayArrowIcon
+																sx={{
+																	transform: "scale(1.2)",
+																}}
+															/>
+														}
+													>
+														Listen
+													</Button>
+												)}
+												{status === "recording" ? (
+													<Button
+														onClick={stopRecord}
+														variant="contained"
+														endIcon={
+															<StopIcon
+																sx={{
+																	transform: "scale(1.2)",
+																}}
+															/>
+														}
+													>
+														Stop
+													</Button>
+												) : (
+													<Button
+														onClick={record}
+														variant="contained"
+														endIcon={
+															<KeyboardVoiceIcon
+																sx={{
+																	transform: "scale(1.2)",
+																}}
+															/>
+														}
+													>
+														Record
+													</Button>
+												)}
+											</Box>
+										</Grid>
+
+
+										{mediaBlobUrl && (
+											<Grid
+												sx={{
+													maxWidth: "665px",
+													maxHeight: "350px",
+													overflowX: "scroll",
+													overflowY: "scroll",
+												}}
+											>
+												<div
+													style={{
+														height: "1000px",
+														width: "1200px",
+														position: "relative",
+													}}
+													id="spectrogram"
+													ref={specRecordRef}
+												></div>
+												<Grid
+													item
+													style={{
+														overflow: "hidden",
+														height: "0px",
+													}}
+													xs={12}
+												>
+													<div
+														style={{
+															visibility: "hidden",
+														}}
+														ref={specRecordContainerRef}
+													></div>
+												</Grid>
+											</Grid>
+										)}
 									</Grid>
 									<Grid item xs={6} pt={3} px={3} mb={18}>
 										<Grid
