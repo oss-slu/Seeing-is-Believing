@@ -3,13 +3,10 @@ import { Box, Divider, IconButton, Input, Paper, TextField, Typography } from '@
 import { LoadingButton } from '@mui/lab';
 import { X as XIcon } from '../../icons/x';
 import { useAuth } from '../../hooks/use-auth';
-import axios from 'axios';
-import toast from 'react-hot-toast';
 
 export const Modal1 = (props) => {
   const {close}=props
   const {user}=useAuth()
-  const [email,setEmail]=useState("");
   const [subject,setSubject]=useState("");
   const [message,setMessage]=useState("");
   const [isSending,setIsSending]=useState(false);
@@ -23,15 +20,6 @@ export const Modal1 = (props) => {
 		text: message,
 		html: `<strong>From : ${user.email}</strong></br><p>${message}</p>`,
 	}
-    const response = await axios.post("api/message", {
-			...content
-		}).then(res=>res.data);
-      setTimeout(()=>{
-        setIsSending(false)
-		close()
-		toast.success("Message sent!")
-      },2000)
-  }
  
   return (
 		<Box
@@ -119,4 +107,4 @@ export const Modal1 = (props) => {
 				</Box>
 			</Paper>
 		</Box>
-  );};
+  );}};

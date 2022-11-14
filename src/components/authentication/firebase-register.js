@@ -5,13 +5,11 @@ import {
 	Box,
 	Button,
 	Checkbox,
-	Divider,
 	FormHelperText,
 	Link,
 	Grid,
 	TextField,
 	Typography,
-	Autocomplete,
 	MenuItem,
 	InputLabel,
 	Select,
@@ -19,23 +17,13 @@ import {
 } from "@mui/material";
 import {useAuth} from "../../hooks/use-auth";
 import {useMounted} from "../../hooks/use-mounted";
-
-import firebase,{db}  from "../../lib/firebase";
+import {db} from '../../lib/firebase';
 
 export const FirebaseRegister = (props) => {
 	const {codes}=props
 	const isMounted = useMounted();
 	const router = useRouter();
 	const {createUserWithEmailAndPassword, getAuth} = useAuth();
-	const defaultPropsStatus = {
-		options: status,
-		getOptionLabel: (option) => option.title,
-	};
-
-	const defaultPropsOrganization = {
-		options: organizations,
-		getOptionLabel: (option) => option.title,
-	};
 
 	const formik = useFormik({
 		initialValues: {
@@ -67,7 +55,7 @@ export const FirebaseRegister = (props) => {
 			confirmPassword: Yup.string()
 				.required("Required *")
 				.oneOf([Yup.ref("password"), null], "Password doesn't match"),
-			status: Yup.string().required("Required *"),
+			status: Yup.string().required("Required *"),     
 			code: Yup.string().required("Required *"),
 			organizations: Yup.string().required("Required *"),
 			policy: Yup.boolean().oneOf([true], "This field must be checked"),
@@ -80,6 +68,9 @@ export const FirebaseRegister = (props) => {
 						break;
 					case "Teacher":
 						if(values.code!=codes.teacher){throw new Error('Wrong verification code!');}
+						break;
+					case "Administrator":
+						if(values.code!=codes.admin){throw new Error('Wrong verification code!')}
 						break;
 					default:
 						break;
@@ -104,7 +95,7 @@ export const FirebaseRegister = (props) => {
 					});
 				}
 				if (isMounted()) {
-					const returnUrl = router.query.returnUrl || "/student";
+					const returnUrl = router.query.returnUrl || "/authentication/login";
 					router.push(returnUrl);
 				}
 			} catch (err) {
@@ -336,7 +327,7 @@ export const FirebaseRegister = (props) => {
 	);
 };
 
-const status = [{title: "Student"}, {title: "Teacher"}];
+const status = [{title: "Student"}, {title: "Teacher"}, {title: "Administrator"}];
 
 const organizations = [
 	{title: "Bradley University"},

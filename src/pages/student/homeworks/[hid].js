@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	IconButton,
+	//IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
@@ -15,7 +15,7 @@ import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
 import { ChatSidebar } from "../../../components/dashboard/chat/chatsidebar_homework";
 import { MenuAlt4 as MenuAlt4Icon } from "../../../icons/menu-alt-4";
-import { gtm } from "../../../lib/gtm";
+//import { gtm } from "../../../lib/gtm";
 import { db, storage } from "../../../lib/firebase";
 import { useAuth } from "../../../hooks/use-auth";
 import { Scrollbar } from "../../../components/scrollbar";
@@ -66,16 +66,16 @@ const Practice = () => {
 	const router = useRouter();
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
-	const specMainContainerRef = useRef(null);
-	const specMainRef = useRef(null);
-	const specRecordContainerRef = useRef(null);
-	const specRecordRef = useRef(null);
+	//const specMainContainerRef = useRef(null);
+	//const specMainRef = useRef(null);
+	//const specRecordContainerRef = useRef(null);
+	//const specRecordRef = useRef(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
+	/*const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
 		noSsr: false,
-	});
+	});*/
 	//Custom hooks
-	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
+	//const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
 	const [wordsIds, setWordsIds] = useState(null);
 	const [fetchedIds, setFetchedIds] = useState(false);
 	const [wordsFetched, setWordsFetched] = useState([]);
@@ -247,7 +247,7 @@ const Practice = () => {
 		}
 	}, [wordsFetched]);
 	useEffect(() => {
-		gtm.push({ event: "page_view" });
+		//gtm.push({ event: "page_view" });
 		//first time rendered component -->fetch the data
 		fetchHomeworkDetails();
 	}, []);

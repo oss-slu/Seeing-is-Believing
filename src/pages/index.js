@@ -11,7 +11,16 @@ const Home = () => {
     if(!isAuthenticated) {
       router.push("authentication/login");
     } else {
-      const url= (user.status=="Student")?'/student':'/teacher'
+      //const url= (user.status=="Student")?'/student':'/teacher'
+      const url = "";
+      //const url= (user.status=="Student")?'/student':'/teacher'
+      if(user.status == "Student"){
+        url = '/student';
+      }else if(user.status == "Teacher"){
+        url = '/teacher';
+      }else if(user.status == 'Administrator'){
+        url = '/administrator';
+      }
       router.push(url);
     }
   }, []);

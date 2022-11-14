@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import {
 	Avatar,
 	Box,
@@ -11,47 +11,45 @@ import {
 	Button,
 	Chip,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { AuthGuard } from "../../components/authentication/auth-guard";
-import { DashboardLayout } from "../../components/dashboard/dashboard-layout";
-import { ChatSidebar } from "../../components/dashboard/chat/chatsidebar";
-import { MenuAlt4 as MenuAlt4Icon } from "../../icons/menu-alt-4";
-//import { gtm } from "../../lib/gtm";
-import { db } from "../../lib/firebase";
-import { Scrollbar } from "../../components/scrollbar";
+import {styled} from "@mui/material/styles";
+import {AuthGuard} from "../../components/authentication/auth-guard";
+import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
+import {ChatSidebar} from "../../components/dashboard/chat/chatsidebar";
+import {MenuAlt4 as MenuAlt4Icon} from "../../icons/menu-alt-4";
+//import {gtm} from "../../lib/gtm";
+import {db} from "../../lib/firebase";
+import {Scrollbar} from "../../components/scrollbar";
 import * as COLORMAPS from "../../constants/colormaps";
 import toast from "react-hot-toast";
-import { useReactMediaRecorder } from "react-media-recorder"; //Library used for recording
-import StopIcon from "@mui/icons-material/Stop";
+import {useReactMediaRecorder} from "react-media-recorder"; //Library used for recording
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SpectrogramPlugin from "../../utils/spectogramPlugin";
 import DOMPurify from "dompurify";
 
-const ChatInner = styled("div", {
-	shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-	display: "flex",
-	flexDirection: "column",
-	flexGrow: 1,
-	overflow: "hidden",
-	[theme.breakpoints.up("md")]: {
-		marginLeft: -380,
-	},
-	transition: theme.transitions.create("margin", {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-	...(open && {
+const ChatInner = styled("div", {shouldForwardProp: (prop) => prop !== "open"})(
+	({theme, open}) => ({
+		display: "flex",
+		flexDirection: "column",
+		flexGrow: 1,
+		overflow: "hidden",
 		[theme.breakpoints.up("md")]: {
-			marginLeft: 0,
+			marginLeft: -380,
 		},
 		transition: theme.transitions.create("margin", {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
 		}),
-	}),
-}));
+		...(open && {
+			[theme.breakpoints.up("md")]: {
+				marginLeft: 0,
+			},
+			transition: theme.transitions.create("margin", {
+				easing: theme.transitions.easing.easeOut,
+				duration: theme.transitions.duration.enteringScreen,
+			}),
+		}),
+	})
+);
 
 // In our case there two possible routes
 // one that contains /chat and one with a chat?threadKey={{threadKey}}
@@ -59,7 +57,7 @@ const ChatInner = styled("div", {
 
 //Show spectogram of original audio
 
-const Practice = () => {
+const WordList = () => {
 	const router = useRouter();
 	const rootRef = useRef(null);
 	const specMainContainerRef = useRef(null);
@@ -82,8 +80,8 @@ const Practice = () => {
 	const [isMainPlaying, setIsMainPlaying] = useState(false);
 	const [isMainNonNativePlaying, setIsMainNonNativePlaying] = useState(false);
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
-	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
-		useReactMediaRecorder({ audio: true });
+	const {status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl} =
+		useReactMediaRecorder({audio: true});
 
 	useEffect(() => {
 		if (mediaBlobUrl && mediaBlobUrl != "") {
@@ -104,7 +102,6 @@ const Practice = () => {
 	const showSpectroRecord = async () => {
 		const wavesurfer = WaveSurfer.create({
 			container: specRecordContainerRef.current,
-			fillParent: true,
 			plugins: [
 				SpectrogramPlugin.create({
 					container: specRecordRef.current,
@@ -223,7 +220,7 @@ const Practice = () => {
 			<Typography color="textSecondary" fontSize="subtitle2">
 				Recording
 			</Typography>,
-			{ icon: "🛑" }
+			{icon: "🛑"}
 		);
 		startRecording();
 	};
@@ -247,7 +244,7 @@ const Practice = () => {
 	};
 
 	useEffect(() => {
-		//gtm.push({ event: "page_view" });
+		//gtm.push({event: "page_view"});
 		//first time rendered component -->fetch the data
 		fetchData();
 	}, []);
@@ -259,6 +256,12 @@ const Practice = () => {
 		setAudioMain(audio);
 		const audioNonNative = new Audio(choice.urlAudioNonNative);
 		setAudioMainNonNative(audioNonNative);
+	};
+	/*------------------------------------Markup description------------------------------------*/
+	const createMarkup = (html) => {
+		return {
+			__html: DOMPurify.sanitize(html),
+		};
 	};
 
 	useEffect(() => {
@@ -296,13 +299,6 @@ const Practice = () => {
 
 	const handleToggleSidebar = () => {
 		setIsSidebarOpen((prevState) => !prevState);
-	};
-
-	/*------------------------------------Markup description------------------------------------*/
-	const createMarkup = (html) => {
-		return {
-			__html: DOMPurify.sanitize(html),
-		};
 	};
 
 	if (!router.isReady) {
@@ -441,7 +437,6 @@ const Practice = () => {
 												</Button>
 											</Box>
 										</Grid>
-
 										<Grid
 											sx={{
 												maxWidth: "665px",
@@ -474,120 +469,6 @@ const Practice = () => {
 												></div>
 											</Grid>
 										</Grid>
-									</Grid>
-									<Grid item xs={6} pt={3} px={3}>
-										<Grid
-											mt={2}
-											mb={2}
-											item
-											sx={{
-												maxWidth: "680px",
-												display: "flex",
-												justifyContent: "space-between",
-												alignItems: "center",
-											}}
-										>
-											<Typography variant="subtitle1" sx={{ display: "block" }}>
-												Spectogram view : &#160;
-												<Chip
-													sx={{
-														fontStyle: "oblique",
-													}}
-													label="Recorded Speech"
-												/>
-											</Typography>
-											<Box
-												sx={{
-													maxWidth: "680px",
-													display: "flex",
-													justifyContent: "flex-end",
-												}}
-											>
-												{mediaBlobUrl && (
-													<Button
-														sx={{ mr: 2 }}
-														onClick={playRecording}
-														disabled={isRecordedPlaying}
-														variant="contained"
-														endIcon={
-															<PlayArrowIcon
-																sx={{
-																	transform: "scale(1.2)",
-																}}
-															/>
-														}
-													>
-														Listen
-													</Button>
-												)}
-												{status === "recording" ? (
-													<Button
-														onClick={stopRecord}
-														variant="contained"
-														endIcon={
-															<StopIcon
-																sx={{
-																	transform: "scale(1.2)",
-																}}
-															/>
-														}
-													>
-														Stop
-													</Button>
-												) : (
-													<Button
-														onClick={record}
-														variant="contained"
-														endIcon={
-															<KeyboardVoiceIcon
-																sx={{
-																	transform: "scale(1.2)",
-																}}
-															/>
-														}
-													>
-														Record
-													</Button>
-												)}
-											</Box>
-										</Grid>
-
-
-										{mediaBlobUrl && (
-											<Grid
-												sx={{
-													maxWidth: "665px",
-													maxHeight: "350px",
-													overflowX: "scroll",
-													overflowY: "scroll",
-												}}
-											>
-												<div
-													style={{
-														height: "1000px",
-														width: "1200px",
-														position: "relative",
-													}}
-													id="spectrogram"
-													ref={specRecordRef}
-												></div>
-												<Grid
-													item
-													style={{
-														overflow: "hidden",
-														height: "0px",
-													}}
-													xs={12}
-												>
-													<div
-														style={{
-															visibility: "hidden",
-														}}
-														ref={specRecordContainerRef}
-													></div>
-												</Grid>
-											</Grid>
-										)}
 									</Grid>
 									<Grid item xs={6} pt={3} px={3} mb={18}>
 										<Grid
@@ -706,10 +587,10 @@ const Practice = () => {
 	);
 };
 
-Practice.getLayout = (page) => (
+WordList.getLayout = (page) => (
 	<AuthGuard>
 		<DashboardLayout>{page}</DashboardLayout>
 	</AuthGuard>
 );
 
-export default Practice;
+export default WordList;

@@ -5,7 +5,7 @@ import firebase,{db} from '../lib/firebase';
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null
+  user: ""
 };
 
 const reducer = (state, action) => {
@@ -68,7 +68,7 @@ export const AuthProvider = (props) => {
         type: 'AUTH_STATE_CHANGED',
         payload: {
           isAuthenticated: false,
-          user: null
+          user: ""
         }
       });
     }
