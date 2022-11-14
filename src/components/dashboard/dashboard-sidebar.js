@@ -20,6 +20,7 @@ import { ViewList as GradesIcon } from '../../icons/view-list';
 import { Language as LanguageIcon } from '../../icons/language';
 import { Save as SaveIcon } from '../../icons/save';
 import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'
+import { InstructionsBook as InstructionsIcon } from '../../icons/instruction-book';
 
 const getSectionsStudent = (t) => [
 	{
