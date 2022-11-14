@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	IconButton,
+	//IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
@@ -16,15 +16,12 @@ import { styled } from "@mui/material/styles";
 import { AuthGuard } from "../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../components/dashboard/dashboard-layout";
 import { ChatSidebar } from "../../components/dashboard/chat/chatsidebar_homework _teacher";
-import { MenuAlt4 as MenuAlt4Icon } from "../../icons/menu-alt-4";
-import { gtm } from "../../lib/gtm";
 import { db } from "../../lib/firebase";
 import { useAuth } from "../../hooks/use-auth";
 import { Scrollbar } from "../../components/scrollbar";
 import * as COLORMAPS from "../../constants/colormaps";
 import { useReactMediaRecorder } from "react-media-recorder"; //Library used for recording
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { LoadingButton } from "@mui/lab";
 import SpectrogramPlugin from "../../utils/spectogramPlugin";
 
 const ChatInner = styled("div", {
@@ -71,7 +68,6 @@ const Page = () => {
 	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
 	//
 	const [hasBeenMarked, setHasBeenMarked] = useState(false);
-	const [answer, setAnswer] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [homework, setHomework] = useState(null);
 	const [feedback, setFeedback] = useState("");
@@ -143,7 +139,6 @@ const Page = () => {
 	}, [words]);
 
 	useEffect(() => {
-		gtm.push({ event: "page_view" });
 		//first time rendered component -->fetch the data
 		setStudentId(user.id);
 		fetchHomeworkDetails();

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+//import { useEffect } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,19 +6,18 @@ import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
 import { GuestGuard } from '../../components/authentication/guest-guard';
 import { FirebaseRegister } from '../../components/authentication/firebase-register';
 import { useAuth } from '../../hooks/use-auth';
-import { gtm } from '../../lib/gtm';
+//import { gtm } from '../../lib/gtm';
 import { db } from '../../lib/firebase';
 
 
 const Register = (props) => {
   const router = useRouter();
-  const { platform } = useAuth();
   const { disableGuard } = router.query;
  
   
-  useEffect(() => {
+  /*useEffect(() => {
     gtm.push({ event: 'page_view' });
-  }, []);
+  }, []);*/
 
   return (
     <>
@@ -148,7 +147,6 @@ Register.getLayout = (page) => (
 
 export async function getServerSideProps(context) {
 	const collection = await db.collection("code");
-	const results = [];
   let codes;
 	await collection.get().then((snapshot) => {
 		if (snapshot) {

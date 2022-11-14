@@ -22,6 +22,6 @@ export const firebaseConfig = {
   measurementId: "G-41PZRQMEBP"
 };
 
-export const gtmConfig = {
+/*export const gtmConfig = {
   containerId: process.env.NEXT_PUBLIC_GTM_CONTAINER_ID
-};
+};*/
