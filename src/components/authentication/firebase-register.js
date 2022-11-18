@@ -81,6 +81,9 @@ export const FirebaseRegister = (props) => {
 					case "Teacher":
 						if(values.code!=codes.teacher){throw new Error('Wrong verification code!');}
 						break;
+					case "Administrator":
+						if(values.code!=codes.administrator){throw new Error('Wrong verification code!')}
+						break;
 					default:
 						break;
 				}
