@@ -227,6 +227,7 @@ const Practice = () => {
 		);
 		startRecording();
 	};
+	
 
 	const stopRecord = () => {
 		toast.dismiss();
@@ -308,6 +309,7 @@ const Practice = () => {
 	if (!router.isReady) {
 		return null;
 	}
+	
 
 	return (
 		<>
@@ -536,18 +538,15 @@ const Practice = () => {
 													</Button>
 												) : (
 													<Button
-														onClick={record}
-														variant="contained"
-														endIcon={
-															<KeyboardVoiceIcon
+															onClick={record}
+															variant="contained"
+															endIcon={<KeyboardVoiceIcon
 																sx={{
 																	transform: "scale(1.2)",
-																}}
-															/>
-														}
-													>
-														Record
-													</Button>
+																}} />}
+														>
+															Record
+														</Button>
 												)}
 											</Box>
 										</Grid>

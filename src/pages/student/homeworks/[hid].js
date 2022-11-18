@@ -358,6 +358,7 @@ const Practice = () => {
 
 const SubSection = (props) => {
 	const { word, setAnswer, position } = props;
+	const [count, setCount] = useState(0);
 	const specMainContainerRef = useRef(null);
 	const specMainRef = useRef(null);
 	const specMainNonNativeContainerRef = useRef(null);
@@ -468,6 +469,7 @@ const SubSection = (props) => {
 	};
 
 	const record = () => {
+		
 		toast.loading(
 			<Typography color="textSecondary" fontSize="subtitle2">
 				Recording
@@ -478,6 +480,7 @@ const SubSection = (props) => {
 	};
 
 	const stopRecord = () => {
+		setCount(count + 1);
 		toast.dismiss();
 		stopRecording();
 	};
@@ -708,13 +711,13 @@ const SubSection = (props) => {
 								Stop
 							</Button>
 						) : (
-							<Button
+							<><Button
 								onClick={record}
 								variant="contained"
 								endIcon={<KeyboardVoiceIcon sx={{ transform: "scale(1.2)" }} />}
 							>
 								Record
-							</Button>
+							</Button><p>&nbsp;{count} attempts </p></>
 						)}
 					</Box>
 				</Grid>

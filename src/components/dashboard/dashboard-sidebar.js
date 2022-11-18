@@ -9,12 +9,13 @@ import { Home as HomeIcon } from '../../icons/home';
 import { DocumentText as DocumentIcon } from '../../icons/document-text';
 import { Scrollbar } from '../scrollbar';
 import { DashboardSidebarSection } from './dashboard-sidebar-section';
-import { PencilAlt as PenIcon } from '../../icons/pencil-alt'
-import { ViewList as GradesIcon } from '../../icons/view-list';
+import {PencilAlt as PenIcon} from '../../icons/pencil-alt'
+import {ViewList as GradesIcon} from '../../icons/view-list';
+import { InstructionsBook as InstructionsIcon } from '../../icons/instruction-book';
+
 import { Language as LanguageIcon } from '../../icons/language';
 import { Save as SaveIcon } from '../../icons/save';
 import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'
-import { InstructionsBook as InstructionsIcon } from '../../icons/instruction-book';
 
 const getSectionsStudent = (t) => [
 	{
