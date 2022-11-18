@@ -121,6 +121,14 @@ const Content = (props) => {
 														display: "See Homework",
 														link: `/teacher/homeworks/${item.id}`,
 													},
+													{
+														display: "Edit Homework",
+														link: `/teacher/homeworks/${item.id}`,
+													},
+													{
+														display: "Delete Homework",
+														link: `/teacher/homeworks/${item.id}`,
+													}
 												]}
 											/>
 										</TableCell>
