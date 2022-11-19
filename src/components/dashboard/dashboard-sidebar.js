@@ -58,11 +58,11 @@ const getSectionsTeacher = (t) => [
 				path: "/teacher",
 				icon: <HomeIcon fontSize="small" />,
 			},
-			{
+			/*{
 				title: t("Add a Langage"),
 				path: "/teacher/language",
 				icon: <LanguageIcon fontSize="small" />,
-			},
+			},*/
 			{
 				title: t("Manage Words"),
 				path: "/teacher/word",
