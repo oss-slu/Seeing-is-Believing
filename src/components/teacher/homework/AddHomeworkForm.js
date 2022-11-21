@@ -28,10 +28,9 @@ import {db} from "../../../lib/firebase";
 import toast from "react-hot-toast";
 import {v4 as uuidv4} from "uuid";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorProps } from 'react-draft-wysiwyg';
 import styles from "../../../styles/rte.module.css";
 
-const Editor = dynamic<EditorProps>(
+const Editor = dynamic(
 	() => import("react-draft-wysiwyg").then((mod) => mod.Editor),
 	{ssr: false}
 );
