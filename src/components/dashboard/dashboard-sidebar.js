@@ -59,7 +59,7 @@ const getSectionsTeacher = (t) => [
 				path: "/teacher",
 				icon: <HomeIcon fontSize="small" />,
 			},
-			{
+			/*{
 				title: t("Add a Langage"),
 				path: "/teacher/language",
 				icon: <LanguageIcon fontSize="small" />,
@@ -68,7 +68,7 @@ const getSectionsTeacher = (t) => [
 				title: t("Manage Words"),
 				path: "/teacher/word",
 				icon: <SaveIcon fontSize="small" />,
-			},
+			},*/
 			{
 				title: t("Homework"),
 				path: "/teacher/homework_portal",
