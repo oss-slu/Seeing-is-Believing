@@ -57,7 +57,7 @@ const EditWordForm = (props) => {
 		EditorState.createEmpty()
 	);
 	const [description, setDescription] = useState("");
-
+ 
 	const handleEditorChange = (state) => {
 		setEditorState(state);
 		convertContentToHTML();
