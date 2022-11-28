@@ -30,7 +30,7 @@ import DOMPurify from "dompurify";
 
 /*------------------------------------Markup description------------------------------------*/
 const createMarkup = (html) => {
-	return {
+	return { 
 		__html: DOMPurify.sanitize(html),
 	};
 };
