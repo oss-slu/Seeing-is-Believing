@@ -62,6 +62,10 @@ const Content = (props) => {
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
 	};
+
+	const editHomework = (homework_id) => {
+		router.push(`/teacher/edithomeworks/${homework_id}`);
+	}
 	if (isLoaded) {
 		return (
 			<>
@@ -99,7 +103,7 @@ const Content = (props) => {
 										<TableCell
 											sx={{cursor: "pointer"}}
 											onClick={() => {
-												seeHomework(item.id);
+												editHomework(item.id);
 											}}
 										>
 											<Typography
@@ -123,7 +127,7 @@ const Content = (props) => {
 													},
 													{
 														display: "Edit Homework",
-														link: `/teacher/homeworks/${item.id}`,
+														link: `/teacher/editHomeworks/${item.id}`,
 													},
 													{
 														display: "Delete Homework",
