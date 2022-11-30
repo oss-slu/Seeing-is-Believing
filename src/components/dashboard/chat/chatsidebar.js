@@ -94,7 +94,7 @@ export const ChatSidebar = (props) => {
 					p: 2,
 				}}
 			>
-				<Typography variant="h5">Word's list</Typography>
+				<Typography variant="h5">Words list</Typography>
 				<Box sx={{flexGrow: 1}} />
 				<IconButton
 					onClick={onClose}

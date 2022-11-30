@@ -80,7 +80,7 @@ const getSectionsTeacher = (t) => [
 				icon: <DotsHorizontalIcon fontSize="small" />,
 				children: [
 					{
-						title: t("Word's Library"),
+						title: t("Words Library"),
 						path: '/teacher/wordlist'
 					},
 					{
@@ -126,7 +126,7 @@ const getSectionsAdministrator = (t) => [
 				icon: <DotsHorizontalIcon fontSize="small" />,
 				children: [
 					{
-						title: t("Word's Library"),
+						title: t("Words Library"),
 						path: '/administrator/wordlist'
 					},
 					{
