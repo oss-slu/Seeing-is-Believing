@@ -62,6 +62,8 @@ const Content = (props) => {
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
 	};
+	
+	
 	if (isLoaded) {
 		return (
 			<>
