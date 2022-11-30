@@ -382,6 +382,23 @@ const AddWordForm = (props) => {
 				</Box>
 			</Box>
 			<Box sx={{mt: 3}}>
+				<LoadingButton
+					loading={isLoading}
+					onClick={handleUpload}
+					disabled={
+						wordName!="" &&
+						selectedLanguage != "" &&
+						dialect != "" &&
+						description != "" &&
+						audio &&
+						audioNonNative
+							? false
+							: true
+					}
+					variant="contained"
+				>
+					Save
+				</LoadingButton>
 				<Button
 					onClick={onCancel}
 					disabled={selectedLanguage ? false : true}
