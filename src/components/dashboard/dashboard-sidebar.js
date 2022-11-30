@@ -80,7 +80,7 @@ const getSectionsTeacher = (t) => [
 				icon: <DotsHorizontalIcon fontSize="small" />,
 				children: [
 					{
-						title: t("Words Library"),
+						title: t("Word's Library"),
 						path: '/teacher/wordlist'
 					},
 					{
@@ -101,17 +101,33 @@ const getSectionsAdministrator = (t) => [
 		title: t("General"),
 		/*items: [
 			{
-				title: t("General"),
-				items: [
+				title: t("Home"),
+				path: "/administrator",
+				icon: <HomeIcon fontSize="small" />,
+			},
+			{
+				title: t("Add a Langage"),
+				path: "/administrator/language",
+				icon: <LanguageIcon fontSize="small" />,
+			},
+			{
+				title: t("Manage Words"),
+				path: "/administrator/word",
+				icon: <SaveIcon fontSize="small" />,
+			},
+			{
+				title: t("Homework"),
+				path: "/administrator/homework_portal",
+				icon: <DocumentIcon fontSize="small" />,
+			},
+			{
+				title: t("More"),
+				path: "/administrator/word-list",
+				icon: <DotsHorizontalIcon fontSize="small" />,
+				children: [
 					{
-						title: t("Home"),
-						path: "/administrator",
-						icon: <HomeIcon fontSize="small" />,
-					},
-					{
-						title: t("Add a Langage"),
-						path: "/administrator/language",
-						icon: <LanguageIcon fontSize="small" />,
+						title: t("Word's Library"),
+						path: '/administrator/wordlist'
 					},
 					/*{
 						title: t('Manage Classes'),
