@@ -62,6 +62,10 @@ const Content = (props) => {
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
 	};
+
+	const editHomework = (homework_id) => {
+		router.push(`/teacher/editHomework`);
+	};
 	
 	
 	if (isLoaded) {
@@ -125,7 +129,7 @@ const Content = (props) => {
 													},
 													{
 														display: "Edit Homework",
-														link: `/teacher/homeworks/${item.id}`,
+														link: `/teacher/editHomework`,
 													},
 													{
 														display: "Delete Homework",
