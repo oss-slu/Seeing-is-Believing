@@ -25,6 +25,7 @@ const Page = () => {
 	const [terms, setTerms] = useState([]);
 	const [words, setWords] = useState(0);
 	const [classes,setClass]= useState(null)
+	const [homework, setHomework] = useState(null);
 
 	const fetchHomeworkDetails = async (id) => {
 		try {
