@@ -6,14 +6,17 @@ import {
 	Tabs,
 	Tab
 } from "@mui/material";
-import {AuthGuard} from "../../components/authentication/auth-guard";
-import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-import AddHomeworkForm from "../../components/teacher/homework/AddHomeworkForm";
+import {AuthGuard} from "../../../components/authentication/auth-guard";
+import {DashboardLayout} from "../../../components/dashboard/dashboard-layout";
+import AddHomeworkForm from "../../../components/teacher/homework/AddHomeworkForm";
 import SwipeableViews from "react-swipeable-views";
-import {db} from "../../lib/firebase";
-import {useAuth} from '../../hooks/use-auth';
+import {db} from "../../../lib/firebase";
+import {useAuth} from '../../../hooks/use-auth';
+import { useRouter } from "next/router";
 
 const Page = () => {
+	const router = useRouter();
+    const homeworkId = router.query.hid;
 	const {user} = useAuth();
 	const [activeStep, setActiveStep] = useState(0);
 	const [complete, setComplete] = useState(false);
@@ -22,6 +25,21 @@ const Page = () => {
 	const [terms, setTerms] = useState([]);
 	const [words, setWords] = useState(0);
 	const [classes,setClass]= useState(null)
+
+	const fetchHomeworkDetails = async (id) => {
+		try {
+			await db
+				.collection("assignments")
+				.doc(homeworkId)
+				.get()
+				.then(async (docRef) => {
+					const results = docRef.data();
+					setHomework(results);
+				});
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
 
 	const fetchDataLanguages = async () => {
 		const collection = await db.collection("languages");
@@ -66,6 +84,7 @@ const Page = () => {
 			fetchDataLanguages();
 			fetchDataClasses();
 			fetchDataWords();
+			fetchHomeworkDetails();
 		}, []);
 	
 		const handleChange = (evt, value) => {
