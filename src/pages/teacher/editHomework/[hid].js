@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../../components/dashboard/dashboard-layout";
-import AddHomeworkForm from "../../../components/teacher/homework/AddHomeworkForm";
+import EditHomeworkForm from "../../../components/teacher/homework/EditHomeworkForm";
 import SwipeableViews from "react-swipeable-views";
 import {db} from "../../../lib/firebase";
 import {useAuth} from '../../../hooks/use-auth';
@@ -157,7 +157,7 @@ const Page = () => {
 										onChangeIndex={handleChangeIndex}
 									>
 										<Grid>
-											<AddHomeworkForm
+											<EditHomeworkForm
 												teacher={user}
 												words={words}
 												classes={classes}

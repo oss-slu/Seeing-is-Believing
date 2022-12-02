@@ -35,7 +35,7 @@ const Editor = dynamic(
 	{ssr: false}
 );
 
-const AddHomeworkForm = (props) => {
+const EditHomeworkForm = (props) => {
 	const {languages, words, classes, teacher, stepBack, ...other} = props;
 
 	const [title, setTitle] = useState("");
