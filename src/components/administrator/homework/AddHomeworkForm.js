@@ -134,7 +134,8 @@ const AddHomeworkForm = (props) => {
 	function valuetext(value) {
 		return `${value}°C`;
 	}
-
+	return (null)
+/*
 	return (
 		<div {...other}>
 			<Box>
@@ -195,7 +196,7 @@ const AddHomeworkForm = (props) => {
 					Set the collection of words to figure in the assignment
 				</Typography>
 				{/**************************************Autocomplete that will contain the students that will be passed to the box-Display***********************************************************/}
-				<Autocomplete
+				/*<Autocomplete
 					disablePortal
 					multiple
 					value={wordsArray}
@@ -264,7 +265,7 @@ const AddHomeworkForm = (props) => {
 			</Box>
 		</div>
 	);
-};
+};*/
 
 AddHomeworkForm.propTypes = {
 	onBack: PropTypes.func,
