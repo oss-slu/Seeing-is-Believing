@@ -167,7 +167,7 @@ const Page = () => {
 	return (
 		<>
 			<Head>
-				<title>Seeing is bieliving</title>
+				<title>Seeing is Believing</title>
 				<script src="https://unpkg.com/wavesurfer.js"></script>
 			</Head>
 			<Box
