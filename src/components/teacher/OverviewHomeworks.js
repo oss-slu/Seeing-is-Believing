@@ -11,14 +11,11 @@ import {
 	Typography,
 	Tooltip
 } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
 import {Scrollbar} from "../scrollbar";
 import {MoreMenu} from "../more-menu class";
 import {useAuth} from "../../hooks/use-auth";
 import {db} from "../../lib/firebase";
 import {useRouter} from "next/router";
-import firebase from '../../utils/firebase'
 
 const Content = (props) => {
 	const router = useRouter();
@@ -66,6 +63,8 @@ const Content = (props) => {
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
 	};
+	
+	
 	if (isLoaded) {
 		return (
 			<>
@@ -132,9 +131,16 @@ const Content = (props) => {
 														display: "See Homework",
 														link: `/teacher/homeworks/${item.id}`,
 													},
+													{
+														display: "Edit Homework",
+														link: `/teacher/homeworks/${item.id}`,
+													},
+													{
+														display: "Delete Homework",
+														link: `/teacher/homeworks/${item.id}`,
+													}
 												]}
 											/>
-											
 										</TableCell>
 									</TableRow>
 								))}
