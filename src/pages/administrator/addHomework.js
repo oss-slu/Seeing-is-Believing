@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-import AddHomeworkForm from "../../components/teacher/homework/AddHomeworkForm";
+import AddHomeworkForm from "../../components/administrator/homework/AddHomeworkForm";
 import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
 import {useAuth} from '../../hooks/use-auth';

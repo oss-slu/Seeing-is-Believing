@@ -115,11 +115,11 @@ const getSectionsAdministrator = (t) => [
 				path: "/administrator/word",
 				icon: <SaveIcon fontSize="small" />,
 			},
-			{
+			/*{
 				title: t("Homework"),
 				path: "/administrator/homework_portal",
 				icon: <DocumentIcon fontSize="small" />,
-			},
+			},*/
 			{
 				title: t("More"),
 				path: "/administrator/word-list",
@@ -129,14 +129,14 @@ const getSectionsAdministrator = (t) => [
 						title: t("Words Library"),
 						path: '/administrator/wordlist'
 					},
-					{
+					/*{
 						title: t('Manage Classes'),
 						path: '/administrator/manage_class'
-					},
-					{
+					},*/
+					/*{
 						title: t('Add Homework'),
 						path: '/administrator/addHomework'
-					},
+					},*/
 				]
 			},
 		]

@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-import AddClassForm from '../../components/teacher/classPage/AddClassForm'
-import EditClassForm from "../../components/teacher/classPage/EditClassForm";
+import AddClassForm from '../../components/administrator/classPage/AddClassForm'
+import EditClassForm from "../../components/administrator/classPage/EditClassForm";
 import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
 

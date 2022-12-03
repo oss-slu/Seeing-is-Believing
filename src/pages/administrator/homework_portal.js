@@ -9,7 +9,7 @@ import {
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
 //import {gtm} from "../../lib/gtm";
-import OverviewClasses from "../../components/teacher/OverviewClasses";
+import OverviewClasses from "../../components/administrator/OverviewClasses";
 import {useAuth} from "../../hooks/use-auth.js";
 import {db} from "../../lib/firebase";
 
@@ -26,7 +26,7 @@ const Homework = () => {
 	const fetchDataClasses= async()=>{
 		const collection = await db.collection("classes");
 		const results=[]
-		await collection.where("teacher","==",user.id)
+		await collection.where("administrator","==",user.id)
 		  .get()
 		  .then(snapshot=>{
 			if(snapshot)

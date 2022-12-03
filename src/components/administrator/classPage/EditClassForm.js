@@ -70,8 +70,8 @@ const EditClassForm = (props) => {
 		setSelectedTerm("");
 		setArrayStudents([]);
 	}
-
-	return (
+	return (null)
+	/*return (
 		<div {...other}>
 			<Box>
 				<Typography variant="subtitle1">Name of the class</Typography>
@@ -161,7 +161,7 @@ const EditClassForm = (props) => {
 							The students registerd for the class
 						</Typography>
 						{/**************************************Autocomplete that will contain the students that will be passed to the box-Display***********************************************************/}
-						<Autocomplete
+						/*<Autocomplete
 							disablePortal
 							multiple
 							value={arrayStudents}
@@ -212,7 +212,7 @@ const EditClassForm = (props) => {
 			</Box>
 		</div>
 	);
-};
+};*/
 
 EditClassForm.propTypes = {
 	onBack: PropTypes.func,

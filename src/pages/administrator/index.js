@@ -38,7 +38,7 @@ const Overview = () => {
   const fetchDataClasses= async()=>{
     const collection = await db.collection("classes");
     const results=[]
-    await collection.where("teacher","==",user.id)
+    await collection.where("adminstrator","==",user.id)
       .get()
       .then(snapshot=>{
         if(snapshot)
@@ -85,19 +85,6 @@ const Overview = () => {
 							</Typography>
 						</Grid>
 						<Grid item container spacing={6}>
-							<Grid item md={4} xs={12}>
-								<NextLink
-									href="/teacher/homework_portal"
-									passHref
-								>
-									<HomeworkCard
-										sx={{borderRadius: 0.6}}
-										heightImg={"330px"}
-										image={gradesImg}
-										title="Homework"
-									/>
-								</NextLink>
-							</Grid>
 
 							<Grid item md={4} xs={12}>
 								<NextLink href="/teacher/wordlist" passHref>
@@ -110,29 +97,8 @@ const Overview = () => {
 								</NextLink>
 							</Grid>
 
-							<Grid item md={4} xs={12}>
-								<NextLink href="/teacher/manage_class" passHref>
-									<HomeworkCard
-										sx={{borderRadius: 0.6}}
-										heightImg={"2010px"}
-										image={practiceImg}
-										title="Manage Classes"
-									/>
-								</NextLink>
-							</Grid>
-
 						</Grid>
-						<Grid item sx={{p: 0, mt: 4, mb: 1}}>
-							<Typography variant="h5" color="neutral.700">
-								Managed classes
-							</Typography>
-						</Grid>
-
-						<Grid item xs={12}>
-							{!isFetching && (
-								<OverviewClasses classes={fetchedClasses} />
-							)}
-						</Grid>
+						
 
 						<Grid item sx={{mt: 6}} xs={12}>
 							<Card>
