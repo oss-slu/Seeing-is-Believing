@@ -125,10 +125,6 @@ const Content = (props) => {
 													{
 														display: "Edit Homework",
 														link: `/teacher/editHomework/${item.id}`,
-													},
-													{
-														display: "Delete Homework",
-														link: `/teacher/homeworks/${item.id}`,
 													}
 												]}
 											/>
