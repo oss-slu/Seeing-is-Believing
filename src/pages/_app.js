@@ -36,7 +36,7 @@ const App = (props) => {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Seeing is bieliving</title>
+        <title>Seeing is Believing</title>
         <meta
           name="viewport"
           content="initial-scale=1, width=device-width"
