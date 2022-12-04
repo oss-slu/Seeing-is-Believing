@@ -9,6 +9,7 @@ import {
 	TableCell,
 	TableRow,
 	Typography,
+	Tooltip
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
@@ -130,6 +131,13 @@ const Content = (props) => {
 												padding: 0,
 											}}
 										>
+										<Tooltip title="Delete">
+										<IconButton aria-label="delete">
+												<DeleteIcon onClick={() => {
+												deleteHomework(item.id);
+											}}/>
+											</IconButton>
+											</Tooltip>
 											<MoreMenu
 												options={[
 													{
@@ -142,11 +150,7 @@ const Content = (props) => {
 													}
 												]}
 											/>
-											<IconButton aria-label="delete">
-												<DeleteIcon onClick={() => {
-												deleteHomework(item.id);
-											}}/>
-											</IconButton>
+											
 										</TableCell>
 									</TableRow>
 								))}
