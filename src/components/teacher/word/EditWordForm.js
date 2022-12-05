@@ -66,7 +66,7 @@ const EditWordForm = (props) => {
 	const convertContentToHTML = () => {
 		let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
 		setDescription(currentContentAsHTML);
-	};
+	};F
 
 	useEffect(() => {
 		if (languages) {

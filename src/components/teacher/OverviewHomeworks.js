@@ -65,6 +65,8 @@ const Content = (props) => {
 
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
+	};	
+	
 	};
 	async function deleteHomework(homework_id){
 		await firebase
@@ -146,7 +148,7 @@ const Content = (props) => {
 													},
 													{
 														display: "Edit Homework",
-														link: `/teacher/homeworks/${item.id}`,
+														link: `/teacher/editHomework/${item.id}`,
 													}
 												]}
 											/>
