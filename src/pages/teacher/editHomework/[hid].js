@@ -22,71 +22,40 @@ const Page = () => {
 	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
-	const [terms, setTerms] = useState([]);
+	const [title, setTitle] = useState([]);
+		const [terms, setTerms] = useState([]);
 	const [words, setWords] = useState(0);
 	const [classes,setClass]= useState(null)
 	const [homework, setHomework] = useState(null);
+	const [score, setScore] = useState(null);
+	const [description, setDescription] = useState(null);
+	const [date, setDate] = useState(null);
+	const [studentId, setStudent] = useState(null);
+	
 
-	const fetchHomeworkDetails = async (id) => {
+	const fetchHomeworkDetails = async () => {
 		try {
 			await db
 				.collection("assignments")
 				.doc(homeworkId)
 				.get()
-				.then(async (docRef) => {
+				.then((docRef) => {
 					const results = docRef.data();
 					setHomework(results);
+					setWords(results.words);
+					setTitle(results.title);
+					setDescription(results.description);
+					setScore(results.score);
+					setDate(results.dueDate);
 				});
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
 
-	const fetchDataLanguages = async () => {
-		const collection = await db.collection("languages");
-		let results = [];
-		await collection.get().then((snapshot) => {
-			//results = snapshot.docs[0].data();
-			snapshot.docs.forEach((doc) => {
-				const newLanguage = doc.data();
-				newLanguage={id:doc.id,...newLanguage}
-				results.push(newLanguage);
-			});
-		});
-		setLanguages(results);
-	};
-
-
-	const fetchDataWords= async () =>{
-		const collection= await db.collection("words"); 
-		let results=[];
-		await collection.get().then(snapshot=>{
-			snapshot.docs.forEach(doc=>{
-				const word={id:doc.id,...doc.data()}
-				results.push(word)
-			})
-		})
-		setWords(results)
-	}
-
-	const fetchDataClasses=async () =>{
-		const collection= await db.collection("classes");
-		let results=[];
-		await collection.get().then(snapshot=>{
-			snapshot.docs.forEach(doc=>{
-				const newClass={id:doc.id,...doc.data()}
-				results.push(newClass)
-			})
-		})
-		setClass(results)
-	}
-	
 	useEffect(() => {
-			fetchDataLanguages();
-			fetchDataClasses();
-			fetchDataWords();
-			fetchHomeworkDetails();
-		}, []);
+		fetchHomeworkDetails()
+	}, []);
 	
 		const handleChange = (evt, value) => {
 			setIndex(value);
@@ -159,10 +128,12 @@ const Page = () => {
 									>
 										<Grid>
 											<EditHomeworkForm
-												teacher={user}
+												title={title}
 												words={words}
 												classes={classes}
-												languages={languages}
+												description={description}
+												score={score}
+												date={date}
 											/>
 										</Grid>
 										<Grid>

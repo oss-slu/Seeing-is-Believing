@@ -36,22 +36,20 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	const {languages, words, classes, teacher, stepBack, ...other} = props;
-
-	const [title, setTitle] = useState("");
-	const [score, setScore] = useState(0);
-	const [dueDate, setDueDate] = useState("");
+	console.log("props:", props)
+	const [title, setTitle] = useState(props.title);
+	const [score, setScore] = useState(props.score);
+	const [dueDate, setDueDate] = useState(props.date);
 	const [wordsArray, setWordsArray] = useState([]);
-	const [students, setStudents] = useState([]);
-	const [selectedClass, setSelectedClass] = useState(null);
+	const [words, setWords] = useState(props.words);
+	const [classes, setClass] = useState(props.class);
 	const [isLoading, setIsLoading] = useState(false);
 	const [date, setDate] = useState(new Date());
-
+	const [description, setDescription] = useState(props.description);
 	//Rich text editor
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
 	);
-	const [description, setDescription] = useState("");
 
 	const handleEditorChange = (state) => {
 		setEditorState(state);
@@ -90,31 +88,8 @@ const EditHomeworkForm = (props) => {
 		}
 	};
 
-	const fetchStudents = async () => {
-		const collection = db.collection("classes");
-		await collection
-			.doc(selectedClass.id)
-			.get()
-			.then((snapshot) => {
-				const students = snapshot.data().students;
-				students = students.map((el) => {
-					return {id: el, submitted: "no"};
-				});
-				setStudents(students);
-			});
-	};
-
-	useEffect(() => {
-		if (selectedClass) {
-			fetchStudents();
-		}
-	}, [selectedClass]);
-	const handleChange = (newValue) => {
-		setDate(newValue);
-	};
-
 	const initialize = () => {
-		setTitle("");
+		setTitle(title);
 		setDescription("");
 		setScore(0);
 		setDueDate("");
@@ -135,7 +110,7 @@ const EditHomeworkForm = (props) => {
 	}
 
 	return (
-		<div {...other}>
+		<div>
 			<Box>
 				<Typography variant="subtitle1">Title</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
@@ -144,7 +119,7 @@ const EditHomeworkForm = (props) => {
 				<TextField
 					fullWidth
 					sx={{mb: 2, mt: 1}}
-					value={title}
+					value={props.title}
 					InputProps={{style: {fontWeight: 300}}}
 					onChange={(evt) => setTitle(evt.target.value)}
 				/>
@@ -155,11 +130,10 @@ const EditHomeworkForm = (props) => {
 				<Autocomplete
 					disablePortal
 					clearIcon
-					options={classes}
-					value={selectedClass}
+					value={props.classes}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
-						setSelectedClass(newValue);
+						setSelectedClass(props.classes);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
@@ -176,6 +150,7 @@ const EditHomeworkForm = (props) => {
 						wrapperClassName={styles.wrapperClass}
 						editorClassName={styles.editorClass}
 						toolbarClassName={styles.toolbarClass}
+						value = {props.description}
 						toolbar={{
 							options: [
 								"inline",
@@ -187,6 +162,7 @@ const EditHomeworkForm = (props) => {
 								"history",
 							],
 						}}
+						
 					/>
 				</Box>
 				<Typography variant="subtitle1">Words</Typography>
@@ -197,7 +173,7 @@ const EditHomeworkForm = (props) => {
 				<Autocomplete
 					disablePortal
 					multiple
-					value={wordsArray}
+					value={props.word}
 					options={words}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
@@ -215,15 +191,15 @@ const EditHomeworkForm = (props) => {
 						<DesktopDatePicker
 							label="Due Date"
 							inputFormat="MM/dd/yyyy"
-							value={date}
-							onChange={handleChange}
+							value={props.dueDate}
+							//onChange={handleChange}
 							renderInput={(params) => <TextField {...params} />}
 						/>
 
 						<TimePicker
 							label="Due Time"
 							value={date}
-							onChange={handleChange}
+							//onChange={handleChange}
 							renderInput={(params) => <TextField {...params} />}
 						/>
 					</Stack>
@@ -236,7 +212,7 @@ const EditHomeworkForm = (props) => {
 						sx={{width: "95%"}}
 						aria-label="Temperature"
 						defaultValue={0}
-						value={score}
+						value={props.score}
 						getAriaValueText={valuetext}
 						valueLabelDisplay="auto"
 						step={5}
