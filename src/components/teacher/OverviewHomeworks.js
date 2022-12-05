@@ -65,20 +65,8 @@ const Content = (props) => {
 
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
-	};	
+	};
 	
-	};
-	async function deleteHomework(homework_id){
-		await firebase
-			.firestore()
-			.collection('assignments')
-			.doc(homework_id)
-			.delete()
-			.catch((e) => console.log(e));
-		window.location.reload(false);
-
-
-	};
 	
 	if (isLoaded) {
 		return (
@@ -148,8 +136,9 @@ const Content = (props) => {
 													},
 													{
 														display: "Edit Homework",
-														link: `/teacher/editHomework/${item.id}`,
+														link: `/teacher/editHomeworks/${item.id}`,
 													}
+													
 												]}
 											/>
 											
