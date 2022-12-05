@@ -9,12 +9,16 @@ import {
 	TableCell,
 	TableRow,
 	Typography,
+	Tooltip
 } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import {Scrollbar} from "../scrollbar";
 import {MoreMenu} from "../more-menu class";
 import {useAuth} from "../../hooks/use-auth";
 import {db} from "../../lib/firebase";
 import {useRouter} from "next/router";
+import firebase from '../../utils/firebase'
 
 const Content = (props) => {
 	const router = useRouter();
@@ -62,7 +66,17 @@ const Content = (props) => {
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
 	};
-	
+	async function deleteHomework(homework_id){
+		await firebase
+			.firestore()
+			.collection('assignments')
+			.doc(homework_id)
+			.delete()
+			.catch((e) => console.log(e));
+		window.location.reload(false);
+
+
+	};
 	
 	if (isLoaded) {
 		return (
@@ -117,6 +131,13 @@ const Content = (props) => {
 												padding: 0,
 											}}
 										>
+										<Tooltip title="Delete">
+										<IconButton aria-label="delete">
+												<DeleteIcon onClick={() => {
+												deleteHomework(item.id);
+											}}/>
+											</IconButton>
+											</Tooltip>
 											<MoreMenu
 												options={[
 													{
@@ -126,13 +147,10 @@ const Content = (props) => {
 													{
 														display: "Edit Homework",
 														link: `/teacher/homeworks/${item.id}`,
-													},
-													{
-														display: "Delete Homework",
-														link: `/teacher/homeworks/${item.id}`,
 													}
 												]}
 											/>
+											
 										</TableCell>
 									</TableRow>
 								))}
