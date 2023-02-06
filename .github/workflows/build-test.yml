@@ -21,7 +21,7 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm CI
+      run: npm install --force
       
     - name: NPX
       run: npx browserslist@latest --update-db
