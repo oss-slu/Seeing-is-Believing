@@ -27,5 +27,5 @@ jobs:
       run: npx browserslist@latest --update-db
 
     - name: Build and test
-      run: npm run build
+      run: CI=npm run build
 
