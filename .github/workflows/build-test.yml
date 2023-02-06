@@ -22,9 +22,6 @@ jobs:
 
     - name: Install dependencies
       run: npm install --force
-      
-    - name: NPX
-      run: npx browserslist@latest --update-db
 
     - name: Build and test
       run: npm run build && next export -o _static
