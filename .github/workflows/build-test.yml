@@ -24,7 +24,7 @@ jobs:
       run: npm install --force
       
     - name: NPX
-      run: npx browserslist@latest --update-db --force
+      run: npx browserslist@latest --update-db --legacy-peer-deps
 
     - name: Build and test
       run: npm run build
