@@ -82,6 +82,6 @@
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
     "next-transpile-modules": "^9.0.0",
-    "immutable": "3.8.2"
+    "immutable": "4.0.0"
   }
 }
