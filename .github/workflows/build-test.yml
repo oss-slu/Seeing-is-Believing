@@ -21,11 +21,11 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm install --force
+      run: npm install --legacy-peer-deps
       
     - name: NPX browser update
-      run: npm --depth 20 update --save caniuse-lite browserslist 
+      run: npm update --save caniuse-lite browserslist
 
     - name: Build and test
-      run: npm run build
+      run: npm build
 
