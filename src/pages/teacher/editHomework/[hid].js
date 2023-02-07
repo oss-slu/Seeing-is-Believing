@@ -47,14 +47,31 @@ const Page = () => {
 					setDescription(results.description);
 					setScore(results.score);
 					setDate(results.dueDate);
+					//setClass(results.classes);
+					//console.log(results.class);
 				});
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
 
+	/*const fetchClasses = async () => {
+		const collection = await db.collection("classes");
+		let results = [];
+		await collection.get().then((snapshot) => {
+			//results = snapshot.docs[0].data();
+			snapshot.docs.forEach((doc) => {
+				const testClasses = doc.data();
+				results.push(testClasses);
+			});
+		});
+		setClass(results);
+		console.log("Results", results);
+	};*/
+
 	useEffect(() => {
 		fetchHomeworkDetails()
+		//fetchClasses()
 	}, []);
 	
 		const handleChange = (evt, value) => {

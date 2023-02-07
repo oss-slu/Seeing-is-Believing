@@ -36,7 +36,7 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	console.log("props:", props)
+	console.log("props:", props.class)
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
 	const [dueDate, setDueDate] = useState(props.date);
@@ -44,6 +44,7 @@ const EditHomeworkForm = (props) => {
 	const [words, setWords] = useState(props.words);
 	const [classes, setClass] = useState(props.class);
 	const [isLoading, setIsLoading] = useState(false);
+	const [selectedClass, setSelectedClass] = useState(null);
 	const [date, setDate] = useState(new Date());
 	const [description, setDescription] = useState(props.description);
 	//Rich text editor
@@ -61,6 +62,26 @@ const EditHomeworkForm = (props) => {
 		);
 		setDescription(currentContentAsHTML);
 	};
+
+	const fetchClasses = async () => {
+		const collection = await db.collection("classes");
+		let results = [];
+		await collection.get().then((snapshot) => {
+			//results = snapshot.docs[0].data();
+			snapshot.docs.forEach((doc) => {
+				const testClasses = doc.data();
+				results.push(testClasses);
+			});
+		});
+		setClass(results);
+		console.log("Results", results);
+	};
+
+	useEffect(() => {
+		if (selectedClass) {
+			fetchStudents();
+		}
+	}, [selectedClass]);
 
 	const handleSave = async () => {
 		try {
@@ -90,10 +111,11 @@ const EditHomeworkForm = (props) => {
 
 	const initialize = () => {
 		setTitle(title);
-		setDescription("");
-		setScore(0);
-		setDueDate("");
-		setWordsArray([]);
+		setDescription(description);
+		setScore(score);
+		setDueDate(dueDate);
+		setClass(classes);
+		setWordsArray([worldsArray]);
 		setStudents([]);
 		setSelectedClass(null);
 		setIsLoading(false);
@@ -133,7 +155,7 @@ const EditHomeworkForm = (props) => {
 					value={props.classes}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
-						setSelectedClass(props.classes);
+						setClass(props.classes);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
