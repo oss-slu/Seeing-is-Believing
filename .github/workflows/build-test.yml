@@ -22,9 +22,6 @@ jobs:
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
-      
-    - name: NPX browser update
-      run: npm update --save caniuse-lite browserslist
 
     - name: Build and test
       run: npm build
