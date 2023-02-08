@@ -7,7 +7,7 @@ on:
     branches: [ main ]
     
 env:
-  NODE_VERSION: 14
+  NODE_VERSION: 16
 
 jobs:
   build:
@@ -27,10 +27,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-
-    - name: Use the correct version of React
-      run: |
-        npm install react@${{ matrix.react-version }}
 
     - name: Install dependencies
       run: |
