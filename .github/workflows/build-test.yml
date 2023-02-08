@@ -1,28 +1,43 @@
-name: Node.js CI
+name: Build  Next.js Project
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
+env:
+  NODE_VERSION: 14
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    name: Build and Deploy Next.js Project
+
+    strategy:
+      matrix:
+        node-version: [14, 18]
+        react-version: [16.13.1, 17.0.1, 17.0.2]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
       with:
-        node-version: 18
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Use the correct version of React
+      run: |
+        npm install react@${{ matrix.react-version }}
 
     - name: Install dependencies
-      run: npm install --legacy-peer-deps
+      run: |
+        npm ci
 
-    - name: Build and test
-      run: npm run build
+    - name: Build the Next.js project
+      run: |
+        npm run build
+
 
