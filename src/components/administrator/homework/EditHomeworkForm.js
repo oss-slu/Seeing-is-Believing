@@ -28,31 +28,28 @@ import {db} from "../../../lib/firebase";
 import toast from "react-hot-toast";
 import {v4 as uuidv4} from "uuid";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorProps } from 'react-draft-wysiwyg';
 import styles from "../../../styles/rte.module.css";
 
-const Editor = dynamic<EditorProps>(
+const Editor = dynamic(
 	() => import("react-draft-wysiwyg").then((mod) => mod.Editor),
 	{ssr: false}
 );
 
-const AddHomeworkForm = (props) => {
-	const {languages, words, classes, teacher, stepBack, ...other} = props;
-
-	const [title, setTitle] = useState("");
-	const [score, setScore] = useState(0);
-	const [dueDate, setDueDate] = useState("");
+const EditHomeworkForm = (props) => {
+	console.log("props:", props)
+	const [title, setTitle] = useState(props.title);
+	const [score, setScore] = useState(props.score);
+	const [dueDate, setDueDate] = useState(props.date);
 	const [wordsArray, setWordsArray] = useState([]);
-	const [students, setStudents] = useState([]);
-	const [selectedClass, setSelectedClass] = useState(null);
+	const [words, setWords] = useState(props.words);
+	const [classes, setClass] = useState(props.class);
 	const [isLoading, setIsLoading] = useState(false);
 	const [date, setDate] = useState(new Date());
-
+	const [description, setDescription] = useState(props.description);
 	//Rich text editor
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
 	);
-	const [description, setDescription] = useState("");
 
 	const handleEditorChange = (state) => {
 		setEditorState(state);
@@ -91,31 +88,8 @@ const AddHomeworkForm = (props) => {
 		}
 	};
 
-	const fetchStudents = async () => {
-		const collection = db.collection("classes");
-		await collection
-			.doc(selectedClass.id)
-			.get()
-			.then((snapshot) => {
-				const students = snapshot.data().students;
-				students = students.map((el) => {
-					return {id: el, submitted: "no"};
-				});
-				setStudents(students);
-			});
-	};
-
-	useEffect(() => {
-		if (selectedClass) {
-			fetchStudents();
-		}
-	}, [selectedClass]);
-	const handleChange = (newValue) => {
-		setDate(newValue);
-	};
-
 	const initialize = () => {
-		setTitle("");
+		setTitle(title);
 		setDescription("");
 		setScore(0);
 		setDueDate("");
@@ -134,10 +108,9 @@ const AddHomeworkForm = (props) => {
 	function valuetext(value) {
 		return `${value}°C`;
 	}
-	return (null)
-/*
+
 	return (
-		<div {...other}>
+		<div>
 			<Box>
 				<Typography variant="subtitle1">Title</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
@@ -146,7 +119,7 @@ const AddHomeworkForm = (props) => {
 				<TextField
 					fullWidth
 					sx={{mb: 2, mt: 1}}
-					value={title}
+					value={props.title}
 					InputProps={{style: {fontWeight: 300}}}
 					onChange={(evt) => setTitle(evt.target.value)}
 				/>
@@ -157,11 +130,10 @@ const AddHomeworkForm = (props) => {
 				<Autocomplete
 					disablePortal
 					clearIcon
-					options={classes}
-					value={selectedClass}
+					value={props.classes}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
-						setSelectedClass(newValue);
+						setSelectedClass(props.classes);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
@@ -178,6 +150,7 @@ const AddHomeworkForm = (props) => {
 						wrapperClassName={styles.wrapperClass}
 						editorClassName={styles.editorClass}
 						toolbarClassName={styles.toolbarClass}
+						value = {props.description}
 						toolbar={{
 							options: [
 								"inline",
@@ -189,6 +162,7 @@ const AddHomeworkForm = (props) => {
 								"history",
 							],
 						}}
+						
 					/>
 				</Box>
 				<Typography variant="subtitle1">Words</Typography>
@@ -196,10 +170,10 @@ const AddHomeworkForm = (props) => {
 					Set the collection of words to figure in the assignment
 				</Typography>
 				{/**************************************Autocomplete that will contain the students that will be passed to the box-Display***********************************************************/}
-				/*<Autocomplete
+				<Autocomplete
 					disablePortal
 					multiple
-					value={wordsArray}
+					value={props.word}
 					options={words}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
@@ -217,15 +191,15 @@ const AddHomeworkForm = (props) => {
 						<DesktopDatePicker
 							label="Due Date"
 							inputFormat="MM/dd/yyyy"
-							value={date}
-							onChange={handleChange}
+							value={props.dueDate}
+							//onChange={handleChange}
 							renderInput={(params) => <TextField {...params} />}
 						/>
 
 						<TimePicker
 							label="Due Time"
 							value={date}
-							onChange={handleChange}
+							//onChange={handleChange}
 							renderInput={(params) => <TextField {...params} />}
 						/>
 					</Stack>
@@ -238,7 +212,7 @@ const AddHomeworkForm = (props) => {
 						sx={{width: "95%"}}
 						aria-label="Temperature"
 						defaultValue={0}
-						value={score}
+						value={props.score}
 						getAriaValueText={valuetext}
 						valueLabelDisplay="auto"
 						step={5}
@@ -265,11 +239,11 @@ const AddHomeworkForm = (props) => {
 			</Box>
 		</div>
 	);
-};*/
+};
 
-AddHomeworkForm.propTypes = {
+EditHomeworkForm.propTypes = {
 	onBack: PropTypes.func,
 	onNext: PropTypes.func,
 };
 
-export default AddHomeworkForm;
+export default EditHomeworkForm;
