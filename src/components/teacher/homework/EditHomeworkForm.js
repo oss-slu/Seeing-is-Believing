@@ -36,16 +36,16 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	console.log("props:", props.class)
+	//console.log("props:", props.class)
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
 	const [dueDate, setDueDate] = useState(props.date);
-	const [wordsArray, setWordsArray] = useState([]);
+	//const [wordsArray, setWordsArray] = useState([]);
 	const [words, setWords] = useState(props.words);
-	const [classes, setClass] = useState(props.class);
+	//const [classes, setClass] = useState(props.class);
 	const [isLoading, setIsLoading] = useState(false);
-	const [selectedClass, setSelectedClass] = useState(null);
-	const [date, setDate] = useState(new Date());
+	const [selectedClass, setSelectedClass] = useState(props.class);
+	const [date, setDate] = useState(props.date);
 	const [description, setDescription] = useState(props.description);
 	//Rich text editor
 	const [editorState, setEditorState] = useState(() =>
@@ -62,26 +62,6 @@ const EditHomeworkForm = (props) => {
 		);
 		setDescription(currentContentAsHTML);
 	};
-
-	const fetchClasses = async () => {
-		const collection = await db.collection("classes");
-		let results = [];
-		await collection.get().then((snapshot) => {
-			//results = snapshot.docs[0].data();
-			snapshot.docs.forEach((doc) => {
-				const testClasses = doc.data();
-				results.push(testClasses);
-			});
-		});
-		setClass(results);
-		console.log("Results", results);
-	};
-
-	useEffect(() => {
-		if (selectedClass) {
-			fetchStudents();
-		}
-	}, [selectedClass]);
 
 	const handleSave = async () => {
 		try {
@@ -114,12 +94,14 @@ const EditHomeworkForm = (props) => {
 		setDescription(description);
 		setScore(score);
 		setDueDate(dueDate);
-		setClass(classes);
-		setWordsArray([worldsArray]);
+		//setClass(classes);
+		//setWordsArray([wordsArray]);
 		setStudents([]);
-		setSelectedClass(null);
+		setSelectedClass(selectedClass);
 		setIsLoading(false);
+		setWords(words);
 		setDate(new Date());
+		console.log("selected class: ", selectedClass)
 	};
 
 	const onCancel = () => {
@@ -143,7 +125,7 @@ const EditHomeworkForm = (props) => {
 					sx={{mb: 2, mt: 1}}
 					value={props.title}
 					InputProps={{style: {fontWeight: 300}}}
-					onChange={(evt) => setTitle(evt.target.value)}
+					//onChange={(evt) => setTitle(evt.target.value)}
 				/>
 				<Typography variant="subtitle1">Class</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
@@ -152,10 +134,10 @@ const EditHomeworkForm = (props) => {
 				<Autocomplete
 					disablePortal
 					clearIcon
-					value={props.classes}
+					value={props.selectedClass}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
-						setClass(props.classes);
+						setSelectedClass(props.selectedClass.name);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />

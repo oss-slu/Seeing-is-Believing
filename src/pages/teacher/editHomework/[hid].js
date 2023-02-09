@@ -28,7 +28,7 @@ const Page = () => {
 	const [classes,setClass]= useState(null)
 	const [homework, setHomework] = useState(null);
 	const [score, setScore] = useState(null);
-	const [description, setDescription] = useState(null);
+	const [description, setDescription] = useState([null]);
 	const [date, setDate] = useState(null);
 	const [studentId, setStudent] = useState(null);
 	
@@ -47,31 +47,16 @@ const Page = () => {
 					setDescription(results.description);
 					setScore(results.score);
 					setDate(results.dueDate);
-					//setClass(results.classes);
-					//console.log(results.class);
+					//setClass(results.class);
+					console.log(results.dueDate);
 				});
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
 
-	/*const fetchClasses = async () => {
-		const collection = await db.collection("classes");
-		let results = [];
-		await collection.get().then((snapshot) => {
-			//results = snapshot.docs[0].data();
-			snapshot.docs.forEach((doc) => {
-				const testClasses = doc.data();
-				results.push(testClasses);
-			});
-		});
-		setClass(results);
-		console.log("Results", results);
-	};*/
-
 	useEffect(() => {
 		fetchHomeworkDetails()
-		//fetchClasses()
 	}, []);
 	
 		const handleChange = (evt, value) => {
