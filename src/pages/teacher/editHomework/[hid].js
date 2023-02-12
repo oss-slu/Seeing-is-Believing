@@ -23,7 +23,7 @@ const Page = () => {
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 	const [title, setTitle] = useState([]);
-		const [terms, setTerms] = useState([]);
+	const [terms, setTerms] = useState([]);
 	const [words, setWords] = useState(0);
 	const [classes,setClass]= useState(null)
 	const [homework, setHomework] = useState(null);
@@ -47,16 +47,55 @@ const Page = () => {
 					setDescription(results.description);
 					setScore(results.score);
 					setDate(results.dueDate);
-					//setClass(results.class);
-					console.log(results.dueDate);
+					setClass(results.class);
+					console.log(results.description);
 				});
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
 
+	const fetchDataClasses=async () =>{
+		const collection= await db.collection("classes");
+		let results=[];
+		await collection.get().then(snapshot=>{
+			snapshot.docs.forEach(doc=>{
+				const newClass={id:doc.id,...doc.data()}
+				results.push(newClass)
+			})
+		})
+		setClass(results)
+	}
+	const fetchDataLanguages = async () => {
+		const collection = await db.collection("languages");
+		let results = [];
+		await collection.get().then((snapshot) => {
+			//results = snapshot.docs[0].data();
+			snapshot.docs.forEach((doc) => {
+				const newLanguage = doc.data();
+				newLanguage={id:doc.id,...newLanguage}
+				results.push(newLanguage);
+			});
+		});
+		setLanguages(results);
+	};
+	const fetchDataWords= async () =>{
+		const collection= await db.collection("words"); 
+		let results=[];
+		await collection.get().then(snapshot=>{
+			snapshot.docs.forEach(doc=>{
+				const word={id:doc.id,...doc.data()}
+				results.push(word)
+			})
+		})
+		setWords(results)
+	}
+
 	useEffect(() => {
-		fetchHomeworkDetails()
+		fetchHomeworkDetails();
+		fetchDataClasses();
+		fetchDataLanguages();
+		fetchDataWords();
 	}, []);
 	
 		const handleChange = (evt, value) => {
