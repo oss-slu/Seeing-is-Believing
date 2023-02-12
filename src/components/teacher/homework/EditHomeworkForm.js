@@ -36,11 +36,12 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
+	const {languages, classes, teacher, stepBack, ...other} = props;
 	//console.log("props:", props.class)
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
 	//const [dueDate, setDueDate] = useState(props.date);
-	//const [wordsArray, setWordsArray] = useState([]);
+	const [wordsArray, setWordsArray] = useState([props.words]);
 	const [words, setWords] = useState(props.words);
 	//const [classes, setClass] = useState(props.class);
 	const [students, setStudents] = useState([]);
@@ -96,7 +97,7 @@ const EditHomeworkForm = (props) => {
 		setScore(score);
 		//setDueDate(dueDate);
 		//setClass(classes);
-		//setWordsArray([wordsArray]);
+		setWordsArray([words]);
 		setStudents([]);
 		setSelectedClass(selectedClass);
 		setIsLoading(false);
@@ -104,6 +105,8 @@ const EditHomeworkForm = (props) => {
 		setDate(date);
 		console.log("selected class: ", date)
 	};
+
+	
 
 	const fetchStudents = async () => {
 		const collection = db.collection("classes");
@@ -129,8 +132,9 @@ const EditHomeworkForm = (props) => {
 		setDate(props.date);
 		setScore(props.score);
 		setDescription(props.description);
-		setSelectedClass(props.setSelectedClass);
-		console.log("Print", props.setSelectedClass);
+		setSelectedClass(props.selectedClass);
+		setWordsArray(props.wordsArray);
+		console.log("Print", props.wordsArray);
 	}, [selectedClass, props.title, props.description, props.words, props.date, props.score, props.description, props.selectedClass]);
 	const handleChange = (newValue) => {
 		setDate(newValue);
@@ -146,7 +150,7 @@ const EditHomeworkForm = (props) => {
 	}
 
 	return (
-		<div>
+		<div {...other}>
 			<Box>
 				<Typography variant="subtitle1">Title</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
@@ -169,7 +173,7 @@ const EditHomeworkForm = (props) => {
 					value={selectedClass}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
-						setSelectedClass(props.selectedClass.name);
+						setSelectedClass(newValue);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
