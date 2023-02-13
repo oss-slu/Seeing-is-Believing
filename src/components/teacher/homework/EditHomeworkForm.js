@@ -94,6 +94,7 @@ const EditHomeworkForm = (props) => {
 			setIsLoading(false);
 			toast.success("Homework saved successfully!");
 			initialize();
+			window.location.reload(false);
 		} catch (err) {
 			console.error('err.message:', err.message);
 			console.log('error')
