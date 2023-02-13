@@ -175,6 +175,7 @@ const Page = () => {
 												description={description}
 												score={score}
 												date={date}
+												id={homeworkId}
 											/>
 										</Grid>
 										<Grid>

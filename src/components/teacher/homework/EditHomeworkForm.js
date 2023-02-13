@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
-import Router, {useRouter} from "next/router";
+import { useEffect, useState } from "react";
+import Router, { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import {EditorState} from "draft-js";
-import {convertToHTML} from "draft-convert";
+import { EditorState } from "draft-js";
+import { convertToHTML } from "draft-convert";
 import PropTypes from "prop-types";
 import {
 	Box,
@@ -14,8 +14,8 @@ import {
 	MenuItem,
 	Typography,
 	Autocomplete,
-    Slider,
-    Stack
+	Slider,
+	Stack
 } from "@mui/material";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -24,24 +24,24 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LoadingButton from "@mui/lab/LoadingButton";
-import {db} from "../../../lib/firebase";
+import { db } from "../../../lib/firebase";
 import toast from "react-hot-toast";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "../../../styles/rte.module.css";
 
 const Editor = dynamic(
 	() => import("react-draft-wysiwyg").then((mod) => mod.Editor),
-	{ssr: false}
+	{ ssr: false }
 );
 
 const EditHomeworkForm = (props) => {
-	const {languages, classes, teacher, stepBack, ...other} = props;
 	//console.log("props:", props.class)
+	const { languages, classes, teacher, stepBack, ...other } = props;
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
-	//const [dueDate, setDueDate] = useState(props.date);
-	const [wordsArray, setWordsArray] = useState([props.words]);
+	const [dueDate, setDueDate] = useState(props.date);
+	const [wordsArray, setWordsArray] = useState([]);
 	const [words, setWords] = useState(props.words);
 	//const [classes, setClass] = useState(props.class);
 	const [students, setStudents] = useState([]);
@@ -70,9 +70,18 @@ const EditHomeworkForm = (props) => {
 			setIsLoading(true);
 			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
 			await fetchStudents();
-			console.log(students);
-			const collection = await db.collection("assignments");
-			await collection.add({
+			//const collection = await db.collection("assignments");
+			const document = await db.collection("assignments").doc(props.id);
+			await document
+				.update({
+					title,
+					description,
+					class: selectedClass.id,
+					words: wordsIds,
+					dueDate: date,
+					score,
+				});
+			/*await collection.add({
 				title,
 				description,
 				class: selectedClass.id,
@@ -81,33 +90,16 @@ const EditHomeworkForm = (props) => {
 				score,
 				students: students,
 				studentsAssignements: [],
-			});
+			});*/
 			setIsLoading(false);
 			toast.success("Homework saved successfully!");
 			initialize();
 		} catch (err) {
-			console.error(err.message);
+			console.error('err.message:', err.message);
+			console.log('error')
 			toast.error("Something went wrong!");
 		}
 	};
-
-	const initialize = () => {
-		setTitle(title);
-		setDescription(description);
-		setScore(score);
-		//setDueDate(dueDate);
-		//setClass(classes);
-		setWordsArray([words]);
-		setStudents([]);
-		setSelectedClass(selectedClass);
-		setIsLoading(false);
-		setWords(words);
-		setDate(date);
-		console.log("selected class: ", date)
-	};
-
-	
-
 	const fetchStudents = async () => {
 		const collection = db.collection("classes");
 		await collection
@@ -116,9 +108,10 @@ const EditHomeworkForm = (props) => {
 			.then((snapshot) => {
 				const students = snapshot.data().students;
 				students = students.map((el) => {
-					return {id: el, submitted: "no"};
+					return { id: el, submitted: "no" };
 				});
 				setStudents(students);
+
 			});
 	};
 
@@ -130,14 +123,29 @@ const EditHomeworkForm = (props) => {
 		setDescription(props.description);
 		setWords(props.words);
 		setDate(props.date);
+		setSelectedClass(props.setSelectedClass);
 		setScore(props.score);
-		setDescription(props.description);
-		setSelectedClass(props.selectedClass);
-		setWordsArray(props.wordsArray);
-		console.log("Print", props.wordsArray);
-	}, [selectedClass, props.title, props.description, props.words, props.date, props.score, props.description, props.selectedClass]);
+	}, [props.setSelectedClass, props.title, props.description, props.words, props.date, props.score]);
+
+
+
 	const handleChange = (newValue) => {
 		setDate(newValue);
+	};
+
+	const initialize = () => {
+		setTitle(title);
+		setDescription(description);
+		setScore(score);
+		setDueDate(dueDate);
+		//setClass(classes);
+		//setWordsArray([wordsArray]);
+		setStudents([]);
+		setSelectedClass(selectedClass);
+		setIsLoading(false);
+		setWords(words);
+		setDate(date);
+		console.log("selected class: ", date)
 	};
 
 	const onCancel = () => {
@@ -153,44 +161,45 @@ const EditHomeworkForm = (props) => {
 		<div {...other}>
 			<Box>
 				<Typography variant="subtitle1">Title</Typography>
-				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
+				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Enter the title of the homework
 				</Typography>
 				<TextField
 					fullWidth
-					sx={{mb: 2, mt: 1}}
+					sx={{ mb: 2, mt: 1 }}
 					value={title}
-					InputProps={{style: {fontWeight: 300}}}
+					InputProps={{ style: { fontWeight: 300 } }}
 					onChange={(evt) => setTitle(evt.target.value)}
 				/>
 				<Typography variant="subtitle1">Class</Typography>
-				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
+				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Choose the class
 				</Typography>
 				<Autocomplete
 					disablePortal
 					clearIcon
+					options={classes}
 					value={selectedClass}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
 						setSelectedClass(newValue);
 					}}
 					renderInput={(params) => (
-						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
+						<TextField {...params} sx={{ mb: 2, mt: 1 }} fullWidth />
 					)}
 				/>
 				<Typography variant="subtitle1">Description</Typography>
-				<Typography color="textSecondary" variant="body2" sx={{mb: 1}}>
+				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Enter a description concerning the homework
 				</Typography>
-				<Box sx={{mb: 3}}>
+				<Box sx={{ mb: 3 }}>
 					<Editor
 						editorState={editorState}
 						onEditorStateChange={handleEditorChange}
 						wrapperClassName={styles.wrapperClass}
 						editorClassName={styles.editorClass}
 						toolbarClassName={styles.toolbarClass}
-						value = {description}
+						value={description}
 						toolbar={{
 							options: [
 								"inline",
@@ -202,28 +211,28 @@ const EditHomeworkForm = (props) => {
 								"history",
 							],
 						}}
-						
+
 					/>
 				</Box>
 				<Typography variant="subtitle1">Words</Typography>
-				<Typography color="textSecondary" variant="body2" sx={{mb: 3}}>
+				<Typography color="textSecondary" variant="body2" sx={{ mb: 3 }}>
 					Set the collection of words to figure in the assignment
 				</Typography>
 				{/**************************************Autocomplete that will contain the students that will be passed to the box-Display***********************************************************/}
 				<Autocomplete
 					disablePortal
 					multiple
-					value={words}
+
 					options={words}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
 						setWordsArray(newValue);
 					}}
 					renderInput={(params) => (
-						<TextField {...params} sx={{mb: 3}} fullWidth />
+						<TextField {...params} sx={{ mb: 3 }} fullWidth />
 					)}
 				/>
-				<Typography sx={{mt: 0}} variant="subtitle1">
+				<Typography sx={{ mt: 0 }} variant="subtitle1">
 					Due Date & Time
 				</Typography>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -244,12 +253,12 @@ const EditHomeworkForm = (props) => {
 						/>
 					</Stack>
 				</LocalizationProvider>
-				<Typography sx={{mt: 3}} variant="subtitle1">
+				<Typography sx={{ mt: 3 }} variant="subtitle1">
 					Assignment Point Value
 				</Typography>
-				<Box sx={{pl: 2.5, mt: 1}}>
+				<Box sx={{ pl: 2.5, mt: 1 }}>
 					<Slider
-						sx={{width: "95%"}}
+						sx={{ width: "95%" }}
 						aria-label="Temperature"
 						defaultValue={0}
 						value={score}
@@ -265,7 +274,7 @@ const EditHomeworkForm = (props) => {
 					/>
 				</Box>
 			</Box>
-			<Box sx={{mt: 4}}>
+			<Box sx={{ mt: 4 }}>
 				<LoadingButton
 					loading={isLoading}
 					onClick={handleSave}
@@ -273,7 +282,7 @@ const EditHomeworkForm = (props) => {
 				>
 					Save
 				</LoadingButton>
-				<Button onClick={onCancel} sx={{ml: 2}}>
+				<Button onClick={onCancel} sx={{ ml: 2 }}>
 					Cancel
 				</Button>
 			</Box>
