@@ -1,5 +1,5 @@
-import {format} from "date-fns";
-import {useState, useEffect} from "react";
+import { format } from "date-fns";
+import { useState, useEffect } from "react";
 import {
 	Box,
 	Card,
@@ -10,16 +10,16 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
-import {Scrollbar} from "../scrollbar";
-import {MoreMenu} from "../more-menu class";
-import {useAuth} from "../../hooks/use-auth";
-import {db} from "../../lib/firebase";
-import {useRouter} from "next/router";
+import { Scrollbar } from "../scrollbar";
+import { MoreMenu } from "../more-menu class";
+import { useAuth } from "../../hooks/use-auth";
+import { db } from "../../lib/firebase";
+import { useRouter } from "next/router";
 
 const Content = (props) => {
 	const router = useRouter();
 	const classId = router.query.cl;
-	const {user} = useAuth();
+	const { user } = useAuth();
 	const [homeworks, setHomeworks] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -62,7 +62,7 @@ const Content = (props) => {
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);
 	};
-	async function deleteHomework(homework_id){
+	async function deleteHomework(homework_id) {
 		await firebase
 			.firestore()
 			.collection('assignments')
@@ -73,13 +73,13 @@ const Content = (props) => {
 
 
 	};
-	
+
 	if (isLoaded) {
 		return (
 			<>
 				<Card>
 					<Scrollbar>
-						<Table sx={{minWidth: 600}}>
+						<Table sx={{ minWidth: 600 }}>
 							<TableHead>
 								<TableRow>
 									<TableCell>Name</TableCell>
@@ -88,18 +88,18 @@ const Content = (props) => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{homeworks.map((item,pos) => (
+								{homeworks.map((item, pos) => (
 									<TableRow
 										key={pos}
 										sx={{
 											"&:last-child td": {
 												border: 0,
 											},
-											"&:hover": {backgroundColor: 'rgba(255,255,255, 0.08)'},
+											"&:hover": { backgroundColor: 'rgba(255,255,255, 0.08)' },
 										}}
 									>
 										<TableCell
-											sx={{cursor: "pointer"}}
+											sx={{ cursor: "pointer" }}
 											onClick={() => {
 												seeHomework(item.id);
 											}}
@@ -109,7 +109,7 @@ const Content = (props) => {
 											</Typography>
 										</TableCell>
 										<TableCell
-											sx={{cursor: "pointer"}}
+											sx={{ cursor: "pointer" }}
 											onClick={() => {
 												seeHomework(item.id);
 											}}
@@ -127,6 +127,13 @@ const Content = (props) => {
 												padding: 0,
 											}}
 										>
+											<Tooltip title="Delete">
+												<IconButton aria-label="delete">
+													<DeleteIcon onClick={() => {
+														deleteHomework(item.id);
+													}} />
+												</IconButton>
+											</Tooltip>
 											<MoreMenu
 												options={[
 													{
