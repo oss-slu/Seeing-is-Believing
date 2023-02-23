@@ -1,14 +1,19 @@
+import {useState} from 'react';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import {Box, Button,FormHelperText, TextField } from '@mui/material';
+import {Box, Button,FormHelperText, TextField,Alert } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
+import firebase from 'firebase/app';
+
 
 export const FirebaseLogin = (props) => {
   const isMounted = useMounted();
   const router = useRouter();
-  const { signInWithEmailAndPassword,getUser} = useAuth();
+  const [isUserAuthenticated, setIsUserAuthenticated] = useState(true)
+
+  const { signInWithEmailAndPassword,logout} = useAuth();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -28,18 +33,36 @@ export const FirebaseLogin = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-			await signInWithEmailAndPassword(
-				values.email,
-				values.password
-			).then(async () => {
-				if (isMounted()) {
-					const returnUrl = router.query.returnUrl || "/student";
-					//router.push('returnUrl');
-          router.push("/")
-				}
-			});
+        const user= await signInWithEmailAndPassword(
+          values.email,
+          values.password
+        ).then(async (authUser) => {
+          
+          const user=firebase.auth().currentUser;
+         
+          if(user.emailVerified){
+            if (isMounted()) {
+              const returnUrl = router.query.returnUrl || "/student";
+              //router.push('returnUrl');
+              router.push("/")
+              
+            }
+          
+    
+          }else{
+            
+            await logout();
+            await user.sendEmailVerification();
+            setIsUserAuthenticated(false);
+            helpers.setStatus({success: false});
+            helpers.setSubmitting(false);
+  
+  
+          }
+        });
 
-		} catch (err) {
+        }
+			 catch (err) {
 			if (isMounted()) {
 				helpers.setStatus({success: false});
 				helpers.setErrors({submit: err.message});
@@ -96,6 +119,7 @@ export const FirebaseLogin = (props) => {
           >
             Log In
           </Button>
+          {!isUserAuthenticated && <Alert severity="warning">Your Account is not Verified! Click the Link sent to your Email</Alert>}
         </Box>
       </form>
     </div>
