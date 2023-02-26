@@ -18,7 +18,6 @@ const Homework = () => {
 
 	const {user} = useAuth()
 	const [fetchedClasses,setFetchedClasses]=useState(null)
-	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
 
 

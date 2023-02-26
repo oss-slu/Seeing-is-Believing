@@ -35,8 +35,6 @@ const StepIcon = (props) => {
 };
 
 const LanguagePage = () => {
-	const [activeStep, setActiveStep] = useState(0);
-	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 

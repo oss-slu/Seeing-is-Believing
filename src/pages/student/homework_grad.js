@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	//IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
@@ -143,14 +142,6 @@ const Page = () => {
 		setStudentId(user.id);
 		fetchHomeworkDetails();
 	}, []);
-
-	/* 	useEffect(() => {
-		if (!mdUp) {
-			setIsSidebarOpen(false);
-		} else {
-			setIsSidebarOpen(true);
-		}
-	}, [mdUp]); */
 
 	const handleCloseSidebar = () => {
 		setIsSidebarOpen(false);

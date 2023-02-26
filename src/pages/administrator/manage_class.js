@@ -14,8 +14,6 @@ import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
 
 const ClassPage = () => {
-	const [activeStep, setActiveStep] = useState(0);
-	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 	const [terms, setTerms] = useState([]);

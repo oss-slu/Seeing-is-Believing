@@ -28,10 +28,8 @@ import {useAuth} from "../../hooks/use-auth.js";
 import {Modal1 as HelpForm} from '../../components/modals/modal-1'
 
 const Overview = () => {
-	const [displayBanner, setDisplayBanner] = useState(true);
 	const {user} = useAuth()
 	const [fetchedClasses,setFetchedClasses]=useState(null)
-	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
 	const [showHelpForm,setShowHelpForm]=useState(false);
 

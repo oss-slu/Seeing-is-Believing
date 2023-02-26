@@ -114,8 +114,6 @@ const Practice = () => {
 					colorMap: COLORMAPS.hsv,
 					forceDecode: true,
 					windowFunc: "bartlettHann",
-					//windowFunc: 'cosine',
-					//windowFunc: 'lanczoz',
 				}),
 			],
 		});
@@ -138,8 +136,6 @@ const Practice = () => {
 						colorMap: COLORMAPS.hsv,
 						forceDecode: true,
 						windowFunc: "bartlettHann",
-						//windowFunc: 'cosine',
-						//windowFunc: 'lanczoz',
 					}),
 				],
 			});
@@ -166,8 +162,6 @@ const Practice = () => {
 						colorMap: COLORMAPS.hsv,
 						forceDecode: true,
 						windowFunc: "bartlettHann",
-						//windowFunc: 'cosine',
-						//windowFunc: 'lanczoz',
 					}),
 				],
 			});

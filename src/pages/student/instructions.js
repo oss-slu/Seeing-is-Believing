@@ -16,24 +16,16 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-import HomeworkCard from "../../components/dashboard/overview/homework-card";
-import OverviewClasses from "../../components/student/home/OverviewClasses";
-import YoutubeEmbed from "../../components/student/instructions/video";
 import {ExternalLink as ExternalLinkIcon} from "../../icons/external-link";
 import {InformationCircleOutlined as InformationCircleOutlinedIcon} from "../../icons/information-circle-outlined";
-import homeworkImg from "../../assets/images/background1.jpg";
-import practiceImg from "../../assets/images/background2.jpg";
-import gradesImg from "../../assets/images/background3.jpg";
 //import {gtm} from "../../lib/gtm";
 import {db} from "../../lib/firebase";
 import {useAuth} from "../../hooks/use-auth.js"
 import {Modal1 as HelpForm} from '../../components/modals/modal-1'
 
 const Overview = () => {
-	const [displayBanner, setDisplayBanner] = useState(true);
 	const {user} = useAuth()
 	const [fetchedClasses,setFetchedClasses]=useState(null)
-	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
 	const [showHelpForm,setShowHelpForm]=useState(false);
 	const youtubeStyle={
