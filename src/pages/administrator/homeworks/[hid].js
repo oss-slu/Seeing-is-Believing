@@ -129,8 +129,6 @@ const Practice = () => {
 		setFeedback("");
 		setHasBeenMarked(false);
 		await fetchHomeworkDetails();
-		/* 
-		 setView("practice"); */
 	};
 
 	useEffect(() => {
@@ -153,19 +151,6 @@ const Practice = () => {
 			setView("practice");
 		}
 	}, [words]);
-
-	/*useEffect(() => {
-		gtm.push({ event: "page_view" });
-		//first time rendered component -->fetch the data
-	}, []);*/
-
-	/* 	useEffect(() => {
-		if (!mdUp) {
-			setIsSidebarOpen(false);
-		} else {
-			setIsSidebarOpen(true);
-		}
-	}, [mdUp]); */
 
 	const handleCloseSidebar = () => {
 		setIsSidebarOpen(false);
@@ -306,7 +291,7 @@ const Practice = () => {
 };
 
 const SubSection = (props) => {
-	const { answer, grading, position } = props;
+	const { answer } = props;
 	const specMainContainerRef = useRef(null);
 	const specMainRef = useRef(null);
 	const specMainNonNativeContainerRef = useRef(null);
@@ -338,8 +323,6 @@ const SubSection = (props) => {
 						colorMap: COLORMAPS.hsv,
 						forceDecode: true,
 						windowFunc: "bartlettHann",
-						//windowFunc: 'cosine',
-						//windowFunc: 'lanczoz',
 					}),
 				],
 			});
@@ -365,8 +348,6 @@ const SubSection = (props) => {
 						colorMap: COLORMAPS.hsv,
 						forceDecode: true,
 						windowFunc: "bartlettHann",
-						//windowFunc: 'cosine',
-						//windowFunc: 'lanczoz',
 					}),
 				],
 			});
@@ -429,8 +410,6 @@ const SubSection = (props) => {
 					colorMap: COLORMAPS.hsv,
 					forceDecode: true,
 					windowFunc: "bartlettHann",
-					//windowFunc: 'cosine',
-					//windowFunc: 'lanczoz',
 				}),
 			],
 		});
