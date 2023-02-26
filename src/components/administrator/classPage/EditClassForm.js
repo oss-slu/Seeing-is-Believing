@@ -1,15 +1,5 @@
 import {useState} from "react";
 import PropTypes from "prop-types";
-import {
-	Box,
-	Button,
-	TextField,
-    Select,
-    MenuItem,
-	Typography,
-	Autocomplete
-} from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
 import {db} from '../../../lib/firebase'
 import toast from 'react-hot-toast';
 

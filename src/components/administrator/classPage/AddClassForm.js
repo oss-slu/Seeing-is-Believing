@@ -1,27 +1,13 @@
 import {useState} from "react";
 import {useRouter} from 'next/router';
 import PropTypes from "prop-types";
-import {
-	Box,
-	Button,
-	Chip,
-	InputAdornment,
-	TextField,
-    Select,
-    MenuItem,
-	Typography,
-	Autocomplete
-} from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
-import {db,storage} from '../../../lib/firebase'
+import {db} from '../../../lib/firebase'
 import toast from 'react-hot-toast';
-import { v4 as uuidv4 } from 'uuid';
 import {useAuth} from '../../../hooks/use-auth'
 
 const AddClassForm = (props) => {
 	
 	const {user} =useAuth()
-	const router=useRouter()
 	const {languages,terms,students,stepBack,...other} = props;
 	const [className,setClassName]=useState("")
 	const [arrayStudents,setArrayStudents]=useState([]);

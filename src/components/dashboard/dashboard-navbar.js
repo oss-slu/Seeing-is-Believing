@@ -16,7 +16,6 @@ import { Menu as MenuIcon } from '../../icons/menu';
 import { AccountPopover } from './account-popover';
 import { NotificationsPopover } from './notifications-popover';
 import { Bell as BellIcon } from '../../icons/bell';
-import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Search as SearchIcon } from '../../icons/search';
 import { Users as UsersIcon } from '../../icons/users';
 import {useAuth} from '../../hooks/use-auth'

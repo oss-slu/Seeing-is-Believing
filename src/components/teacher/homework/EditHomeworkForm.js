@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { EditorState } from "draft-js";
 import { convertToHTML } from "draft-convert";
@@ -7,11 +6,7 @@ import PropTypes from "prop-types";
 import {
 	Box,
 	Button,
-	Chip,
-	InputAdornment,
 	TextField,
-	Select,
-	MenuItem,
 	Typography,
 	Autocomplete,
 	Slider,
@@ -20,13 +15,10 @@ import {
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TimePicker from '@mui/lab/TimePicker';
-import DateTimePicker from '@mui/lab/DateTimePicker';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LoadingButton from "@mui/lab/LoadingButton";
 import { db } from "../../../lib/firebase";
 import toast from "react-hot-toast";
-import { v4 as uuidv4 } from "uuid";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "../../../styles/rte.module.css";
 
@@ -36,14 +28,12 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	//console.log("props:", props.class)
 	const { languages, classes, teacher, stepBack, ...other } = props;
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
 	const [dueDate, setDueDate] = useState(props.date);
 	const [wordsArray, setWordsArray] = useState([]);
 	const [words, setWords] = useState(props.words);
-	//const [classes, setClass] = useState(props.class);
 	const [students, setStudents] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedClass, setSelectedClass] = useState(props.selectedClass);
@@ -70,7 +60,6 @@ const EditHomeworkForm = (props) => {
 			setIsLoading(true);
 			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
 			await fetchStudents();
-			//const collection = await db.collection("assignments");
 			const document = await db.collection("assignments").doc(props.id);
 			await document
 				.update({
@@ -81,16 +70,6 @@ const EditHomeworkForm = (props) => {
 					dueDate: date,
 					score,
 				});
-			/*await collection.add({
-				title,
-				description,
-				class: selectedClass.id,
-				words: wordsIds,
-				dueDate: date,
-				score,
-				students: students,
-				studentsAssignements: [],
-			});*/
 			setIsLoading(false);
 			toast.success("Homework saved successfully!");
 			initialize();
@@ -139,8 +118,6 @@ const EditHomeworkForm = (props) => {
 		setDescription(description);
 		setScore(score);
 		setDueDate(dueDate);
-		//setClass(classes);
-		//setWordsArray([wordsArray]);
 		setStudents([]);
 		setSelectedClass(selectedClass);
 		setIsLoading(false);

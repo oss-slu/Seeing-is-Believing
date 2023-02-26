@@ -59,16 +59,6 @@ const getSectionsTeacher = (t) => [
 				path: "/teacher",
 				icon: <HomeIcon fontSize="small" />,
 			},
-			/*{
-				title: t("Add a Langage"),
-				path: "/teacher/language",
-				icon: <LanguageIcon fontSize="small" />,
-			},
-			{
-				title: t("Manage Words"),
-				path: "/teacher/word",
-				icon: <SaveIcon fontSize="small" />,
-			},*/
 			{
 				title: t("Homework"),
 				path: "/teacher/homework_portal",
@@ -115,11 +105,6 @@ const getSectionsAdministrator = (t) => [
 				path: "/administrator/word",
 				icon: <SaveIcon fontSize="small" />,
 			},
-			/*{
-				title: t("Homework"),
-				path: "/administrator/homework_portal",
-				icon: <DocumentIcon fontSize="small" />,
-			},*/
 			{
 				title: t("More"),
 				path: "/administrator/word-list",
@@ -129,14 +114,6 @@ const getSectionsAdministrator = (t) => [
 						title: t("Words Library"),
 						path: '/administrator/wordlist'
 					},
-					/*{
-						title: t('Manage Classes'),
-						path: '/administrator/manage_class'
-					},*/
-					/*{
-						title: t('Add Homework'),
-						path: '/administrator/addHomework'
-					},*/
 				]
 			},
 		]
@@ -152,7 +129,6 @@ export const DashboardSidebar = (props) => {
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
 		noSsr: true,
 	});
-	//const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
 	const sections = useMemo(() => {
 		if (user.status === "Student") {
 			return getSectionsStudent(t)
@@ -186,7 +162,6 @@ export const DashboardSidebar = (props) => {
 
 	useEffect(
 		handlePathChange,
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[router.isReady, router.asPath]
 	);
 
