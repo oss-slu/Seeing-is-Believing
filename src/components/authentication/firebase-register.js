@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {useRouter} from "next/router";
 import * as Yup from "yup";
 import {useFormik} from "formik";
@@ -14,6 +15,7 @@ import {
 	InputLabel,
 	Select,
 	FormControl,
+	Alert,
 } from "@mui/material";
 import {useAuth} from "../../hooks/use-auth";
 import {useMounted} from "../../hooks/use-mounted";
@@ -24,6 +26,8 @@ export const FirebaseRegister = (props) => {
 	const isMounted = useMounted();
 	const router = useRouter();
 	const {createUserWithEmailAndPassword, getAuth} = useAuth();
+	const [isUserCreated, setIsUserCreated] = useState(false)
+
 
 	const formik = useFormik({
 		initialValues: {
@@ -86,6 +90,8 @@ export const FirebaseRegister = (props) => {
 						console.log(err.code);
 					});
 				if (userCreated) {
+					setIsUserCreated(true);
+					await userCreated.sendEmailVerification();
 					await db.collection("users").add({
 						email: values.email,
 						firstName: values.firstName,
@@ -93,10 +99,12 @@ export const FirebaseRegister = (props) => {
 						status: values.status,
 						organization: values.organizations,
 					});
+					
 				}
 				if (isMounted()) {
-					const returnUrl = router.query.returnUrl || "/authentication/login";
-					router.push(returnUrl);
+					setTimeout(() => {const returnUrl = router.query.returnUrl || "/authentication/login";
+					router.push(returnUrl);}, 9000);
+					
 				}
 			} catch (err) {
 				if (isMounted()) {
@@ -321,6 +329,9 @@ export const FirebaseRegister = (props) => {
 					>
 						Register
 					</Button>
+					<div>
+					{isUserCreated && <Alert severity="info">Email verification link has been sent!</Alert>}
+					</div>
 				</Box>
 			</form>
 		</div>
