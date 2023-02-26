@@ -71,13 +71,9 @@ const Practice = () => {
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
-		noSsr: false,
-	});
 	//Custom hooks
 	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
 	const [hasBeenMarked, setHasBeenMarked] = useState(false);
-	const [answer, setAnswer] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [homework, setHomework] = useState(null);
 	const [feedback, setFeedback] = useState("");
