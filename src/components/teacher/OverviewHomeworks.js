@@ -146,7 +146,7 @@ const Content = (props) => {
 													},
 													{
 														display: "Edit Homework",
-														link: `/teacher/homeworks/${item.id}`,
+														link: `/teacher/editHomework/${item.id}`,
 													}
 												]}
 											/>
