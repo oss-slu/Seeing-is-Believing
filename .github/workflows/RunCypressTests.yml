@@ -1,0 +1,30 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-localhost:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Localhost
+        run: npm run dev
+  run-Cypress:
+    runs-on: ubuntu-latest
+    needs: run-localhost
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: npm install
+      - name: Wait for localhost
+        run: npx wait-on http://localhost:3000
+      - name: Run Cypress Tests
+        run: npx cypress run
+
+
