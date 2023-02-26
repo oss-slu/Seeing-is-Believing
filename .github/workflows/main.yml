@@ -21,8 +21,8 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
         
-      - name: Run Localhost
-        run: npm run dev
+      - name: Run Localhost and cypress
+        run: npm run dev & npx cypress run
         
         
   run-Cypress:
