@@ -90,11 +90,11 @@ export const FirebaseRegister = (props) => {
 					.catch((err) => {
 						if (err.code == "auth/email-already-in-use") {
 							setEmailInUse(true);
-							console.log(userCreated);
+							
 							
 							
 						}
-						console.log(err.code);
+						
 					});
 				if (userCreated) {
 					setIsUserCreated(true);

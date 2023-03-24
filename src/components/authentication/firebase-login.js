@@ -39,6 +39,7 @@ export const FirebaseLogin = (props) => {
         ).then(async (authUser) => {
           
           const user=firebase.auth().currentUser;
+  
          
           if(user.emailVerified){
             if (isMounted()) {
