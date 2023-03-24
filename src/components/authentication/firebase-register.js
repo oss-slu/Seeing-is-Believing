@@ -27,6 +27,7 @@ export const FirebaseRegister = (props) => {
 	const router = useRouter();
 	const {createUserWithEmailAndPassword, getAuth} = useAuth();
 	const [isUserCreated, setIsUserCreated] = useState(false)
+	const [emailInUse, setEmailInUse] = useState(false)
 
 
 	const formik = useFormik({
@@ -87,6 +88,12 @@ export const FirebaseRegister = (props) => {
 						return res.user;
 					})
 					.catch((err) => {
+						if (err.code == "auth/email-already-in-use") {
+							setEmailInUse(true);
+							console.log(userCreated);
+							
+							
+						}
 						console.log(err.code);
 					});
 				if (userCreated) {
@@ -102,8 +109,10 @@ export const FirebaseRegister = (props) => {
 					
 				}
 				if (isMounted()) {
-					setTimeout(() => {const returnUrl = router.query.returnUrl || "/authentication/login";
-					router.push(returnUrl);}, 9000);
+					if (userCreated){
+						setTimeout(() => {const returnUrl = router.query.returnUrl || "/authentication/login";
+						router.push(returnUrl);}, 9000);
+					}
 					
 				}
 			} catch (err) {
@@ -331,6 +340,7 @@ export const FirebaseRegister = (props) => {
 					</Button>
 					<div>
 					{isUserCreated && <Alert severity="info">Email verification link has been sent!</Alert>}
+					{emailInUse && <Alert severity="warning">Email already in use.</Alert>}
 					</div>
 				</Box>
 			</form>
