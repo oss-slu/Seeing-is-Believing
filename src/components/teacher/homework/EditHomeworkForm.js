@@ -37,18 +37,18 @@ const Editor = dynamic(
 
 const EditHomeworkForm = (props) => {
 	//console.log("props:", props.class)
-	const { languages, classes, teacher, stepBack, ...other } = props;
-	const [title, setTitle] = useState(props.title);
-	const [score, setScore] = useState(props.score);
-	const [dueDate, setDueDate] = useState(props.date);
+	const { languages, classes, teacher, words, stepBack, ...other } = props;
+	const [title, setTitle] = useState({});
+	const [score, setScore] = useState({});
+	const [dueDate, setDueDate] = useState({});
 	const [wordsArray, setWordsArray] = useState([]);
-	const [words, setWords] = useState(props.words);
+	const [word, setWords] = useState();
 	//const [classes, setClass] = useState(props.class);
 	const [students, setStudents] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedClass, setSelectedClass] = useState(props.selectedClass);
-	const [date, setDate] = useState(props.date);
-	const [description, setDescription] = useState(props.description);
+	const [date, setDate] = useState({});
+	const [description, setDescription] = useState({});
 	//Rich text editor
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
@@ -81,16 +81,7 @@ const EditHomeworkForm = (props) => {
 					dueDate: date,
 					score,
 				});
-			/*await collection.add({
-				title,
-				description,
-				class: selectedClass.id,
-				words: wordsIds,
-				dueDate: date,
-				score,
-				students: students,
-				studentsAssignements: [],
-			});*/
+
 			setIsLoading(false);
 			toast.success("Homework saved successfully!");
 			initialize();
@@ -122,13 +113,20 @@ const EditHomeworkForm = (props) => {
 		}
 		setTitle(props.title);
 		setDescription(props.description);
-		setWords(props.words);
+		/*const wordsArray=[];
+		words.forEach(word=>{
+			if(words.includes(word.id)){
+				wordsArray.push(word);
+			}
+		})
+		setWords(wordsArray);*/
+		setWords(words);
+		console.log("words", words);
 		setDate(props.date);
 		setSelectedClass(props.setSelectedClass);
 		setScore(props.score);
+		console.log("description",description);
 	}, [props.setSelectedClass, props.title, props.description, props.words, props.date, props.score]);
-
-
 
 	const handleChange = (newValue) => {
 		setDate(newValue);
@@ -146,7 +144,6 @@ const EditHomeworkForm = (props) => {
 		setIsLoading(false);
 		setWords(words);
 		setDate(date);
-		console.log("selected class: ", date)
 	};
 
 	const onCancel = () => {
@@ -170,7 +167,8 @@ const EditHomeworkForm = (props) => {
 					sx={{ mb: 2, mt: 1 }}
 					value={title}
 					InputProps={{ style: { fontWeight: 300 } }}
-					onChange={(evt) => setTitle(evt.target.value)}
+					//onChange={(evt) => setTitle(evt.target.value)}
+					onChange={(evt, newValue) => chosenHomework(newValue)}
 				/>
 				<Typography variant="subtitle1">Class</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
@@ -223,11 +221,11 @@ const EditHomeworkForm = (props) => {
 				<Autocomplete
 					disablePortal
 					multiple
-
+					value={words}
 					options={words}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
-						setWordsArray(newValue);
+						console.log("newValue", newValue);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{ mb: 3 }} fullWidth />
