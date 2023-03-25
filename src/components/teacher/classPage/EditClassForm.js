@@ -19,7 +19,7 @@ const EditClassForm = (props) => {
 	const [arrayStudents,setArrayStudents]=useState([]);
     const [isLoading,setIsLoading]=useState(false);
     const [selectedLanguage,setSelectedLanguage]=useState({})	
-    const [selectedTerm,setSelectedTerm]=useState({})	
+    const [selectedTerm,setSelectedTerm]=useState(props.terms)	
 	const [selectedClass,setSelectedClass]=useState(null)
 
 	const handleSaveChanges=async () =>{
@@ -49,6 +49,7 @@ const EditClassForm = (props) => {
 
 	const handleChooseClass=(chosenClass) =>{
 		setSelectedLanguage(chosenClass.language);
+		console.log("chosenClass.language", chosenClass.language);
 		setSelectedTerm(chosenClass.term)
 		
 		//Map through students to get additional informations

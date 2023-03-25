@@ -111,14 +111,20 @@ const EditHomeworkForm = (props) => {
 
 	const chosenHomework = (chosenHomework) =>{
 		setAssignment(chosenHomework);
-		console.log("chosenHomework", chosenHomework);
 		setTitle(chosenHomework.title);
 		setScore(chosenHomework.score);
 		setDescription(chosenHomework.description);
-		setDueDate(chosenHomework.dueDate);
+		const date = new Date(chosenHomework.dueDate.seconds * 1000);
+		//console.log("date2", date);
+		setDueDate(date);
+		//console.log("date", chosenHomework.dueDate);
+
+		/*Array.from(classes).forEach(class1=>{
+			if(chosenHomework.class.includes(class1.id)){
+				setSelectedClass(class1);
+			}
+		})*/
 		setSelectedClass(chosenHomework.class);
-		console.log("chosenHomework date", chosenHomework.class);
-		setDescription(chosenHomework.description);
 
 		/*if(selectedClass){
 			fetchStudents();
@@ -148,13 +154,14 @@ const EditHomeworkForm = (props) => {
 			}
 		})
 		//setWords(wordsArray);
-		setDueDate(date);
-		setSelectedClass(props.setSelectedClass);
+		//setDueDate(date);
+		//setSelectedClass(props.setSelectedClass);
 		setScore(props.score);
 	}, [props.setSelectedClass, props.title, props.description, props.words, props.date, props.score]);
 
 	const handleChange = (newValue) => {
 		setDueDate(newValue);
+		console.log("newValue", newValue);
 	};
 
 	const initialize = () => {
@@ -162,7 +169,7 @@ const EditHomeworkForm = (props) => {
 		//setTitle(title);
 		//setDescription(description);
 		//setScore(score);
-		setDueDate(date);
+		//setDueDate(date);
 		//setClass(classes);
 		//setWordsArray([wordsArray]);
 		setStudents([]);
@@ -284,7 +291,7 @@ const EditHomeworkForm = (props) => {
 						<DesktopDatePicker
 							label="Due Date"
 							inputFormat="MM/dd/yyyy"
-							value={date}
+							value={dueDate}
 							onChange={handleChange}
 							
 							renderInput={(params) => <TextField {...params} />}
@@ -292,9 +299,8 @@ const EditHomeworkForm = (props) => {
 
 						<TimePicker
 							label="Due Time"
-							value={date}
+							value={dueDate}
 							onChange={handleChange}
-							
 							renderInput={(params) => <TextField {...params} />}
 						/>
 					</Stack>

@@ -48,7 +48,11 @@ const Page = () => {
 					setTitle(results.title);
 					setDescription(results.description);
 					setScore(results.score);
-					setDate(results.dueDate);
+					const date = new Date(results.dueDate.seconds * 1000);
+					//console.log("year", year);
+					//console.log("date", results.dueDate);
+					setDate(date);
+					//console.log("results.dueDate", results.dueDate);
 					setClass(results.class);
 				});
 		} catch (err) {
