@@ -37,7 +37,7 @@ const Editor = dynamic(
 
 const EditHomeworkForm = (props) => {
 	//console.log("props:", props.class)
-	const { languages, classes, teacher, words, stepBack, ...other } = props;
+	const { languages, classes, teacher, words, stepBack,assignments, ...other } = props;
 	const [title, setTitle] = useState({});
 	const [score, setScore] = useState({});
 	const [dueDate, setDueDate] = useState({});
@@ -107,25 +107,30 @@ const EditHomeworkForm = (props) => {
 			});
 	};
 
+	const chosenHomework = (chosenHomework) =>{
+		setTitle(chosenHomework.title);
+		if(selectedClass){
+			fetchStudents();
+		}
+		setDescription(chosenHomework.description);
+	}
+
 	useEffect(() => {
 		if (selectedClass) {
 			fetchStudents();
 		}
 		setTitle(props.title);
 		setDescription(props.description);
-		/*const wordsArray=[];
-		words.forEach(word=>{
+		const wordsArray=[];
+		Array.from(words).forEach(word=>{         //Need to fix this array to get the correct words
 			if(words.includes(word.id)){
 				wordsArray.push(word);
 			}
 		})
-		setWords(wordsArray);*/
-		setWords(words);
-		console.log("words", words);
+		setWords(wordsArray);
 		setDate(props.date);
 		setSelectedClass(props.setSelectedClass);
 		setScore(props.score);
-		console.log("description",description);
 	}, [props.setSelectedClass, props.title, props.description, props.words, props.date, props.score]);
 
 	const handleChange = (newValue) => {
@@ -158,6 +163,24 @@ const EditHomeworkForm = (props) => {
 	return (
 		<div {...other}>
 			<Box>
+			<Typography variant="subtitle1">Assignments</Typography>
+				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
+					Select Homework
+				</Typography>
+				<Autocomplete
+					disablePortal
+					clearIcon
+					options={assignments}
+					value={selectedClass}
+					getOptionLabel={(option) => option.title}
+					onChange={(evt, newValue) => {
+						setSelectedClass(newValue);
+					}}
+					renderInput={(params) => (
+						<TextField {...params} sx={{ mb: 2, mt: 1 }} fullWidth />
+					)}
+				/>
+				
 				<Typography variant="subtitle1">Title</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Enter the title of the homework
@@ -168,7 +191,7 @@ const EditHomeworkForm = (props) => {
 					value={title}
 					InputProps={{ style: { fontWeight: 300 } }}
 					//onChange={(evt) => setTitle(evt.target.value)}
-					onChange={(evt, newValue) => chosenHomework(newValue)}
+					onChange={(evt, newValue) => setTitle(newValue)}
 				/>
 				<Typography variant="subtitle1">Class</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
@@ -225,6 +248,7 @@ const EditHomeworkForm = (props) => {
 					options={words}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
+						setWords(newValue);
 						console.log("newValue", newValue);
 					}}
 					renderInput={(params) => (

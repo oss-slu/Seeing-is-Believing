@@ -32,6 +32,7 @@ const Page = () => {
 	const [date, setDate] = useState(null);
 	const [studentId, setStudent] = useState(null);
 	const [className, setClassName] = useState(null);
+	const [assignments, setAssignments] = useState(null);
 	
 
 	const fetchHomeworkDetails = async () => {
@@ -71,6 +72,20 @@ const Page = () => {
 		
 	}*/
 
+	const fetchDataAssignments = async () =>{
+		const collection = await db.collection("assignments");
+		let results = [];
+		await collection.get().then(snapshot=>{
+			snapshot.docs.forEach(doc=>{
+				const newAssignment={id:doc.id,...doc.data()}
+				results.push(newAssignment);
+			})
+		})
+		setAssignments(results);
+		//console.log("assignments",assignments);
+
+	}
+
 	const fetchDataClasses=async () =>{
 		const collection= await db.collection("classes")
 		let results=[];
@@ -81,6 +96,7 @@ const Page = () => {
 			})
 		})
 		setClass(results);
+		//console.log("classes",classes);
 	}
 	const fetchDataLanguages = async () => {
 		const collection = await db.collection("languages");
@@ -112,6 +128,7 @@ const Page = () => {
 		fetchDataLanguages();
 		fetchDataWords();
 		fetchDataClasses();
+		fetchDataAssignments();
 	}, []);
 	
 		const handleChange = (evt, value) => {
@@ -191,7 +208,8 @@ const Page = () => {
 												description={description}
 												score={score}
 												date={date}
-												id={homeworkId}
+												homeworkId={homeworkId}
+												assignments={assignments}
 											/>
 										</Grid>
 										<Grid>

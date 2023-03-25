@@ -49,18 +49,16 @@ const EditClassForm = (props) => {
 
 	const handleChooseClass=(chosenClass) =>{
 		setSelectedLanguage(chosenClass.language);
-		console.log("language",chosenClass.language);
 		setSelectedTerm(chosenClass.term)
 		
 		//Map through students to get additional informations
 		const studentsInCLass=[];
 		students.forEach(student=>{
 			if(chosenClass.students.includes(student.id)){
-				  studentsInCLass.push(student)
+			      console.log("id", student.id);	  
+				  studentsInCLass.push("test",chosenClass.teacher);
 		}})
-		
 		setArrayStudents(studentsInCLass)
-		console.log(studentsInCLass);
 		setSelectedClass(chosenClass);
 		
 	}
@@ -88,7 +86,7 @@ const EditClassForm = (props) => {
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
 						handleChooseClass(newValue);
-						console.log(newValue);
+						console.log("newValue", newValue);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
