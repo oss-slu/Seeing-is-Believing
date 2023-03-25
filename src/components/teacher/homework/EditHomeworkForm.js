@@ -37,18 +37,20 @@ const Editor = dynamic(
 
 const EditHomeworkForm = (props) => {
 	//console.log("props:", props.class)
-	const { languages, classes, teacher, words, stepBack,assignments, ...other } = props;
+	const { languages, date,classes, teacher, words, stepBack,assignments, ...other } = props;
 	const [title, setTitle] = useState({});
 	const [score, setScore] = useState({});
-	const [dueDate, setDueDate] = useState({});
+	//const [dueDate, setDueDate] = useState({});
 	const [wordsArray, setWordsArray] = useState([]);
-	const [word, setWords] = useState();
+	const [word, setWords] = useState([]);
 	//const [classes, setClass] = useState(props.class);
 	const [students, setStudents] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [selectedClass, setSelectedClass] = useState(props.selectedClass);
-	const [date, setDate] = useState({});
+	const [dueDate, setDueDate] = useState({});
 	const [description, setDescription] = useState({});
+	const [assignment, setAssignment] = useState({});
+
 	//Rich text editor
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
@@ -69,7 +71,7 @@ const EditHomeworkForm = (props) => {
 		try {
 			setIsLoading(true);
 			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
-			await fetchStudents();
+			//await fetchStudents();
 			//const collection = await db.collection("assignments");
 			const document = await db.collection("assignments").doc(props.id);
 			await document
@@ -92,7 +94,7 @@ const EditHomeworkForm = (props) => {
 			toast.error("Something went wrong!");
 		}
 	};
-	const fetchStudents = async () => {
+	/*const fetchStudents = async () => {
 		const collection = db.collection("classes");
 		await collection
 			.doc(selectedClass.id)
@@ -105,20 +107,38 @@ const EditHomeworkForm = (props) => {
 				setStudents(students);
 
 			});
-	};
+	};*/
 
 	const chosenHomework = (chosenHomework) =>{
+		setAssignment(chosenHomework);
+		console.log("chosenHomework", chosenHomework);
 		setTitle(chosenHomework.title);
-		if(selectedClass){
-			fetchStudents();
-		}
+		setScore(chosenHomework.score);
 		setDescription(chosenHomework.description);
+		setDueDate(chosenHomework.dueDate);
+		setSelectedClass(chosenHomework.class);
+		console.log("chosenHomework date", chosenHomework.class);
+		setDescription(chosenHomework.description);
+
+		/*if(selectedClass){
+			fetchStudents();
+		}*/
+		
+		const wordsArray=[];
+		Array.from(words).forEach(word=>{         //Need to fix this array to get the correct words
+			if(chosenHomework.words.includes(word.id)){
+				wordsArray.push(word);
+			}
+		})
+		setWords(wordsArray);
+		console.log("Words Array", wordsArray);
 	}
 
 	useEffect(() => {
-		if (selectedClass) {
+		/*if (selectedClass) {
 			fetchStudents();
-		}
+		}*/
+		
 		setTitle(props.title);
 		setDescription(props.description);
 		const wordsArray=[];
@@ -127,28 +147,29 @@ const EditHomeworkForm = (props) => {
 				wordsArray.push(word);
 			}
 		})
-		setWords(wordsArray);
-		setDate(props.date);
+		//setWords(wordsArray);
+		setDueDate(date);
 		setSelectedClass(props.setSelectedClass);
 		setScore(props.score);
 	}, [props.setSelectedClass, props.title, props.description, props.words, props.date, props.score]);
 
 	const handleChange = (newValue) => {
-		setDate(newValue);
+		setDueDate(newValue);
 	};
 
 	const initialize = () => {
-		setTitle(title);
-		setDescription(description);
-		setScore(score);
-		setDueDate(dueDate);
+		chosenHomework(null);
+		//setTitle(title);
+		//setDescription(description);
+		//setScore(score);
+		setDueDate(date);
 		//setClass(classes);
 		//setWordsArray([wordsArray]);
 		setStudents([]);
 		setSelectedClass(selectedClass);
 		setIsLoading(false);
-		setWords(words);
-		setDate(date);
+		setWords("");
+		//setDate(date);
 	};
 
 	const onCancel = () => {
@@ -174,7 +195,7 @@ const EditHomeworkForm = (props) => {
 					value={selectedClass}
 					getOptionLabel={(option) => option.title}
 					onChange={(evt, newValue) => {
-						setSelectedClass(newValue);
+						chosenHomework(newValue);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{ mb: 2, mt: 1 }} fullWidth />
@@ -244,7 +265,7 @@ const EditHomeworkForm = (props) => {
 				<Autocomplete
 					disablePortal
 					multiple
-					value={words}
+					value={word}
 					options={words}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
@@ -265,6 +286,7 @@ const EditHomeworkForm = (props) => {
 							inputFormat="MM/dd/yyyy"
 							value={date}
 							onChange={handleChange}
+							
 							renderInput={(params) => <TextField {...params} />}
 						/>
 
@@ -272,6 +294,7 @@ const EditHomeworkForm = (props) => {
 							label="Due Time"
 							value={date}
 							onChange={handleChange}
+							
 							renderInput={(params) => <TextField {...params} />}
 						/>
 					</Stack>

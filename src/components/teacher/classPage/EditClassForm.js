@@ -22,7 +22,7 @@ const EditClassForm = (props) => {
     const [selectedTerm,setSelectedTerm]=useState({})	
 	const [selectedClass,setSelectedClass]=useState(null)
 
-	const handleSaveChanges=async () => {
+	const handleSaveChanges=async () =>{
 		try{
 		setIsLoading(true)
 		const studentsIds=arrayStudents.map(student=>student.id)
@@ -55,9 +55,9 @@ const EditClassForm = (props) => {
 		const studentsInCLass=[];
 		students.forEach(student=>{
 			if(chosenClass.students.includes(student.id)){
-			      console.log("id", student.id);	  
-				  studentsInCLass.push("test",chosenClass.teacher);
+				  studentsInCLass.push(student)
 		}})
+		
 		setArrayStudents(studentsInCLass)
 		setSelectedClass(chosenClass);
 		
@@ -86,7 +86,6 @@ const EditClassForm = (props) => {
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
 						handleChooseClass(newValue);
-						console.log("newValue", newValue);
 					}}
 					renderInput={(params) => (
 						<TextField {...params} sx={{mb: 2, mt: 1}} fullWidth />
@@ -111,7 +110,6 @@ const EditClassForm = (props) => {
 								setSelectedLanguage(evt.target.value)
 							}
 							value={selectedLanguage}
-						
 						>
 							<MenuItem value="">
 								<em style={{color: "grey"}}>None</em>

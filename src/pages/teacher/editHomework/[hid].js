@@ -49,8 +49,7 @@ const Page = () => {
 					setDescription(results.description);
 					setScore(results.score);
 					setDate(results.dueDate);
-					setClass(results.class)
-					console.log(results.class);
+					setClass(results.class);
 				});
 		} catch (err) {
 			console.log(err.message);
@@ -82,7 +81,6 @@ const Page = () => {
 			})
 		})
 		setAssignments(results);
-		//console.log("assignments",assignments);
 
 	}
 
@@ -96,7 +94,6 @@ const Page = () => {
 			})
 		})
 		setClass(results);
-		//console.log("classes",classes);
 	}
 	const fetchDataLanguages = async () => {
 		const collection = await db.collection("languages");
