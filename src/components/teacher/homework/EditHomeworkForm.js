@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { EditorState } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import PropTypes from "prop-types";
 import {
@@ -29,6 +29,7 @@ import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "../../../styles/rte.module.css";
+import { CommentsDisabledSharp } from "@mui/icons-material";
 
 const Editor = dynamic(
 	() => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -37,7 +38,7 @@ const Editor = dynamic(
 
 const EditHomeworkForm = (props) => {
 	//console.log("props:", props.class)
-	const { languages, date,classes, teacher, words, stepBack,assignments, ...other } = props;
+	const { languages, date, classes, teacher, words, stepBack,homework, assignments, ...other } = props;
 	const [title, setTitle] = useState({});
 	const [score, setScore] = useState({});
 	//const [dueDate, setDueDate] = useState({});
@@ -70,7 +71,7 @@ const EditHomeworkForm = (props) => {
 	const handleSave = async () => {
 		try {
 			setIsLoading(true);
-			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
+			const wordsIds = word.map((word1) => word1.id); //Retrieve words-Ids
 			//await fetchStudents();
 			//const collection = await db.collection("assignments");
 			const document = await db.collection("assignments").doc(props.id);
@@ -80,7 +81,7 @@ const EditHomeworkForm = (props) => {
 					description,
 					class: selectedClass.id,
 					words: wordsIds,
-					dueDate: date,
+					dueDate: dueDate,
 					score,
 				});
 
@@ -109,11 +110,14 @@ const EditHomeworkForm = (props) => {
 			});
 	};*/
 
-	const chosenHomework = (chosenHomework) =>{
+	const chosenHomework = (chosenHomework) => {
 		setAssignment(chosenHomework);
+		console.log("chosenHomework", chosenHomework);
 		setTitle(chosenHomework.title);
 		setScore(chosenHomework.score);
-		setDescription(chosenHomework.description);
+		//const descriptionData = chosenHomework.description.content();
+		//console.log(descriptionData);
+		//setDescription(editorValue);
 		const date = new Date(chosenHomework.dueDate.seconds * 1000);
 		//console.log("date2", date);
 		setDueDate(date);
@@ -124,32 +128,37 @@ const EditHomeworkForm = (props) => {
 				setSelectedClass(class1);
 			}
 		})*/
-		setSelectedClass(chosenHomework.class);
+		const word1 = null;
+		Array.from(classes).forEach(class1 => {
+			if (chosenHomework.class.includes(class1.id)) {
+				word1 = class1;
+			}
+		})
+		setSelectedClass(word1);
 
 		/*if(selectedClass){
 			fetchStudents();
 		}*/
-		
-		const wordsArray=[];
-		Array.from(words).forEach(word=>{         //Need to fix this array to get the correct words
-			if(chosenHomework.words.includes(word.id)){
+
+		const wordsArray = [];
+		Array.from(words).forEach(word => {         //Need to fix this array to get the correct words
+			if (chosenHomework.words.includes(word.id)) {
 				wordsArray.push(word);
 			}
 		})
 		setWords(wordsArray);
-		console.log("Words Array", wordsArray);
 	}
 
 	useEffect(() => {
 		/*if (selectedClass) {
 			fetchStudents();
 		}*/
-		
+
 		setTitle(props.title);
 		setDescription(props.description);
-		const wordsArray=[];
-		Array.from(words).forEach(word=>{         //Need to fix this array to get the correct words
-			if(words.includes(word.id)){
+		const wordsArray = [];
+		Array.from(words).forEach(word => {         //Need to fix this array to get the correct words
+			if (words.includes(word.id)) {
 				wordsArray.push(word);
 			}
 		})
@@ -166,17 +175,21 @@ const EditHomeworkForm = (props) => {
 
 	const initialize = () => {
 		chosenHomework(null);
-		//setTitle(title);
+		setTitle("");
 		//setDescription(description);
 		//setScore(score);
 		//setDueDate(date);
 		//setClass(classes);
 		//setWordsArray([wordsArray]);
 		setStudents([]);
-		setSelectedClass(selectedClass);
+		setSelectedClass("");
 		setIsLoading(false);
 		setWords("");
 		//setDate(date);
+
+		const date = new Date(homework.dueDate.seconds * 1000);
+		//console.log("date2", date);
+		setDueDate("");
 	};
 
 	const onCancel = () => {
@@ -191,7 +204,7 @@ const EditHomeworkForm = (props) => {
 	return (
 		<div {...other}>
 			<Box>
-			<Typography variant="subtitle1">Assignments</Typography>
+				<Typography variant="subtitle1">Assignments</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Select Homework
 				</Typography>
@@ -208,7 +221,7 @@ const EditHomeworkForm = (props) => {
 						<TextField {...params} sx={{ mb: 2, mt: 1 }} fullWidth />
 					)}
 				/>
-				
+
 				<Typography variant="subtitle1">Title</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Enter the title of the homework
@@ -238,6 +251,7 @@ const EditHomeworkForm = (props) => {
 						<TextField {...params} sx={{ mb: 2, mt: 1 }} fullWidth />
 					)}
 				/>
+
 				<Typography variant="subtitle1">Description</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{ mb: 1 }}>
 					Enter a description concerning the homework
@@ -293,7 +307,7 @@ const EditHomeworkForm = (props) => {
 							inputFormat="MM/dd/yyyy"
 							value={dueDate}
 							onChange={handleChange}
-							
+
 							renderInput={(params) => <TextField {...params} />}
 						/>
 

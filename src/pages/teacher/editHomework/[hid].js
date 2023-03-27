@@ -54,6 +54,7 @@ const Page = () => {
 					setDate(date);
 					//console.log("results.dueDate", results.dueDate);
 					setClass(results.class);
+					console.log("results", results);
 				});
 		} catch (err) {
 			console.log(err.message);
@@ -209,7 +210,7 @@ const Page = () => {
 												description={description}
 												score={score}
 												date={date}
-												homeworkId={homeworkId}
+												homework={homework}
 												assignments={assignments}
 											/>
 										</Grid>
