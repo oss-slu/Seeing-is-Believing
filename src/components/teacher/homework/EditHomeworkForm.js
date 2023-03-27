@@ -77,12 +77,12 @@ const EditHomeworkForm = (props) => {
 			const document = await db.collection("assignments").doc(props.id);
 			await document
 				.update({
-					title,
-					description,
+					title: title,
+					description: description,
 					class: selectedClass.id,
 					words: wordsIds,
 					dueDate: dueDate,
-					score,
+					score: score,
 				});
 
 			setIsLoading(false);
