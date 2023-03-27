@@ -54,7 +54,6 @@ const Page = () => {
 					setDate(date);
 					//console.log("results.dueDate", results.dueDate);
 					setClass(results.class);
-					console.log("results", results);
 				});
 		} catch (err) {
 			console.log(err.message);

@@ -74,7 +74,7 @@ const EditHomeworkForm = (props) => {
 			const wordsIds = word.map((word1) => word1.id); //Retrieve words-Ids
 			//await fetchStudents();
 			//const collection = await db.collection("assignments");
-			const document = await db.collection("assignments").doc(props.id);
+			const document = await db.collection("assignments").doc(assignment.id);
 			await document
 				.update({
 					title: title,
@@ -135,7 +135,7 @@ const EditHomeworkForm = (props) => {
 			}
 		})
 		setSelectedClass(word1);
-
+		setAssignment(chosenHomework);
 		/*if(selectedClass){
 			fetchStudents();
 		}*/
