@@ -116,12 +116,9 @@ const EditHomeworkForm = (props) => {
 		setTitle(chosenHomework.title);
 		setScore(chosenHomework.score);
 		//const descriptionData = chosenHomework.description.content();
-		//console.log(descriptionData);
 		//setDescription(editorValue);
-		const date = new Date(chosenHomework.dueDate.seconds * 1000);
-		//console.log("date2", date);
-		setDueDate(date);
-		//console.log("date", chosenHomework.dueDate);
+		/*const date = new Date(chosenHomework.dueDate.seconds * 1000);
+		setDueDate(date);*/
 
 		/*Array.from(classes).forEach(class1=>{
 			if(chosenHomework.class.includes(class1.id)){
@@ -188,8 +185,7 @@ const EditHomeworkForm = (props) => {
 		//setDate(date);
 
 		const date = new Date(homework.dueDate.seconds * 1000);
-		//console.log("date2", date);
-		setDueDate("");
+		setDueDate(date);
 	};
 
 	const onCancel = () => {
