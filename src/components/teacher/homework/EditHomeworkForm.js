@@ -36,13 +36,12 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	//console.log("props:", props.class)
-	const { languages, classes, teacher, stepBack, ...other } = props;
+	const { languages, classes, teacher, words, stepBack, ...other } = props;
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
 	const [dueDate, setDueDate] = useState(props.date);
 	const [wordsArray, setWordsArray] = useState([]);
-	const [words, setWords] = useState(props.words);
+	const [word, setWords] = useState(props.words);
 	//const [classes, setClass] = useState(props.class);
 	const [students, setStudents] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -122,7 +121,22 @@ const EditHomeworkForm = (props) => {
 		}
 		setTitle(props.title);
 		setDescription(props.description);
-		setWords(props.words);
+
+		console.log("props1", props.words);
+		const wordsArray = [];
+		console.log("word1", words);
+		Array.from(words).forEach(word => { 
+			console.log("word", word);       //Need to fix this array to get the correct words
+			if (props.words.includes(word.id)) {
+				console.log("true");
+				wordsArray.push(word);
+				//console.log("wordsArray", wordsArray);
+			}
+		})
+
+		setWords(wordsArray);
+		//const date1 = new Date(props.date.seconds * 1000);
+		//console.log("props.date", props.date);
 		setDate(props.date);
 		setSelectedClass(props.setSelectedClass);
 		setScore(props.score);
@@ -146,7 +160,6 @@ const EditHomeworkForm = (props) => {
 		setIsLoading(false);
 		setWords(words);
 		setDate(date);
-		console.log("selected class: ", date)
 	};
 
 	const onCancel = () => {
@@ -224,7 +237,7 @@ const EditHomeworkForm = (props) => {
 					disablePortal
 					multiple
 
-					options={words}
+					options={word}
 					getOptionLabel={(option) => option.name}
 					onChange={(evt, newValue) => {
 						setWordsArray(newValue);
