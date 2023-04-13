@@ -105,6 +105,7 @@ const DeleteClassForm = (props) => {
 							onChange={(evt) =>
 								setSelectedLanguage(evt.target.value)
 							}
+                            readOnly={true}
 							value={selectedLanguage}
 						>
 							<MenuItem value="">
@@ -134,6 +135,7 @@ const DeleteClassForm = (props) => {
 							onChange={(evt) =>
 								setSelectedTerm(evt.target.value)
 							}
+                            readOnly={true}
 							value={selectedTerm}
 						>
 							<MenuItem value="">
@@ -168,6 +170,7 @@ const DeleteClassForm = (props) => {
 							onChange={(evt, newValue) => {
 								setArrayStudents(newValue);
 							}}
+                            readOnly={true}
 							renderInput={(params) => (
 								<TextField {...params} fullWidth />
 							)}
