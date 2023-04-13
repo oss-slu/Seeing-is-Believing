@@ -10,6 +10,7 @@ import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
 import AddClassForm from '../../components/teacher/classPage/AddClassForm'
 import EditClassForm from "../../components/teacher/classPage/EditClassForm";
+import DeleteClassForm from "../../components/teacher/classPage/DeleteClassForm";
 import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
 
@@ -157,6 +158,10 @@ const ClassPage = () => {
 											sx={{fontSize: 16}}
 											label="Edit class"
 										/>
+										<Tab
+											sx={{fontSize: 16}}
+											label="Delete Class"
+										/>
 									</Tabs>
 								</Grid>
 								<Grid pl={2} md={8} pt={6}>
@@ -178,6 +183,18 @@ const ClassPage = () => {
 												/>
 										</Grid>
 										}
+									{index === 2 && 
+										<Grid>
+												<DeleteClassForm
+													classes={classes}
+													students={students}
+													terms={terms}
+													languages={languages}
+													refetch={handleRefetch}
+												/>
+										</Grid>
+										}
+									
 									</SwipeableViews>
 								</Grid>
 							</Grid>
