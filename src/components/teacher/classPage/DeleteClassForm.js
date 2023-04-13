@@ -25,7 +25,6 @@ const DeleteClassForm = (props) => {
     const handleDelete=async ()=>{
         try{
             setIsLoading(true)
-            const studentsIds=arrayStudents.map(student=>student.id)
             const collection=await db.collection('classes');
             await collection.doc(selectedClass.id).delete()
                 refetch();
@@ -94,8 +93,8 @@ const DeleteClassForm = (props) => {
 							displayEmpty
 							fullWidth
 							sx={{mb: 2, mt: 1}}
-                            readOnly={true}
 							value={selectedLanguage}
+                            disabled={true}
 						>
 							<MenuItem value="">
 								<em style={{color: "grey"}}>None</em>
@@ -114,7 +113,7 @@ const DeleteClassForm = (props) => {
 							displayEmpty
 							fullWidth
 							sx={{mb: 2, mt: 1}}
-                            readOnly={true}
+                            disabled={true}
 							value={selectedTerm}
 						>
 							<MenuItem value="">
@@ -139,7 +138,7 @@ const DeleteClassForm = (props) => {
 							getOptionLabel={(option) =>
 								option.firstName + " " + option.lastName
 							}
-                            readOnly={true}
+                            disabled={true}
 							renderInput={(params) => (
 								<TextField {...params} fullWidth />
 							)}
