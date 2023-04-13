@@ -22,26 +22,22 @@ const DeleteClassForm = (props) => {
     const [selectedTerm,setSelectedTerm]=useState({})	
 	const [selectedClass,setSelectedClass]=useState(null)
 
-	const handleSaveChanges=async () =>{
-		try{
-		setIsLoading(true)
-		const studentsIds=arrayStudents.map(student=>student.id)
-		const collection=await db.collection('classes');
-		await collection.doc(selectedClass.id).update({
-			language:selectedLanguage,
-			term:selectedTerm,
-			students:studentsIds
-		})
-			refetch();
-			toast.success("Class edited successfully")
-		}catch(err){
-			console.error(err.message)
-			toast.error("Something went wrong")
-		}
-
-		setIsLoading(false);
-		initialize()
-	}
+    const handleDelete=async ()=>{
+        try{
+            setIsLoading(true)
+            const studentsIds=arrayStudents.map(student=>student.id)
+            const collection=await db.collection('classes');
+            await collection.doc(selectedClass.id).delete()
+                refetch();
+                toast.success("Class deleted successfully")
+            }catch(err){
+                console.error(err.message)
+                toast.error("Something went wrong")
+            }
+    
+            setIsLoading(false);
+            initialize()
+    }
 
 	const handleCancel=()=>{
 		initialize()
@@ -182,7 +178,7 @@ const DeleteClassForm = (props) => {
 			<Box sx={{mt: 3}}>
 				<LoadingButton
 					loading={isLoading}
-					onClick={handleSaveChanges}
+					onClick={handleDelete}
 					disabled={
 						selectedClass &&
 						selectedLanguage &&
@@ -193,7 +189,7 @@ const DeleteClassForm = (props) => {
 					}
 					variant="contained"
 				>
-					Save Changes
+					Delete Class
 				</LoadingButton>
 				<Button
 					onClick={handleCancel}
