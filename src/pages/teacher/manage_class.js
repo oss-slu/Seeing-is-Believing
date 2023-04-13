@@ -87,6 +87,9 @@ const ClassPage = () => {
 		if(index===1){
 			fetchDataClasses();
 		}
+		if(index === 2){
+			fetchDataClasses();
+		}
 	},[index])
 	const handleChange = (evt, value) => {
 		setIndex(value);

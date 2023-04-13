@@ -14,7 +14,6 @@ import {db} from '../../../lib/firebase'
 import toast from 'react-hot-toast';
 
 const DeleteClassForm = (props) => {
-	
 	const {languages,terms,refetch,students,classes,stepBack,...other} = props;
 	const [arrayStudents,setArrayStudents]=useState([]);
     const [isLoading,setIsLoading]=useState(false);
