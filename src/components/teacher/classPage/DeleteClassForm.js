@@ -90,21 +90,10 @@ const DeleteClassForm = (props) => {
 				{selectedClass && (
 					<>
 						<Typography variant="subtitle1">Language</Typography>
-						<Typography
-							color="textSecondary"
-							variant="body2"
-							sx={{mb: 1}}
-						>
-							Select the language in which the course will be
-							taught
-						</Typography>
 						<Select
 							displayEmpty
 							fullWidth
 							sx={{mb: 2, mt: 1}}
-							onChange={(evt) =>
-								setSelectedLanguage(evt.target.value)
-							}
                             readOnly={true}
 							value={selectedLanguage}
 						>
@@ -121,20 +110,10 @@ const DeleteClassForm = (props) => {
 						</Select>
 
 						<Typography variant="subtitle1">Term</Typography>
-						<Typography
-							color="textSecondary"
-							variant="body2"
-							sx={{mb: 1}}
-						>
-							Select the term of the year
-						</Typography>
 						<Select
 							displayEmpty
 							fullWidth
 							sx={{mb: 2, mt: 1}}
-							onChange={(evt) =>
-								setSelectedTerm(evt.target.value)
-							}
                             readOnly={true}
 							value={selectedTerm}
 						>
@@ -149,15 +128,8 @@ const DeleteClassForm = (props) => {
 								);
 							})}
 						</Select>
-
 						<Typography variant="subtitle1">Students</Typography>
-						<Typography
-							color="textSecondary"
-							variant="body2"
-							sx={{mb: 2}}
-						>
-							The students registerd for the class
-						</Typography>
+						
 						{/**************************************Autocomplete that will contain the students that will be passed to the box-Display***********************************************************/}
 						<Autocomplete
 							disablePortal
@@ -167,9 +139,6 @@ const DeleteClassForm = (props) => {
 							getOptionLabel={(option) =>
 								option.firstName + " " + option.lastName
 							}
-							onChange={(evt, newValue) => {
-								setArrayStudents(newValue);
-							}}
                             readOnly={true}
 							renderInput={(params) => (
 								<TextField {...params} fullWidth />
