@@ -152,7 +152,7 @@ const EditHomeworkForm = (props) => {
 	const onCancel = () => {
 		initialize();
 	};
-
+	
 	///Formating assignment point value
 	function valuetext(value) {
 		return `${value}°C`;
