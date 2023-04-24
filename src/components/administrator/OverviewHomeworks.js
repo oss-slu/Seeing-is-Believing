@@ -19,7 +19,6 @@ import {useRouter} from "next/router";
 const Content = (props) => {
 	const router = useRouter();
 	const classId = router.query.cl;
-	const {user} = useAuth();
 	const [homeworks, setHomeworks] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -51,13 +50,6 @@ const Content = (props) => {
 			setIsLoaded(true);
 		}
 	}, [homeworks]);
-
-	const firstToUpperCase = (i) => {
-		if (i) {
-			return i.charAt(0).toUpperCase() + i.slice(1, i.length);
-		}
-		return "";
-	};
 
 	const seeHomework = (homework_id) => {
 		router.push(`/teacher/homeworks/${homework_id}`);

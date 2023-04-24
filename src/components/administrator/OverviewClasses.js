@@ -1,13 +1,9 @@
 import {useRouter} from 'next/router';
-import { format, subDays } from 'date-fns';
 import {useState,useEffect} from 'react';
 import numeral from 'numeral';
 import {
-  Box,
   Card,
-  CardHeader,
   Table,
-  Button,
   TableBody,
   TableHead,
   TableCell,
@@ -15,17 +11,12 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from '../scrollbar';
-import { SeverityPill } from '../severity-pill';
 import { MoreMenu } from '../more-menu class';
-import {useAuth} from '../../hooks/use-auth';
 import {db} from '../../lib/firebase'
-
-
 
 const Content = (props) => {
   const router=useRouter();
   const {classes}=props
-  const {isLoading,setIsLoading}=useState(true)
   const [languages,setLanguages]=useState(null)
   const [semesters,setSemesters]=useState(null)
 

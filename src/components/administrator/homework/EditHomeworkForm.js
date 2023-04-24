@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import Router, {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {EditorState} from "draft-js";
 import {convertToHTML} from "draft-convert";
@@ -7,11 +6,7 @@ import PropTypes from "prop-types";
 import {
 	Box,
 	Button,
-	Chip,
-	InputAdornment,
 	TextField,
-	Select,
-	MenuItem,
 	Typography,
 	Autocomplete,
     Slider,
@@ -20,13 +15,10 @@ import {
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TimePicker from '@mui/lab/TimePicker';
-import DateTimePicker from '@mui/lab/DateTimePicker';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LoadingButton from "@mui/lab/LoadingButton";
 import {db} from "../../../lib/firebase";
 import toast from "react-hot-toast";
-import {v4 as uuidv4} from "uuid";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "../../../styles/rte.module.css";
 
@@ -42,7 +34,6 @@ const EditHomeworkForm = (props) => {
 	const [dueDate, setDueDate] = useState(props.date);
 	const [wordsArray, setWordsArray] = useState([]);
 	const [words, setWords] = useState(props.words);
-	const [classes, setClass] = useState(props.class);
 	const [isLoading, setIsLoading] = useState(false);
 	const [date, setDate] = useState(new Date());
 	const [description, setDescription] = useState(props.description);
@@ -192,14 +183,12 @@ const EditHomeworkForm = (props) => {
 							label="Due Date"
 							inputFormat="MM/dd/yyyy"
 							value={props.dueDate}
-							//onChange={handleChange}
 							renderInput={(params) => <TextField {...params} />}
 						/>
 
 						<TimePicker
 							label="Due Time"
 							value={date}
-							//onChange={handleChange}
 							renderInput={(params) => <TextField {...params} />}
 						/>
 					</Stack>
