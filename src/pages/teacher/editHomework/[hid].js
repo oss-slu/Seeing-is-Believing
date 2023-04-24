@@ -18,8 +18,6 @@ const Page = () => {
 	const router = useRouter();
     const homeworkId = router.query.hid;
 	const {user} = useAuth();
-	const [activeStep, setActiveStep] = useState(0);
-	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 	const [title, setTitle] = useState([]);
@@ -30,7 +28,6 @@ const Page = () => {
 	const [score, setScore] = useState(null);
 	const [description, setDescription] = useState([null]);
 	const [date, setDate] = useState(null);
-	const [studentId, setStudent] = useState(null);
 	
 
 	const fetchHomeworkDetails = async () => {
