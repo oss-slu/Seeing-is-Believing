@@ -16,7 +16,6 @@ import { AuthGuard } from "../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../components/dashboard/dashboard-layout";
 import { ChatSidebar } from "../../components/dashboard/chat/chatsidebar";
 import { MenuAlt4 as MenuAlt4Icon } from "../../icons/menu-alt-4";
-//import { gtm } from "../../lib/gtm";
 import { db } from "../../lib/firebase";
 import { Scrollbar } from "../../components/scrollbar";
 import * as COLORMAPS from "../../constants/colormaps";
@@ -114,8 +113,6 @@ const Practice = () => {
 					colorMap: COLORMAPS.hsv,
 					forceDecode: true,
 					windowFunc: "bartlettHann",
-					//windowFunc: 'cosine',
-					//windowFunc: 'lanczoz',
 				}),
 			],
 		});
@@ -138,8 +135,6 @@ const Practice = () => {
 						colorMap: COLORMAPS.hsv,
 						forceDecode: true,
 						windowFunc: "bartlettHann",
-						//windowFunc: 'cosine',
-						//windowFunc: 'lanczoz',
 					}),
 				],
 			});
@@ -248,7 +243,6 @@ const Practice = () => {
 	};
 
 	useEffect(() => {
-		//gtm.push({ event: "page_view" });
 		//first time rendered component -->fetch the data
 		fetchData();
 	}, []);

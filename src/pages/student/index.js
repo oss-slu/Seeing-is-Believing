@@ -22,16 +22,13 @@ import {InformationCircleOutlined as InformationCircleOutlinedIcon} from "../../
 import homeworkImg from "../../assets/images/background1.jpg";
 import practiceImg from "../../assets/images/background2.jpg";
 import gradesImg from "../../assets/images/background3.jpg";
-//import {gtm} from "../../lib/gtm";
 import {db} from "../../lib/firebase";
 import {useAuth} from "../../hooks/use-auth.js"
 import {Modal1 as HelpForm} from '../../components/modals/modal-1'
 
 const Overview = () => {
-	const [displayBanner, setDisplayBanner] = useState(true);
 	const {user} = useAuth()
 	const [fetchedClasses,setFetchedClasses]=useState(null)
-	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
 	const [showHelpForm,setShowHelpForm]=useState(false);
 
@@ -56,7 +53,6 @@ const Overview = () => {
   },[fetchedClasses])
   
 	useEffect(() => {
-		//gtm.push({event: "page_view"});
 		fetchDataClasses();
 	}, []);
 

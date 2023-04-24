@@ -8,14 +8,10 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../../components/dashboard/dashboard-layout";
-//import {gtm} from "../../../lib/gtm";
 import HomeworkOverview from '../../../components/student/home/OverviewHomeworks'
 
 const Homework = () => {
 	const [displayBanner, setDisplayBanner] = useState(true);
-	/*useEffect(() => {
-		gtm.push({event: "page_view"});
-	}, []);*/
 
 	useEffect(() => {
 		// Restore the persistent state from local/session storage
@@ -28,7 +24,6 @@ const Homework = () => {
 
 	const handleDismissBanner = () => {
 		// Update the persistent state
-		// globalThis.sessionStorage.setItem('dismiss-banner', 'true');
 		setDisplayBanner(false);
 	};
 

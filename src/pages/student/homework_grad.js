@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	Box,
-	//IconButton,
 	Typography,
 	Grid,
 	useMediaQuery,
@@ -61,9 +60,6 @@ const Page = () => {
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
-		noSsr: false,
-	});
 	//Custom hooks
 	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
 	//
@@ -87,33 +83,6 @@ const Page = () => {
 				});
 		} catch (err) {
 			console.log(err.message);
-		}
-	};
-
-	const handleSubmit = async () => {
-		try {
-			setIsSubmitting(true);
-			const updatedStudentsAssignments = homework.studentsAssignements.map(
-				(std) => {
-					if (std.idStudent === studentId) {
-						return {
-							idStudent: studentId,
-							answers: std.answers,
-							feedback,
-							grade,
-						};
-					} else {
-						return std;
-					}
-				}
-			);
-			await db.collection("assignments").doc(homeworkId).update({
-				studentsAssignements: updatedStudentsAssignments,
-			});
-			setIsSubmitting(false);
-			setView("blank");
-		} catch (err) {
-			console.error(err.message);
 		}
 	};
 
@@ -144,20 +113,8 @@ const Page = () => {
 		fetchHomeworkDetails();
 	}, []);
 
-	/* 	useEffect(() => {
-		if (!mdUp) {
-			setIsSidebarOpen(false);
-		} else {
-			setIsSidebarOpen(true);
-		}
-	}, [mdUp]); */
-
 	const handleCloseSidebar = () => {
 		setIsSidebarOpen(false);
-	};
-
-	const handleToggleSidebar = () => {
-		setIsSidebarOpen((prevState) => !prevState);
 	};
 
 	if (!router.isReady) {
@@ -263,7 +220,7 @@ const Page = () => {
 };
 
 const SubSection = (props) => {
-	const { answer, grading, position } = props;
+	const { answer } = props;
 	const specMainContainerRef = useRef(null);
 	const specMainRef = useRef(null);
 	const specMainNonNativeContainerRef = useRef(null);
@@ -387,8 +344,6 @@ const SubSection = (props) => {
 					colorMap: COLORMAPS.hsv,
 					forceDecode: true,
 					windowFunc: "bartlettHann",
-					//windowFunc: 'cosine',
-					//windowFunc: 'lanczoz',
 				}),
 			],
 		});
