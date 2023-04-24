@@ -1,4 +1,3 @@
-//import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -6,14 +5,10 @@ import { Box, Card, Button, Container, Typography } from '@mui/material';
 import { GuestGuard } from '../../components/authentication/guest-guard';
 import { AmplifyPasswordRecovery } from '../../components/authentication/password-recovery';
 import { Logo } from '../../components/logo';
-//import { gtm } from '../../lib/gtm';
 
 
 const PasswordRecovery = () => {
   const router = useRouter();
-  /*useEffect(() => {
-    gtm.push({ event: 'page_view' });
-  }, []);*/
 
   return (
 		<>

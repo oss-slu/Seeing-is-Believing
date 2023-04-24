@@ -1,4 +1,3 @@
-//import { useEffect } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,18 +5,12 @@ import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
 import { GuestGuard } from '../../components/authentication/guest-guard';
 import { FirebaseRegister } from '../../components/authentication/firebase-register';
 import { useAuth } from '../../hooks/use-auth';
-//import { gtm } from '../../lib/gtm';
 import { db } from '../../lib/firebase';
 
 
 const Register = (props) => {
   const router = useRouter();
   const { disableGuard } = router.query;
- 
-  
-  /*useEffect(() => {
-    gtm.push({ event: 'page_view' });
-  }, []);*/
 
   return (
     <>
