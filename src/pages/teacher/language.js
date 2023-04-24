@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import Head from "next/head";
 import {
-	Avatar,
 	Box,
 	Grid,
 	Tabs,
@@ -11,32 +10,10 @@ import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
 import {AddLanguageForm} from "../../components/teacher/language/AddLanguageForm";
 import {EditLanguageForm} from "../../components/teacher/language/EditLanguageForm";
-import {Check as CheckIcon} from "../../icons/check";
 import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
 
-const StepIcon = (props) => {
-	const {active, completed, icon} = props;
-	const highlight = active || completed;
-
-	return (
-		<Avatar
-			sx={{
-				backgroundColor: highlight && "secondary.main",
-				color: highlight && "secondary.contrastText",
-				height: 40,
-				width: 40,
-			}}
-			variant="rounded"
-		>
-			{completed ? <CheckIcon fontSize="small" /> : icon}
-		</Avatar>
-	);
-};
-
 const LanguagePage = () => {
-	const [activeStep, setActiveStep] = useState(0);
-	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 
