@@ -14,8 +14,6 @@ import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
 
 const WordPage = () => {
-	const [activeStep, setActiveStep] = useState(0);
-	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 
@@ -23,7 +21,6 @@ const WordPage = () => {
 		const collection = await db.collection("languages");
 		let results = [];
 		await collection.get().then((snapshot) => {
-			//results = snapshot.docs[0].data();
 			snapshot.docs.forEach((doc) => {
 				const newLanguage = doc.data();
 				results.push(newLanguage);
