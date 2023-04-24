@@ -17,7 +17,6 @@ import { AuthGuard } from "../../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../../components/dashboard/dashboard-layout";
 import { ChatSidebar } from "../../../components/dashboard/chat/chatsidebar_homework _teacher";
 import { MenuAlt4 as MenuAlt4Icon } from "../../../icons/menu-alt-4";
-//import { gtm } from "../../../lib/gtm";
 import { db } from "../../../lib/firebase";
 import { useAuth } from "../../../hooks/use-auth";
 import { Scrollbar } from "../../../components/scrollbar";
@@ -66,18 +65,13 @@ const ChatInner = styled("div", {
 //Show spectogram of original audio
 
 const Practice = () => {
-	const { user } = useAuth();
 	const router = useRouter();
 	const homeworkId = router.query.hid;
 	const rootRef = useRef(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"), {
-		noSsr: false,
-	});
 	//Custom hooks
 	const [view, setView] = useState("blank"); //Variable to render a blank view first time rendered
 	const [hasBeenMarked, setHasBeenMarked] = useState(false);
-	const [answer, setAnswer] = useState([]);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [homework, setHomework] = useState(null);
 	const [feedback, setFeedback] = useState("");
@@ -85,7 +79,7 @@ const Practice = () => {
 	const [words, setWords] = useState(null);
 	const [studentId, setStudentId] = useState(null);
 
-	const fetchHomeworkDetails = async (id) => {
+	const fetchHomeworkDetails = async () => {
 		try {
 			await db
 				.collection("assignments")
@@ -133,8 +127,6 @@ const Practice = () => {
 		setFeedback("");
 		setHasBeenMarked(false);
 		await fetchHomeworkDetails();
-		/* 
-		 setView("practice"); */
 	};
 
 	useEffect(() => {
@@ -158,19 +150,6 @@ const Practice = () => {
 		}
 	}, [words]);
 
-	/*useEffect(() => {
-		gtm.push({ event: "page_view" });
-		//first time rendered component -->fetch the data
-	}, []);*/
-
-	/* 	useEffect(() => {
-		if (!mdUp) {
-			setIsSidebarOpen(false);
-		} else {
-			setIsSidebarOpen(true);
-		}
-	}, [mdUp]); */
-
 	const handleCloseSidebar = () => {
 		setIsSidebarOpen(false);
 	};
@@ -182,7 +161,6 @@ const Practice = () => {
 	if (!router.isReady) {
 		return null;
 	}
-
 
 	return (
 		<>
@@ -310,7 +288,7 @@ const Practice = () => {
 };
 
 const SubSection = (props) => {
-	const { answer, grading, position } = props;
+	const { answer } = props;
 	const specMainContainerRef = useRef(null);
 	const specMainRef = useRef(null);
 	const specMainNonNativeContainerRef = useRef(null);
@@ -369,8 +347,6 @@ const SubSection = (props) => {
 						colorMap: COLORMAPS.hsv,
 						forceDecode: true,
 						windowFunc: "bartlettHann",
-						//windowFunc: 'cosine',
-						//windowFunc: 'lanczoz',
 					}),
 				],
 			});
@@ -433,8 +409,6 @@ const SubSection = (props) => {
 					colorMap: COLORMAPS.hsv,
 					forceDecode: true,
 					windowFunc: "bartlettHann",
-					//windowFunc: 'cosine',
-					//windowFunc: 'lanczoz',
 				}),
 			],
 		});
