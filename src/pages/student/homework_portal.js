@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-//import {gtm} from "../../lib/gtm";
 import OverviewClasses from "../../components/student/home/OverviewClasses";
 import {useAuth} from "../../hooks/use-auth.js";
 import {db} from "../../lib/firebase";
@@ -18,7 +17,6 @@ const Homework = () => {
 
 	const {user} = useAuth()
 	const [fetchedClasses,setFetchedClasses]=useState(null)
-	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
 
 
@@ -44,7 +42,6 @@ const Homework = () => {
   },[fetchedClasses])
   
 	useEffect(() => {
-		//gtm.push({event: "page_view"});
 		fetchDataClasses();
 	}, []);
 
