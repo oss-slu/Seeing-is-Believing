@@ -14,10 +14,6 @@ import HomeworkOverview from '../../../components/teacher/OverviewHomeworks'
 const Homework = () => {
 	const [displayBanner, setDisplayBanner] = useState(true);
 
-	/*useEffect(() => {
-		gtm.push({event: "page_view"});
-	}, []);*/
-
 	useEffect(() => {
 		// Restore the persistent state from local/session storage
 		const value = globalThis.sessionStorage.getItem("dismiss-banner");

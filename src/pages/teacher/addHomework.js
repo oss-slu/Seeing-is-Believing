@@ -16,7 +16,6 @@ import {useAuth} from '../../hooks/use-auth';
 const Page = () => {
 	const {user} = useAuth();
 	const [activeStep, setActiveStep] = useState(0);
-	const [complete, setComplete] = useState(false);
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 	const [terms, setTerms] = useState([]);
