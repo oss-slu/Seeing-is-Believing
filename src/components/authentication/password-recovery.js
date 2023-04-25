@@ -1,9 +1,7 @@
 import {useState} from 'react'
-import {useRouter} from "next/router";
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import {Box, Button, FormHelperText, TextField} from "@mui/material";
-import {useAuth} from "../../hooks/use-auth";
 import {useMounted} from "../../hooks/use-mounted";
 import firebase from "../../lib/firebase";
 
@@ -12,8 +10,6 @@ export const AmplifyPasswordRecovery = (props) => {
 	const [color,setColor]=useState("primary")
 	const [submited,setSubmited]=useState(false)
 	const isMounted = useMounted();
-	const {passwordRecovery} = useAuth();
-	const router = useRouter();
 	const formik = useFormik({
 		initialValues: {
 			email: "",
@@ -39,12 +35,6 @@ export const AmplifyPasswordRecovery = (props) => {
 		 setColor("secondary")
 		 setSubmited(true)
 
-				/* await passwordRecovery(values.email);
-
-        if (isMounted()) {
-          sessionStorage.setItem('username', values.email);
-          router.push('/authentication/password-reset');
-        } */
 			} catch (err) {
 				console.error(err);
 
