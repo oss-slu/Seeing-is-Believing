@@ -60,10 +60,8 @@ const EditClassForm = (props) => {
 		
 		setArrayStudents(studentsInCLass)
 		setSelectedClass(chosenClass);
-		
 	}
 
-	
 	const initialize=() =>{
 		setSelectedClass(null);
 		setSelectedLanguage("");

@@ -116,7 +116,6 @@ const EditWordForm = (props) => {
 		const collection = await db.collection("words");
 		let results = [];
 		await collection.get().then((snapshot) => {
-			//results = snapshot.docs[0].data();
 			snapshot.docs.forEach((doc) => {
 				const id = doc.id;
 				const word = doc.data();

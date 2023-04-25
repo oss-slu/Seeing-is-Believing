@@ -23,7 +23,6 @@ import firebase from '../../utils/firebase'
 const Content = (props) => {
 	const router = useRouter();
 	const classId = router.query.cl;
-	const {user} = useAuth();
 	const [homeworks, setHomeworks] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 
