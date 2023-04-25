@@ -40,15 +40,12 @@ const ChatSidebarMobile = styled(Drawer)({
 
 export const ChatSidebar = (props) => {
 	const {languages, chooseWord, containerRef, onClose, open, ...other} =props;
-	const router = useRouter();
 	const mdUp = useMediaQuery((theme) => theme.breakpoints.up("md"));
   //Custom hooks
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [languageNames, setLanguageNames] = useState([]);
   const [words, setWords] = useState([]);
   const [isFetchingWords, setIsFetchingWords] = useState(false); //for circular progress indicator
-
-	
 
 	useEffect(() => {
 		if (languages) {
