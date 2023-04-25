@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import { Box, Button, FormHelperText, TextField, Typography } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
-import firebase from "../../lib/firebase"
 
 export const AmplifyPasswordReset = (props) => {
   const isMounted = useMounted();
