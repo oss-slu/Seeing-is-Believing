@@ -57,13 +57,7 @@ const Content = (props) => {
             setIsLoaded(true);
         }   
     },[homeworks])
-
-    const firstToUpperCase=(i)=>{
-        if(i){
-          return i.charAt(0).toUpperCase()+i.slice(1,i.length)
-        }
-        return ""
-      }
+	
 	const seeHomework=(link)=>{
 		router.push(link)
 	}
