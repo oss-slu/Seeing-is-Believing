@@ -1,9 +1,6 @@
 import Image from 'next/image';
-import { Avatar, Box, Button, Card, CardActions, Divider, Typography,Grow} from '@mui/material';
-import { alpha, useTheme } from '@mui/material/styles';
-import { ArrowRight as ArrowRightIcon } from '../../../icons/arrow-right';
-import { ChevronUp as ChevronUpIcon } from '../../../icons/chevron-up';
-import { DocumentText as DocumentIcon } from '../../../icons/document-text';
+import { Box, Card, Typography,Grow} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const CardHeader = (props) => {
   const theme = useTheme();
