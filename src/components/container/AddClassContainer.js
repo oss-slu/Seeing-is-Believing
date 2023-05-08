@@ -13,10 +13,10 @@ import {
 	Autocomplete
 } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
-import { db } from '../../../lib/firebase'
+import { db } from "../../lib/firebase";
 import toast from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
-import { useAuth } from '../../../hooks/use-auth'
+import { useAuth } from "../../hooks/use-auth";
 import AddClassForm from "../teacher/classPage/AddClassForm";
 
 const AddClassContainer = (props) => {
@@ -78,10 +78,14 @@ const AddClassContainer = (props) => {
 			handleSave={handleSave}
 			handleCancel={handleCancel}
 			isLoading={isLoading}
+		    initialize={initialize}
+			
+			{...props}
+
 		/>
 	);
 };
-
+ 
 AddClassContainer.propTypes = {
 	onBack: PropTypes.func,
 	onNext: PropTypes.func,
