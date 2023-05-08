@@ -21,18 +21,26 @@ import { useAuth } from '../../../hooks/use-auth'
 const AddClassForm = (props) => {
 
 	const {
-		//handleSave,
+		className,
+		setClassName,
+		arrayStudents,
+		setArrayStudents,
+		isLoading,
+		setIsLoading,
+		selectedLanguage,
+		setSelectedLanguage,
+		selectedTerm,
+		setSelectedTerm,
+		handleSave,
 		handleCancel,
+		languages,
+		terms,
+		students,
+		...other
 	} = props;
 
 	const { user } = useAuth()
 	const router = useRouter()
-	const { languages, terms, students, stepBack, handleSave, ...other } = props;
-	const [className, setClassName] = useState("")
-	const [arrayStudents, setArrayStudents] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [selectedLanguage, setSelectedLanguage] = useState({})
-	const [selectedTerm, setSelectedTerm] = useState({})
 
 	return (
 		<div {...other}>

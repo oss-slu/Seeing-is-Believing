@@ -78,7 +78,6 @@ const AddClassContainer = (props) => {
 			handleSave={handleSave}
 			handleCancel={handleCancel}
 			isLoading={isLoading}
-		    initialize={initialize}
 			
 			{...props}
 

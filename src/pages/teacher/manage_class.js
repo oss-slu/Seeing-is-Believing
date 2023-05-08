@@ -8,7 +8,8 @@ import {
 } from "@mui/material";
 import {AuthGuard} from "../../components/authentication/auth-guard";
 import {DashboardLayout} from "../../components/dashboard/dashboard-layout";
-import AddClassForm from '../../components/teacher/classPage/AddClassForm'
+//import AddClassForm from '../../components/teacher/classPage/AddClassForm'
+import AddClassContainer from "../../components/container/AddClassContainer";
 import EditClassForm from "../../components/teacher/classPage/EditClassForm";
 import DeleteClassForm from "../../components/teacher/classPage/DeleteClassForm";
 import SwipeableViews from "react-swipeable-views";
@@ -173,7 +174,7 @@ const ClassPage = () => {
 										onChangeIndex={handleChangeIndex}
 									>
 										<Grid>
-											<AddClassForm  languages={languages} students={students} terms={terms}/>
+											<AddClassContainer  languages={languages} students={students} terms={terms}/>
 										</Grid>
 									 {index === 1 && 
 										<Grid>
