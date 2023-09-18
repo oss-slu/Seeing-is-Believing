@@ -85,6 +85,22 @@ const Practice = () => {
 	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
 		useReactMediaRecorder({ audio: true });
 
+	/* TODO: timer counting up feature to time practice */
+	const [practiceTime, setPracticeTime] = useState({ms:0, s:0, m:0, h:0});
+	const [time, setTime] = useState(0);
+	var updatedMs = practiceTime.ms, updatedS = practiceTime.s, updatedM = practiceTime.m, updatedH = practiceTime.h;
+
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+		  setTime(prevTime => prevTime + 1); // increment by 1 second
+		}, 1000); // every 1 second
+		return () => clearInterval(intervalId); // cleanup
+	  }, []); 
+
+	const displayTime = () => {
+
+	}
+
 	useEffect(() => {
 		if (mediaBlobUrl && mediaBlobUrl != "") {
 			showSpectroRecord();
@@ -373,7 +389,7 @@ const Practice = () => {
 													mr: 4,
 												}}
 											>
-												Word :&#160;
+												Word: &#160;
 												<Typography color="textSecondary" variant="subtitle1">
 													{word.name}
 												</Typography>
@@ -383,6 +399,7 @@ const Practice = () => {
 												sx={{
 													display: "inline",
 													display: "flex",
+													mr: 4,
 												}}
 											>
 												Dialect: &#160;
@@ -390,6 +407,22 @@ const Practice = () => {
 													<em>{word.dialect} </em>
 												</Typography>
 											</Typography>
+											
+											{/* TODO: Changes for tracking how often a student has practiced a module */}
+											<Typography
+												variant="subtitle1"
+												sx={{
+													display: "inline",
+													display: "flex",
+												}}
+											>
+												Time Spent On Module: &#160;
+												<Typography color="textSecondary" variant="subtitle1">
+													<em> {practiceTime.h}:{practiceTime.m}:{practiceTime.s} </em> 
+													<em> {time} </em> 
+												</Typography>
+											</Typography>
+
 										</Grid>
 										<Grid xs={12} px={3} mt={2} item>
 											<Typography variant="subtitle1" sx={{ display: "block" }}>
