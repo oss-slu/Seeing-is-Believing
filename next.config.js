@@ -11,7 +11,21 @@ module.exports = {
         {
           loader: '@svgr/webpack',
           options: {
-            svgoConfig: { plugins: [{ removeViewBox: false }] }
+            //svgoConfig: { plugins: [{ removeViewBox: false }] }
+            //svgoConfig: { plugins: [{ removeViewBox: false }] }
+            svgoConfig: {
+  plugins: [
+    {
+      name: 'preset-default',
+      params: {
+        overrides: {
+          // disable plugins
+          removeViewBox: false,
+        },
+      },
+    },
+  ],
+},
           }
         }
       ]
