@@ -104,7 +104,7 @@ const Practice = () => {
 	const showSpectroRecord = async () => {
 		const wavesurfer = WaveSurfer.create({
 			container: specRecordContainerRef.current,
-			fillParent: true,
+			fillParent: false,
 			plugins: [
 				SpectrogramPlugin.create({
 					container: specRecordRef.current,
@@ -227,7 +227,7 @@ const Practice = () => {
 		);
 		startRecording();
 	};
-	
+
 
 	const stopRecord = () => {
 		toast.dismiss();
@@ -310,12 +310,12 @@ const Practice = () => {
 		return null;
 	}
 	
-
+//Changing the script source to refrence specifically the version 6 of wave surfer is neccessary.
 	return (
 		<>
 			<Head>
 				<title>Seeing is believing</title>
-				<script src="https://unpkg.com/wavesurfer.js"></script>
+				<script src="https://unpkg.com/wavesurfer.js@6"></script>
 			</Head>
 			<Box
 				component="main"
@@ -362,7 +362,7 @@ const Practice = () => {
 						</Box>
 						{view == "practice" && (
 							<Scrollbar sx={{ maxHeight: "100%" }}>
-								<Grid container xs={12} direction="column">
+								<Grid container direction="column">
 									<Grid container item xs={6} pt={3}>
 										<Grid xs={12} px={3} item sx={{ display: "flex" }}>
 											<Typography
@@ -395,7 +395,7 @@ const Practice = () => {
 											<Typography variant="subtitle1" sx={{ display: "block" }}>
 												Description
 											</Typography>
-											<Grid md={10}>
+											<Grid item md={10}>
 												<div
 													style={{ color: "#65748B" }}
 													dangerouslySetInnerHTML={createMarkup(
