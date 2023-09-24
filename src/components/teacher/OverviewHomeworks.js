@@ -29,7 +29,7 @@ const Content = (props) => {
 
 // trying to decipher location of issue 48(teachers can see other teachers homework)
 
-	// const fetchDataHomeworks = async () => {
+	const fetchDataHomeworks = async () => {
 		const collection = await db.collection("assignments");
 		const results = [];
 		await collection

@@ -123,7 +123,7 @@ const AddClassForm = (props) => {
 
 				<Typography variant="subtitle1">Students</Typography>
 				<Typography color="textSecondary" variant="body2" sx={{mb: 2}}>
-					The students registerd for the class
+					The students registered for the class
 				</Typography>
 		{/**************************************Autocomplete that will contain the students that will be passed to the box-Display***********************************************************/}
 				<Autocomplete
