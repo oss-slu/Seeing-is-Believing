@@ -311,6 +311,7 @@ const Practice = () => {
 	}
 	
 
+	
 	return (
 		<>
 			<Head>
@@ -362,7 +363,7 @@ const Practice = () => {
 						</Box>
 						{view == "practice" && (
 							<Scrollbar sx={{ maxHeight: "100%" }}>
-								<Grid container xs={12} direction="column">
+								<Grid container direction="column">
 									<Grid container item xs={6} pt={3}>
 										<Grid xs={12} px={3} item sx={{ display: "flex" }}>
 											<Typography
@@ -373,7 +374,7 @@ const Practice = () => {
 													mr: 4,
 												}}
 											>
-												Word :&#160;
+												Word: &#160;
 												<Typography color="textSecondary" variant="subtitle1">
 													{word.name}
 												</Typography>
@@ -383,6 +384,7 @@ const Practice = () => {
 												sx={{
 													display: "inline",
 													display: "flex",
+													mr: 4,
 												}}
 											>
 												Dialect: &#160;
@@ -395,7 +397,7 @@ const Practice = () => {
 											<Typography variant="subtitle1" sx={{ display: "block" }}>
 												Description
 											</Typography>
-											<Grid md={10}>
+											<Grid item md={10}>
 												<div
 													style={{ color: "#65748B" }}
 													dangerouslySetInnerHTML={createMarkup(
