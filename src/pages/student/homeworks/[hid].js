@@ -415,6 +415,7 @@ const SubSection = (props) => {
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
 	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
 		useReactMediaRecorder({ audio: true });
+		
 
 	const showSpectroMain = async () => {
 		try {

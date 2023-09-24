@@ -311,6 +311,7 @@ const Practice = () => {
 	}
 	
 
+	
 	return (
 		<>
 			<Head>
