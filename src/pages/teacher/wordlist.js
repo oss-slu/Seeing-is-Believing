@@ -311,7 +311,7 @@ const WordList = () => {
 		<>
 			<Head>
 				<title>Seeing is believing</title>
-				<script src="https://unpkg.com/wavesurfer.js"></script>
+				<script src="https://unpkg.com/wavesurfer.js@6"></script>
 			</Head>
 			<Box
 				component="main"
