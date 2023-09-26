@@ -373,7 +373,7 @@ const Practice = () => {
 													mr: 4,
 												}}
 											>
-												Word :&#160;
+												Word: &#160;
 												<Typography color="textSecondary" variant="subtitle1">
 													{word.name}
 												</Typography>
@@ -383,6 +383,7 @@ const Practice = () => {
 												sx={{
 													display: "inline",
 													display: "flex",
+													mr: 4,
 												}}
 											>
 												Dialect: &#160;
