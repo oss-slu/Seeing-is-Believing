@@ -310,7 +310,7 @@ const Practice = () => {
 		<>
 			<Head>
 				<title>Seeing is Believing</title>
-				<script src="https://unpkg.com/wavesurfer.js"></script>
+				<script src="https://unpkg.com/wavesurfer.js@6"></script>
 			</Head>
 			<Box
 				component="main"
