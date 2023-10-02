@@ -12,7 +12,7 @@ export const auth0Config = {
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyCa08_y3n-_qRFvzR7Kw-R4VW8pKzj7WJI",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "seeing-is-beleiving.firebaseapp.com",
   databaseURL: "https://seeing-is-beleiving-default-rtdb.firebaseio.com",
   projectId: "seeing-is-beleiving",
