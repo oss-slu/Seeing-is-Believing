@@ -15,7 +15,7 @@ import { InstructionsBook as InstructionsIcon } from '../../icons/instruction-bo
 
 import { Language as LanguageIcon } from '../../icons/language';
 import { Save as SaveIcon } from '../../icons/save';
-import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'
+import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'	
 
 const getSectionsStudent = (t) => [
 	{
@@ -50,6 +50,7 @@ const getSectionsStudent = (t) => [
 		],
 	}
 ];
+
 const getSectionsTeacher = (t) => [
 	{
 		title: t("General"),
@@ -96,6 +97,20 @@ const getSectionsTeacher = (t) => [
 		],
 	}
 ];
+
+const getModifiedSectionsTeacher = (t) => [
+	{
+		title: t("General"),
+		items: [
+			{
+				title: t("Home"),
+				path: "/teacher",
+				icon: <HomeIcon fontSize="small" />,
+			}
+		],
+	}
+];
+
 const getSectionsAdministrator = (t) => [
 	{
 		title: t("General"),
@@ -152,6 +167,26 @@ export const DashboardSidebar = (props) => {
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
 		noSsr: true,
 	});
+	const [fetchedClasses,setFetchedClasses]=useState(null)
+	const fetchDataClasses= async()=>{
+		const collection = await db.collection("classes");
+		const results=[]
+		await collection.where("teacher","==",user.id)
+		  .get()
+		  .then(snapshot=>{
+			if(snapshot)
+			{snapshot.forEach(doc=>{
+			  results.push({id:doc.id,...doc.data()})
+			})}
+		  })
+		  if(results.length > 0) {window.res = 1}
+		  else window.res = 0
+		  console.log("window.res",window.res)
+
+			setFetchedClasses(results);
+	  }
+
+
 	//const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
 	const sections = useMemo(() => {
 		if (user.status === "Student") {
@@ -159,7 +194,8 @@ export const DashboardSidebar = (props) => {
 		} else if (user.status === "Administrator") {
 			return getSectionsAdministrator(t);
 		} else {
-			return getSectionsTeacher(t);
+			if(window.res == 1) return getSectionsTeacher(t);
+			else return getModifiedSectionsTeacher(t)
 		}
 	}, [t]);
 
