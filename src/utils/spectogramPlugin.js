@@ -195,6 +195,7 @@ const SpectrogramPlugin=class SpectrogramPlugin_ {
         this.canvas.style.width = width;
     }
 
+    //Issue with spectrogram generation could be here.
     drawSpectrogram(frequenciesData, my) {
         const spectrCc = my.spectrCc;
         const height = my.height;

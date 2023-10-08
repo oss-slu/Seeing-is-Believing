@@ -183,6 +183,34 @@ const Practice = () => {
 		}
 	};
 
+	/* TODO: timer counting up feature to time homework */
+	const [displayTime, setDisplayTime] = useState("");
+	const [time, setTime] = useState(0); // TODO: need to read and write this value to and from database so that we don't lose time spent on hw every time page is reloaded
+	
+	useEffect(() => {
+		const intervalId = setInterval(() => {
+		  setTime(prevTime => prevTime + 1); // increment by 1 second
+		}, 1000); // every 1 second
+		return () => clearInterval(intervalId); // cleanup
+	  }, []); 
+
+	useEffect(() => {
+		var hours   = Math.floor(time / 3600);
+		var minutes = Math.floor((time - (hours * 3600)) / 60);
+		var seconds = time - (hours * 3600) - (minutes * 60);
+
+		if (hours < 10) {
+			hours   = "0"+hours;
+		}
+		if (minutes < 10) {
+			minutes = "0"+minutes;
+		}
+		if (seconds < 10) {
+			seconds = "0"+seconds;
+		}
+		setDisplayTime(hours+':'+minutes+':'+seconds);
+	})
+
 	/*------------------------------------Markup description------------------------------------*/
 	const createMarkup = (html) => {
 		return {
@@ -282,7 +310,7 @@ const Practice = () => {
 		<>
 			<Head>
 				<title>Seeing is Believing</title>
-				<script src="https://unpkg.com/wavesurfer.js"></script>
+				<script src="https://unpkg.com/wavesurfer.js@6"></script>
 			</Head>
 			<Box
 				component="main"
@@ -314,11 +342,25 @@ const Practice = () => {
 						<ChatInner open={isSidebarOpen}>
 							<Scrollbar sx={{ maxHeight: "100%", pb: 10 }}>
 								{homework && (
-									<Grid xs={12} px={3} mt={2} item>
+									<Grid item xs={12} px={3} mt={2}>
 										<Typography variant="subtitle1" sx={{ display: "block" }}>
-											Homework description
+											Homework Description
 										</Typography>
-										<Grid md={10}>
+										
+										{/* TODO: Changes for tracking how long a student has been working on a homework */}
+										<Typography
+												variant="subtitle1"
+												sx={{
+													display: "inline",
+													display: "flex",
+												}}
+											>
+												Time Spent On This Assignment: &#160;
+												<Typography color="textSecondary" variant="subtitle1">
+													<em> {displayTime} </em>  
+												</Typography>
+											</Typography>
+										<Grid item md={10}>
 											<div
 												style={{ color: "#65748B" }}
 												dangerouslySetInnerHTML={createMarkup(
@@ -336,7 +378,7 @@ const Practice = () => {
 										setAnswer={handleSetAnswer}
 									/>
 								))}
-								<Grid xs={8.5} mx={3}>
+								<Grid item xs={8.5} mx={3}>
 									<LoadingButton
 										fullWidth
 										loading={isSubmitting}
@@ -358,7 +400,7 @@ const Practice = () => {
 
 const SubSection = (props) => {
 	const { word, setAnswer, position } = props;
-	const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0); // TODO: gets updated when student is on page but is not written to database so reloading page wipes how many times you attempted a recording
 	const specMainContainerRef = useRef(null);
 	const specMainRef = useRef(null);
 	const specMainNonNativeContainerRef = useRef(null);
@@ -373,11 +415,13 @@ const SubSection = (props) => {
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
 	const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
 		useReactMediaRecorder({ audio: true });
+		
 
 	const showSpectroMain = async () => {
 		try {
 			const container = specMainContainerRef.current;
-			const wavesurfer = WaveSurfer.create({
+			console.log('hello Container:', container);
+			const wavesurfer = WaveSurfer.create({ // TODO: problem with wavesurfer creation 
 				container,
 				fillParent: true,
 				plugins: [
@@ -395,6 +439,7 @@ const SubSection = (props) => {
 					}),
 				],
 			});
+			console.log('hello WaveSurfer:', wavesurfer);
 			wavesurfer.empty();
 			wavesurfer.load(word.urlAudio);
 		} catch (err) {
@@ -550,9 +595,9 @@ const SubSection = (props) => {
 	}, []);
 
 	return (
-		<Grid container xs={12} direction="column">
+		<Grid container item xs={12} direction="column">
 			<Grid container item xs={6} pt={3}>
-				<Grid xs={12} px={3} item sx={{ display: "flex" }}>
+				<Grid item xs={12} px={3} sx={{ display: "flex" }}>
 					<Typography
 						variant="subtitle1"
 						sx={{
@@ -583,7 +628,7 @@ const SubSection = (props) => {
 					<Typography variant="subtitle1" sx={{ display: "block" }}>
 						Description
 					</Typography>
-					<Grid md={10}>
+					<Grid item md={10}>
 						<div
 							style={{ color: "#65748B" }}
 							dangerouslySetInnerHTML={createMarkup(word.description)}
