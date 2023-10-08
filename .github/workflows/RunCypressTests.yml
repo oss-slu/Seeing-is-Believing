@@ -19,6 +19,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 16
+        secrets: inherit
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
