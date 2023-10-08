@@ -5,23 +5,20 @@ export const amplifyConfig = {
   aws_user_pools_id: process.env.NEXT_PUBLIC_AWS_USER_POOLS_ID,
   aws_user_pools_web_client_id: process.env.NEXT_PUBLIC_AWS_USER_POOLS_WEB_CLIENT_ID
 };
-
 export const auth0Config = {
   client_id: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
   domain: process.env.NEXT_PUBLIC_AUTH0_DOMAIN
 };
-
 export const firebaseConfig = {
-  apiKey: "AIzaSyCa08_y3n-_qRFvzR7Kw-R4VW8pKzj7WJI",
-  authDomain: "seeing-is-beleiving.firebaseapp.com",
-  databaseURL: "https://seeing-is-beleiving-default-rtdb.firebaseio.com",
-  projectId: "seeing-is-beleiving",
-  storageBucket: "seeing-is-beleiving.appspot.com",
-  messagingSenderId: "955481005378",
-  appId: "1:955481005378:web:d5145ada8733d1804d7cdb",
-  measurementId: "G-41PZRQMEBP"
+  apiKey: String(process.env.NEXT_PUBLIC_FIREBASE_API_KEY),
+  authDomain: String(process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN),
+  databaseURL: String(process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL),
+  projectId: String(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID),
+  storageBucket: String(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET),
+  messagingSenderId: String(process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_ID),
+  appId: String(process.env.NEXT_PUBLIC_FIREBASE_APP_ID),
+  measurementId: String(process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID)
 };
-
 /*export const gtmConfig = {
   containerId: process.env.NEXT_PUBLIC_GTM_CONTAINER_ID
 };*/
