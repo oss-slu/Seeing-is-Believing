@@ -65,13 +65,6 @@ const AddHomeworkForm = (props) => {
 	};
 
 	const handleSave = async () => {
-
-		if (!classes || classes.length === 0) {
-			// The teacher doesn't manage any classes, show an error message or take action
-			toast.error("You must manage at least one class to add homework.");
-			return; // Prevent further execution of the function
-		}	
-
 		try {
 			setIsLoading(true);
 			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
