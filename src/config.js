@@ -11,6 +11,8 @@ export const auth0Config = {
   domain: process.env.NEXT_PUBLIC_AUTH0_DOMAIN
 };
 
+
+//Added firebase env variables
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
