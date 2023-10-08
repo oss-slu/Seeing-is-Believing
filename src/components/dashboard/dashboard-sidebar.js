@@ -50,6 +50,7 @@ const getSectionsStudent = (t) => [
 	}
 ];
 
+//declare routes for firebase info
 const ROUTES = {
 	home: "/teacher",
 	manageClasses: "/teacher/manage_class",
