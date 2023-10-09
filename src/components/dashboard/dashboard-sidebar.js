@@ -12,10 +12,9 @@ import { DashboardSidebarSection } from './dashboard-sidebar-section';
 import {PencilAlt as PenIcon} from '../../icons/pencil-alt'
 import {ViewList as GradesIcon} from '../../icons/view-list';
 import { InstructionsBook as InstructionsIcon } from '../../icons/instruction-book';
-
 import { Language as LanguageIcon } from '../../icons/language';
 import { Save as SaveIcon } from '../../icons/save';
-import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'
+import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'	
 
 const getSectionsStudent = (t) => [
 	{
@@ -50,58 +49,85 @@ const getSectionsStudent = (t) => [
 		],
 	}
 ];
+
+//declare routes for firebase info
+const ROUTES = {
+	home: "/teacher",
+	manageClasses: "/teacher/manage_class",
+	wordList: "/teacher/word-list",
+	addHomework: "/teacher/addHomework",
+	language: "/teacher/language",
+	words: "/tacher/word"
+};
+
 const getSectionsTeacher = (t) => [
 	{
 		title: t("General"),
 		items: [
 			{
-				title: t("Home"),
-				path: "/teacher",
+				title: t("Home"), path: ROUTES.home,
 				icon: <HomeIcon fontSize="small" />,
 			},
 			/*{
-				title: t("Add a Langage"),
-				path: "/teacher/language",
+				title: t("Add a Langage"), path: ROUTES.language, 
 				icon: <LanguageIcon fontSize="small" />,
 			},
 			{
-				title: t("Manage Words"),
-				path: "/teacher/word",
+				title: t("Manage Words"), path: ROUTES.words, 
 				icon: <SaveIcon fontSize="small" />,
 			},*/
 			{
-				title: t("Homework"),
-				path: "/teacher/homework_portal",
+				title: t("Homework"), path: "/teacher/homework_portal", 
 				icon: <DocumentIcon fontSize="small" />,
 			},
 			{
 				title: t("More"),
-				path: "/teacher/word-list",
+				path: ROUTES.wordList,
 				icon: <DotsHorizontalIcon fontSize="small" />,
 				children: [
 					{
-						title: t("Words Library"),
-						path: '/teacher/wordlist'
+						title: t("Words Library"), path: ROUTES.wordlist
 					},
 					{
-						title: t('Manage Classes'),
-						path: '/teacher/manage_class'
+						title: t('Manage Classes'), path: ROUTES.manageClasses
 					},
 					{
-						title: t('Add Homework'),
-						path: '/teacher/addHomework'
+						title: t('Add Homework'), path: ROUTES.addHomework
 					},
 				]
 			},
 		],
 	}
 ];
+
+// modified display for teachers that do not manage any classes
+const getModifiedSectionsTeacher = (t) => [
+	{
+		title: t("General"),
+		items: [
+			{
+				title: t("Home"), path: ROUTES.home,
+				icon: <HomeIcon fontSize="small" />,
+			},
+			{
+				title: t("More"), path: ROUTES.wordList,
+				icon: <DotsHorizontalIcon fontSize="small" />,
+				children: [
+					{
+						title: t('Manage Classes'), path: ROUTES.manageClasses
+					}
+				]
+			},
+		],
+	}
+];
+
 const getSectionsAdministrator = (t) => [
 	{
 		title: t("General"),
 		items: [
 			{
-				title: t("Home"),
+				title: t("Home"), 
 				path: "/administrator",
 				icon: <HomeIcon fontSize="small" />,
 			},
@@ -152,14 +178,36 @@ export const DashboardSidebar = (props) => {
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
 		noSsr: true,
 	});
-	//const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
+	const [fetchedClasses,setFetchedClasses]=useState(null)
+	const fetchDataClasses= async()=>{
+		const collection = await db.collection("classes");
+		const results=[]
+		await collection.where("teacher","==",user.id)
+		  .get()
+		  .then(snapshot=>{
+			if(snapshot)
+			{snapshot.forEach(doc=>{
+			  results.push({id:doc.id,...doc.data()})
+			})}
+		  })
+		  if(results.length > 0) {window.res = 1}
+		  else window.res = 0
+		  console.log("window.res",window.res)
+
+		  setFetchedClasses(results);
+	}
+
+
+	// const sections = useMemo(() => user.status === "Student" ? getSectionsStudent(t): getSectionsTeacher(t), [t]);
+	// check user type and status, call appropriate method
 	const sections = useMemo(() => {
 		if (user.status === "Student") {
 			return getSectionsStudent(t)
 		} else if (user.status === "Administrator") {
 			return getSectionsAdministrator(t);
 		} else {
-			return getSectionsTeacher(t);
+			if(window.res == 1) return getSectionsTeacher(t);
+			else return getModifiedSectionsTeacher(t)
 		}
 	}, [t]);
 
