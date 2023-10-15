@@ -28,7 +28,14 @@ export const FirebaseRegister = (props) => {
 	const {createUserWithEmailAndPassword, getAuth} = useAuth();
 	const [isUserCreated, setIsUserCreated] = useState(false)
 	const [emailInUse, setEmailInUse] = useState(false)
-
+	
+	// State variables for the email button
+	const [isEmailButtonDisabled, setIsEmailButtonDisabled] = useState(false);
+	// Disable the button when it is clicked
+	const emailButtonClick = () => {
+	  setIsEmailButtonDisabled(true);
+	  // Any other actions here
+	}
 
 	const formik = useFormik({
 		initialValues: {
@@ -171,7 +178,10 @@ export const FirebaseRegister = (props) => {
 						/>
 					</Grid>
 				</Grid>
-				<TextField
+				
+				<Grid container spacing={4}>
+					<Grid item md={8} xs={12}>
+					<TextField
 					error={Boolean(formik.touched.email && formik.errors.email)}
 					fullWidth
 					helperText={formik.touched.email && formik.errors.email}
@@ -182,7 +192,22 @@ export const FirebaseRegister = (props) => {
 					onChange={formik.handleChange}
 					type="email"
 					value={formik.values.email}
-				/>
+				/>	
+					</Grid>
+
+
+					<Grid item md={4} xs={12}>
+					<Box textAllign = "center" paddingTop ="20px">
+					<Button variant="contained" 
+					onClick={() => { console.log('Button clicked!'); emailButtonClick(); }}
+            		disabled={isEmailButtonDisabled}
+					>
+							Get Code
+						  </Button>
+						  </Box>
+					</Grid>
+				</Grid>
+
 				<TextField
 					error={Boolean(
 						formik.touched.password && formik.errors.password
