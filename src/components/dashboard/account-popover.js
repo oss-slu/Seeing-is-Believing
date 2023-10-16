@@ -120,6 +120,20 @@ export const AccountPopover = (props) => {
             />
           </MenuItem>
         </NextLink>
+
+        <MenuItem component="a">
+            <ListItemIcon>
+              <UserCircleIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary = {(
+                <Typography variant="body1">
+                  Invite User
+                </Typography>
+              )}
+            />
+          </MenuItem>
+
         <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
