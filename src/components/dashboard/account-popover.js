@@ -39,6 +39,109 @@ export const AccountPopover = (props) => {
     }
   };
 
+  if (user.status == "Student" || user.status == "Teacher") {
+
+  return (
+    <Popover
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        horizontal: 'center',
+        vertical: 'bottom'
+      }}
+      keepMounted
+      onClose={onClose}
+      open={open}
+      PaperProps={{ sx: { width: 300 } }}
+      transitionDuration={0}
+      {...other}>
+      <Box
+        sx={{
+          alignItems: 'center',
+          p: 2,
+          display: 'flex'
+        }}
+      >
+        <Avatar
+          sx={{
+            bgcolor:'#7582EB',
+            height: 40,
+            width: 40
+          }}
+        >
+            {user && (firstToUpperCase(user.firstName)+ firstToUpperCase(user.lastName))}
+        </Avatar>
+        <Box
+          sx={{
+            ml: 1
+          }}
+        >
+          <Typography variant="body1">
+            {user &&(user.firstName +" "+ user.lastName)  }
+          </Typography>
+          <Typography
+            color="textSecondary"
+            variant="body2"
+          >
+            {user && (user.organization)}
+          </Typography>
+        </Box>
+      </Box>
+      <Divider />
+      <Box sx={{ my: 1 }}>
+        <NextLink
+          href="/dashboard/social/profile"
+          passHref
+        >
+          <MenuItem component="a">
+            <ListItemIcon>
+              <UserCircleIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary={(
+                <Typography variant="body1">
+                  Profile
+                </Typography>
+              )}
+            />
+          </MenuItem>
+        </NextLink>
+        <NextLink
+          href="/dashboard/account"
+          passHref
+        >
+          <MenuItem component="a">
+            <ListItemIcon>
+              <CogIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary={(
+                <Typography variant="body1">
+                  Settings
+                </Typography>
+              )}
+            />
+          </MenuItem>
+        </NextLink>
+
+        <Divider />
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText
+            primary={(
+              <Typography variant="body1">
+                Logout
+              </Typography>
+            )}
+          />
+        </MenuItem>
+      </Box>
+    </Popover>
+  );
+
+} else { // add "Invite User" section if user status is Administrator
+
   return (
     <Popover
       anchorEl={anchorEl}
@@ -150,7 +253,8 @@ export const AccountPopover = (props) => {
       </Box>
     </Popover>
   );
-};
+}
+}
 
 AccountPopover.propTypes = {
   anchorEl: PropTypes.any,
