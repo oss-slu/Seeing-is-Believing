@@ -5,22 +5,43 @@ import toast from 'react-hot-toast';
 import {
   Avatar,
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   ListItemIcon,
   ListItemText,
   MenuItem,
   Popover,
+  TextField,
   Typography
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
+import React, { useState } from 'react';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
   const { user,logout } = useAuth();
+  const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState(' ');
+
+  const handleInviteUser = () => {
+    // This function does nothing for testing
+  };
+
+  const hadleOpenInviteUserDialog = () => {
+    setInviteUserDialogOpen(true);
+  }
+
+  const handleCloseInviteUserDialog = () => {
+    setInviteUserDialogOpen(false);
+  }
 
   const firstToUpperCase=(i)=>{
     if(i){
@@ -143,6 +164,7 @@ export const AccountPopover = (props) => {
 } else { // add "Invite User" section if user status is Administrator
 
   return (
+    <div>
     <Popover
       anchorEl={anchorEl}
       anchorOrigin={{
@@ -224,7 +246,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
 
-        <MenuItem component="a">
+        <MenuItem onClick={hadleOpenInviteUserDialog}>
             <ListItemIcon>
               <UserCircleIcon fontSize="small" />
             </ListItemIcon>
@@ -252,6 +274,37 @@ export const AccountPopover = (props) => {
         </MenuItem>
       </Box>
     </Popover>
+
+// Invite User popup
+    <Dialog
+      open={inviteUserDialogOpen}
+      onClose={handleCloseInviteUserDialog}
+      maxWidth="sm"
+      fullWidth
+    >
+      <DialogTitle>Invite User</DialogTitle>
+      <DialogContent>
+        <TextField
+        label="User Email"
+        variant="outlined"
+        fullWidth
+        value={userEmail}
+        onChange={(e) => setUserEmail(e.target.value)}
+        sx={{
+          marginTop: '20px'
+        }}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseInviteUserDialog} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={handleInviteUser} color="primary">
+          Invite
+        </Button>
+      </DialogActions>
+    </Dialog>
+    </div>
   );
 }
 }
