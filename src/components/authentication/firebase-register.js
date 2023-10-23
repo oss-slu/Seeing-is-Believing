@@ -38,7 +38,7 @@ export const FirebaseRegister = (props) => {
 			password: "",
 			confirmPassword: "",
 			status: "",
-			code: "",
+			//code: "", Use this if we add the code functionality back
 			organizations: "",
 			policy: true,
 			submit: null,
@@ -61,13 +61,13 @@ export const FirebaseRegister = (props) => {
 				.required("Required *")
 				.oneOf([Yup.ref("password"), null], "Password doesn't match"),
 			status: Yup.string().required("Required *"),     
-			code: Yup.string().required("Required *"),
+			//code: Yup.string().required("Required *"), code functionality
 			organizations: Yup.string().required("Required *"),
 			policy: Yup.boolean().oneOf([true], "This field must be checked"),
 		}),
 		onSubmit: async (values, helpers) => {
 			try {
-				switch (values.status) {
+				/*switch (values.status) {
 					case "Student":
 						if(values.code!=codes.student){throw new Error('Wrong verification code!');}
 						break;
@@ -79,7 +79,7 @@ export const FirebaseRegister = (props) => {
 						//break;
 					default:
 						break;
-				}
+				} code functionality for sign up */
 				const userCreated = await createUserWithEmailAndPassword(
 					values.email,
 					values.password
@@ -217,7 +217,8 @@ export const FirebaseRegister = (props) => {
 					type="password"
 					value={formik.values.confirmPassword}
 				/>
-				<Grid container spacing={3}>
+				{/* this is all commented out because we are removing the code from sign up functionality  
+				<Grid container spacing={3}> 
 					<Grid item md={6} xs={12}>
 						<FormControl
 							variant="standard"
@@ -245,7 +246,7 @@ export const FirebaseRegister = (props) => {
 								})}
 							</Select>
 						</FormControl>
-					</Grid>
+					</Grid> 
 					<Grid item md={6} xs={12}>
 						<TextField
 							error={Boolean(
@@ -263,8 +264,34 @@ export const FirebaseRegister = (props) => {
 							type="text"
 							value={formik.values.code}
 						/>
-					</Grid>
-				</Grid>
+					</Grid> 
+						</Grid>*/}
+				<FormControl
+							variant="standard"
+							sx={{mt: 2, minWidth: "100%"}}
+							error={Boolean(
+								formik.touched.status && formik.errors.status
+							)}
+						>
+							<InputLabel id="status">Status</InputLabel>
+							<Select
+								displayEmpty
+								labelId="status"
+								fullWidth
+								name="status"
+								onBlur={formik.handleBlur}
+								onChange={formik.handleChange}
+								value={formik.values.status}
+							>
+								{status.map((item, pos) => {
+									return (
+										<MenuItem key={pos} value={item.title}>
+											{item.title}
+										</MenuItem>
+									);
+								})}
+							</Select>
+						</FormControl>
 				<Box mb={3}>
 					<FormControl
 						variant="standard"
