@@ -275,7 +275,6 @@ export const AccountPopover = (props) => {
       </Box>
     </Popover>
 
-// Invite User popup
     <Dialog
       open={inviteUserDialogOpen}
       onClose={handleCloseInviteUserDialog}
