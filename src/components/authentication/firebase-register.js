@@ -74,9 +74,9 @@ export const FirebaseRegister = (props) => {
 					case "Teacher":
 						if(values.code!=codes.teacher){throw new Error('Wrong verification code!');}
 						break;
-					case "Administrator":
-						if(values.code!=codes.admin){throw new Error('Wrong verification code!')}
-						break;
+					//case "Administrator":
+						//if(values.code!=codes.admin){throw new Error('Wrong verification code!')}
+						//break;
 					default:
 						break;
 				}
@@ -348,7 +348,7 @@ export const FirebaseRegister = (props) => {
 	);
 };
 
-const status = [{title: "Student"}, {title: "Teacher"}, {title: "Administrator"}];
+const status = [{title: "Student"}, {title: "Teacher"}];
 
 const organizations = [
 	{title: "Bradley University"},
