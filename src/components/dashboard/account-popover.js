@@ -34,7 +34,17 @@ export const AccountPopover = (props) => {
   const [userEmail, setUserEmail] = useState(' ');
 
   const handleInviteUser = async () => {
+
     try  {
+      const email = userEmail.trim();
+
+      if (!email) {
+        //Ensure that the user email is not empty
+        return;
+      }
+
+      await firebase.auth().createUserWithEmailAndPassword(email, '');
+      
       const user = firebase.auth().currentUser;
 
       if (user) {
