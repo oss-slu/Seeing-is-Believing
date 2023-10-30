@@ -23,6 +23,8 @@ import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import React, { useState } from 'react';
+import firebase from 'firebase/app';
+import {useFormik} from "formik";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -32,8 +34,12 @@ export const AccountPopover = (props) => {
   const [userEmail, setUserEmail] = useState(' ');
 
   const handleInviteUser = () => {
-    // This function does nothing for testing
-  };
+    //const formik = useFormik({
+      //initialValues: {
+       // userEmail: ""
+  }
+    //)}
+  //};
 
   const hadleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
@@ -275,14 +281,13 @@ export const AccountPopover = (props) => {
       </Box>
     </Popover>
 
-// Invite User popup
     <Dialog
       open={inviteUserDialogOpen}
       onClose={handleCloseInviteUserDialog}
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle>Invite User</DialogTitle>
+      <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
         <TextField
         label="User Email"
