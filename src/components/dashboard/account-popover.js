@@ -33,14 +33,20 @@ export const AccountPopover = (props) => {
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
 
-  const handleInviteUser = () => {
-    //const formik = useFormik({
-      //initialValues: {
-       // userEmail: ""
-  }
-    //)}
-  //};
+  const handleInviteUser = async () => {
+    try  {
+      const user = firebase.auth().currentUser;
 
+      if (user) {
+        await user.sendEmailVerification();
+      }
+
+      handleCloseInviteUserDialog();
+    } catch (error) {
+      //handle error
+    }
+  }
+ 
   const hadleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
   }
@@ -167,7 +173,7 @@ export const AccountPopover = (props) => {
     </Popover>
   );
 
-} else { // add "Invite User" section if user status is Administrator
+} else { // add "Invite Admin" section if user status is Administrator
 
   return (
     <div>
@@ -259,7 +265,7 @@ export const AccountPopover = (props) => {
             <ListItemText
               primary = {(
                 <Typography variant="body1">
-                  Invite User
+                  Invite Administrator
                 </Typography>
               )}
             />
