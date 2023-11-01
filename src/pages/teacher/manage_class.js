@@ -13,10 +13,12 @@ import EditClassForm from "../../components/teacher/classPage/EditClassForm";
 import DeleteClassForm from "../../components/teacher/classPage/DeleteClassForm";
 import SwipeableViews from "react-swipeable-views";
 import {db} from "../../lib/firebase";
+import { useAuth } from '../../hooks/use-auth';
 
 const ClassPage = () => {
 	const [activeStep, setActiveStep] = useState(0);
 	const [complete, setComplete] = useState(false);
+	const { user } = useAuth();
 	const [index, setIndex] = useState(0);
 	const [languages, setLanguages] = useState([]);
 	const [terms, setTerms] = useState([]);
@@ -68,7 +70,7 @@ const ClassPage = () => {
 	const fetchDataClasses=async () =>{
 		const collection= await db.collection("classes");
 		let results=[];
-		await collection.get().then(snapshot=>{
+		await collection.where("teacher","==",user.id).get().then(snapshot=>{
 			snapshot.docs.forEach(doc=>{
 				const newClass={id:doc.id,...doc.data()}
 				results.push(newClass)
