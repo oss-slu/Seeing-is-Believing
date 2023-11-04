@@ -15,6 +15,7 @@ import { InstructionsBook as InstructionsIcon } from '../../icons/instruction-bo
 import { Language as LanguageIcon } from '../../icons/language';
 import { Save as SaveIcon } from '../../icons/save';
 import { DotsHorizontal as DotsHorizontalIcon } from '../../icons/dots-horizontal'	
+import {db} from "../../lib/firebase";
 
 const getSectionsStudent = (t) => [
 	{
@@ -54,7 +55,7 @@ const getSectionsStudent = (t) => [
 const ROUTES = {
 	home: "/teacher",
 	manageClasses: "/teacher/manage_class",
-	wordList: "/teacher/word-list",
+	wordList: "/teacher/wordlist",
 	addHomework: "/teacher/addHomework",
 	language: "/teacher/language",
 	words: "/tacher/word"
@@ -86,7 +87,7 @@ const getSectionsTeacher = (t) => [
 				icon: <DotsHorizontalIcon fontSize="small" />,
 				children: [
 					{
-						title: t("Words Library"), path: ROUTES.wordlist
+						title: t("Words Library"), path: ROUTES.wordList
 					},
 					{
 						title: t('Manage Classes'), path: ROUTES.manageClasses
@@ -115,7 +116,7 @@ const getModifiedSectionsTeacher = (t) => [
 				children: [
 					{
 						title: t('Manage Classes'), path: ROUTES.manageClasses
-					}
+					},
 				]
 			},
 		],
@@ -178,23 +179,27 @@ export const DashboardSidebar = (props) => {
 	const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"), {
 		noSsr: true,
 	});
-	const [fetchedClasses,setFetchedClasses]=useState(null)
-	const fetchDataClasses= async()=>{
-		const collection = await db.collection("classes");
-		const results=[]
-		await collection.where("teacher","==",user.id)
-		  .get()
-		  .then(snapshot=>{
-			if(snapshot)
-			{snapshot.forEach(doc=>{
-			  results.push({id:doc.id,...doc.data()})
-			})}
-		  })
-		  if(results.length > 0) {window.res = 1}
-		  else window.res = 0
-		  console.log("window.res",window.res)
+	const [fetchedClasses,setFetchedClasses]=useState(null);
+	const [res, setRes] = useState(0);
 
-		  setFetchedClasses(results);
+	useEffect(() => {
+		fetchDataClasses();
+	}, []);
+	
+
+	const fetchDataClasses=async () =>{
+		const collection= await db.collection("classes");
+		let results=[];
+		await collection.where("teacher","==",user.id).get().then(snapshot=>{
+			snapshot.docs.forEach(doc=>{
+				const newClass={id:doc.id,...doc.data()}
+				results.push(newClass)
+			})
+		})
+		if (results.length > 0) {
+			setRes(1);
+		}
+		setFetchedClasses(results)
 	}
 
 
@@ -206,8 +211,8 @@ export const DashboardSidebar = (props) => {
 		} else if (user.status === "Administrator") {
 			return getSectionsAdministrator(t);
 		} else {
-			if(window.res == 1) return getSectionsTeacher(t);
-			else return getModifiedSectionsTeacher(t)
+			if(res == 1) return getSectionsTeacher(t);
+			else return getModifiedSectionsTeacher(t);
 		}
 	}, [t]);
 

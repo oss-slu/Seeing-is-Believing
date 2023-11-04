@@ -53,7 +53,7 @@ const Page = () => {
 	const fetchDataClasses=async () =>{
 		const collection= await db.collection("classes");
 		let results=[];
-		await collection.get().then(snapshot=>{
+		await collection.where("teacher","==",user.id).get().then(snapshot=>{
 			snapshot.docs.forEach(doc=>{
 				const newClass={id:doc.id,...doc.data()}
 				results.push(newClass)
