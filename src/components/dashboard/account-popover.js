@@ -33,6 +33,21 @@ export const AccountPopover = (props) => {
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
 
+  const functions = require('firebase-functions');
+  const admin = require('firebase-admin');
+  admin.initializeApp();
+  const nodemailer = require('nodemailer');
+
+  const mailTransport = nodemailer.createTransport({
+    service: 'Gmail',
+    auth : {
+      user: 'testemail@gmail.com',
+      pass: 'randomPass',
+    },
+  });
+
+  exports.sendCustom
+
   const handleInviteUser = async () => {
 
     try  {
