@@ -23,6 +23,7 @@ import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import React, { useState } from 'react';
+import firebase from "../../lib/firebase";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -30,12 +31,19 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
+  const { passwordReset } = useAuth();
 
-  const handleInviteUser = () => {
-    // This function does nothing for testing
-  };
+  const handleInviteUser = async () => {
+    const email = userEmail.trim();
+    try {
+      await passwordReset(email, '', '');
+    } catch(err) {
+      console.error(err);
+    }
+    handleCloseInviteUserDialog;
+  }
 
-  const hadleOpenInviteUserDialog = () => {
+  const handleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
   }
 
@@ -161,7 +169,7 @@ export const AccountPopover = (props) => {
     </Popover>
   );
 
-} else { // add "Invite User" section if user status is Administrator
+} else { // add "Invite Admin" section if user status is Administrator
 
   return (
     <div>
@@ -246,14 +254,14 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
 
-        <MenuItem onClick={hadleOpenInviteUserDialog}>
+        <MenuItem onClick={handleOpenInviteUserDialog}>
             <ListItemIcon>
               <UserCircleIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText
               primary = {(
                 <Typography variant="body1">
-                  Invite User
+                  Invite Administrator
                 </Typography>
               )}
             />
@@ -275,14 +283,13 @@ export const AccountPopover = (props) => {
       </Box>
     </Popover>
 
-// Invite User popup
     <Dialog
       open={inviteUserDialogOpen}
       onClose={handleCloseInviteUserDialog}
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle>Invite User</DialogTitle>
+      <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
         <TextField
         label="User Email"
@@ -308,6 +315,7 @@ export const AccountPopover = (props) => {
   );
 }
 }
+
 
 AccountPopover.propTypes = {
   anchorEl: PropTypes.any,
