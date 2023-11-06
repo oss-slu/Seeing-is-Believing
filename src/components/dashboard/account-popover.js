@@ -23,8 +23,7 @@ import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import React, { useState } from 'react';
-import firebase from 'firebase/app';
-import {useFormik} from "formik";
+import firebase from "../../lib/firebase";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -32,47 +31,19 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-
-  const functions = require('firebase-functions');
-  const admin = require('firebase-admin');
-  admin.initializeApp();
-  const nodemailer = require('nodemailer');
-
-  const mailTransport = nodemailer.createTransport({
-    service: 'Gmail',
-    auth : {
-      user: 'testemail@gmail.com',
-      pass: 'randomPass',
-    },
-  });
-
-  exports.sendCustom
+  const { passwordReset } = useAuth();
 
   const handleInviteUser = async () => {
-
-    try  {
-      const email = userEmail.trim();
-
-      if (!email) {
-        //Ensure that the user email is not empty
-        return;
-      }
-
-      await firebase.auth().createUserWithEmailAndPassword(email, '');
-      
-      const user = firebase.auth().currentUser;
-
-      if (user) {
-        await user.sendEmailVerification();
-      }
-
-      handleCloseInviteUserDialog();
-    } catch (error) {
-      //handle error
+    const email = userEmail.trim();
+    try {
+      await passwordReset(email, '', '');
+    } catch(err) {
+      console.error(err);
     }
+    handleCloseInviteUserDialog;
   }
- 
-  const hadleOpenInviteUserDialog = () => {
+
+  const handleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
   }
 
@@ -283,7 +254,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
 
-        <MenuItem onClick={hadleOpenInviteUserDialog}>
+        <MenuItem onClick={handleOpenInviteUserDialog}>
             <ListItemIcon>
               <UserCircleIcon fontSize="small" />
             </ListItemIcon>
@@ -344,6 +315,7 @@ export const AccountPopover = (props) => {
   );
 }
 }
+
 
 AccountPopover.propTypes = {
   anchorEl: PropTypes.any,
