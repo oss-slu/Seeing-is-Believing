@@ -31,12 +31,17 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const { passwordReset } = useAuth();
 
   const handleInviteUser = async () => {
+
     const email = userEmail.trim();
     try {
-      await passwordReset(email, '', '');
+      await firebase
+        .auth()
+        .sendPasswordResetEmail(email, {
+          url: `${window.location.origin}`+'/authentication/login'
+        })
+        console.log("email sent")
     } catch(err) {
       console.error(err);
     }
