@@ -31,19 +31,32 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const {sendPasswordResetEmail, getAuth} = useAuth();
+  const {createUserWithEmailAndPassword, getAuth} = useAuth();
+  const {sendPasswordResetEmail} = useAuth();
 
   const handleInviteUser = async () => {
 
     const email = userEmail.trim();
+    const password = "setpassword"
       console.log("in try")
-      await sendPasswordResetEmail(email).then((a) => {
-        console.log("Password reset email sent")
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode,errorMessage)
-      });
+      const userCreated = await createUserWithEmailAndPassword(
+        email,
+        password
+      )
+        .then((res) => {
+          console.log(res.user);
+          sendPasswordResetEmail(email).then((a) => {
+            console.log("Password reset email sent")
+          }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode,errorMessage)
+          });
+        })
+        .catch((err) => {
+          console.log("Something went wrong",err)
+        });
+      
     handleCloseInviteUserDialog();
   }
 
