@@ -41,11 +41,10 @@ export const AccountPopover = (props) => {
         .sendPasswordResetEmail(email, {
           url: `${window.location.origin}`+'/authentication/login'
         })
-        console.log("email sent")
     } catch(err) {
       console.error(err);
     }
-    handleCloseInviteUserDialog;
+    handleCloseInviteUserDialog();
   }
 
   const handleOpenInviteUserDialog = () => {
