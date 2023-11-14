@@ -31,16 +31,20 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const { passwordReset } = useAuth();
+  const {sendPasswordResetEmail, getAuth} = useAuth();
 
   const handleInviteUser = async () => {
+
     const email = userEmail.trim();
-    try {
-      await passwordReset(email, '', '');
-    } catch(err) {
-      console.error(err);
-    }
-    handleCloseInviteUserDialog;
+      console.log("in try")
+      await sendPasswordResetEmail(email).then((a) => {
+        console.log("Password reset email sent")
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode,errorMessage)
+      });
+    handleCloseInviteUserDialog();
   }
 
   const handleOpenInviteUserDialog = () => {
