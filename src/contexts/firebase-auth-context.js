@@ -1,7 +1,6 @@
 import { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import firebase,{db} from '../lib/firebase';
-
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
@@ -38,7 +37,9 @@ export const AuthProvider = (props) => {
       .where("email", "==", user.email)
       .get()
       .then((snapshot) => {
-        results = {id:snapshot.docs[0].id,...snapshot.docs[0].data()}
+       // results = {id:snapshot.docs[0].id,...snapshot.docs[0].data()}
+       if(snapshot) results = {id:snapshot.docs[0].id,...snapshot.docs[0].data()}
+        else return false
       });
     dispatch({
       type: 'AUTH_STATE_CHANGED',
