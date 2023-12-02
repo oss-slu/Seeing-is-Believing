@@ -105,7 +105,7 @@ const WordList = () => {
 			plugins: [
 				SpectrogramPlugin.create({
 					container: specRecordRef.current,
-					fftSamples: 2048,
+					fftSamples: 1024,
 					noverlap: 0,
 					labels: false,
 					colorMap: COLORMAPS.hsv,
@@ -129,7 +129,7 @@ const WordList = () => {
 					SpectrogramPlugin.create({
 						wavesurfer: wavesurfer,
 						container: specMainRef.current,
-						fftSamples: 2048,
+						fftSamples: 1024,
 						noverlap: 0,
 						labels: false,
 						colorMap: COLORMAPS.hsv,
@@ -157,7 +157,7 @@ const WordList = () => {
 					SpectrogramPlugin.create({
 						wavesurfer: wavesurfer,
 						container: specMainNonNativeRef.current,
-						fftSamples: 2048,
+						fftSamples: 1024,
 						noverlap: 0,
 						labels: false,
 						colorMap: COLORMAPS.hsv,
@@ -440,9 +440,9 @@ const WordList = () => {
 										<Grid
 											sx={{
 												maxWidth: "665px",
-												maxHeight: "350px",
-												overflowX: "scroll",
-												overflowY: "scroll",
+												maxHeight: "450px",
+												overflowX: "clip",
+												overflowY: "clip",
 											}}
 										>
 											<div
@@ -515,9 +515,9 @@ const WordList = () => {
 										<Grid
 											sx={{
 												maxWidth: "665px",
-												maxHeight: "350px",
-												overflowX: "scroll",
-												overflowY: "scroll",
+												maxHeight: "450px",
+												overflowX: "clip",
+												overflowY: "clip",
 											}}
 										>
 											<div
