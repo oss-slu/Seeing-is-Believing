@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import Head from "next/head";
-import NextLink from "next/link";
+import Link from "next/link";
 import {
 	Box,
 	Button,
@@ -61,7 +61,7 @@ const Overview = () => {
 	}, []);
 
 	return (
-		<Box>
+        <Box>
 			<Head>
 				<title>Seeing-is-believing</title>
 			</Head>
@@ -86,39 +86,36 @@ const Overview = () => {
 						</Grid>
 						<Grid item container spacing={6}>
 							<Grid item md={4} xs={12}>
-								<NextLink
-									href="/student/homework_portal"
-									passHref
-								>
+								<Link href="/student/homework_portal" passHref legacyBehavior>
 									<HomeworkCard
 										sx={{borderRadius: 0.6}}
 										heightImg={"445px"}
 										image={homeworkImg}
 										title="Homework"
 									/>
-								</NextLink>
+								</Link>
 							</Grid>
 
 							<Grid item md={4} xs={12}>
-								<NextLink href="/student/practice" passHref>
+								<Link href="/student/practice" passHref legacyBehavior>
 									<HomeworkCard
 										sx={{borderRadius: 0.6}}
 										heightImg={"2010px"}
 										image={practiceImg}
 										title="Practice"
 									/>
-								</NextLink>
+								</Link>
 							</Grid>
 
 							<Grid item md={4} xs={12}>
-								<NextLink href="/student/grades" passHref>
+								<Link href="/student/grades" passHref legacyBehavior>
 									<HomeworkCard
 										sx={{borderRadius: 0.6}}
 										heightImg={"330px"}
 										image={gradesImg}
 										title="Grades"
 									/>
-								</NextLink>
+								</Link>
 							</Grid>
 						</Grid>
 						<Grid item sx={{p: 0, mt: 4, mb: 1}} md={12} xs={12}>
@@ -199,7 +196,7 @@ const Overview = () => {
 				</Container>
 			</Box>
 		</Box>
-	);
+    );
 };
 
 Overview.getLayout = (page) => (

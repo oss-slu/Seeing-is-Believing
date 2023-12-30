@@ -19,123 +19,121 @@ const Register = (props) => {
     gtm.push({ event: 'page_view' });
   }, []);*/
 
-  return (
-    <>
-      <Head>
-        <title>Seeing Is Believing</title>
-      </Head>
-      <Box
-        component="main"
+  return <>
+    <Head>
+      <title>Seeing Is Believing</title>
+    </Head>
+    <Box
+      component="main"
+      sx={{
+        backgroundColor: 'background.default',
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}
+    >
+      <Container
+        maxWidth="sm"
         sx={{
-          backgroundColor: 'background.default',
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh'
+          py: {
+            xs: '40px',
+            md: '45px'
+          }
         }}
       >
-        <Container
-          maxWidth="sm"
+
+      <Box
           sx={{
-            py: {
-              xs: '40px',
-              md: '45px'
+            alignItems: 'center',
+            backgroundColor: (theme) => theme.palette.mode === 'dark'
+              ? 'neutral.900'
+              : 'neutral.100',
+            borderColor: 'divider',
+            borderRadius: 1,
+            borderStyle: 'solid',
+            borderWidth: 1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            mb: 4,
+            p: 2,
+            '& > img': {
+              height: 32,
+              width: 'auto',
+              flexGrow: 0,
+              flexShrink: 0
             }
           }}
         >
+          <Typography
+            color="textSecondary"
+            variant="caption"
+          >
+            Seeing Is Believing
+          </Typography>
+          <img
+            alt="Logo"
+            src={'/static/icons/logo1.png'}
+            style={{height: 50, width: 50}}
+          />
+        </Box>
 
-        <Box
+        <Card
+          elevation={16}
+          sx={{ p: 4 }}
+        >
+          <Box
             sx={{
               alignItems: 'center',
-              backgroundColor: (theme) => theme.palette.mode === 'dark'
-                ? 'neutral.900'
-                : 'neutral.100',
-              borderColor: 'divider',
-              borderRadius: 1,
-              borderStyle: 'solid',
-              borderWidth: 1,
               display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              mb: 4,
-              p: 2,
-              '& > img': {
-                height: 32,
-                width: 'auto',
-                flexGrow: 0,
-                flexShrink: 0
-              }
+              flexDirection: 'column',
+              justifyContent: 'center'
             }}
           >
-            <Typography
-              color="textSecondary"
-              variant="caption"
-            >
-              Seeing Is Believing
-            </Typography>
-            <img
-              alt="Logo"
-              src={'/static/icons/logo1.png'}
-              style={{height: 50, width: 50}}
-            />
-          </Box>
-  
-          <Card
-            elevation={16}
-            sx={{ p: 4 }}
-          >
-            <Box
-              sx={{
-                alignItems: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
-              }}
-            >
-              <NextLink
-                href="/"
-                passHref
-              >
-                <a>
-                  <img
-                    alt="Logo"
-                    src={'/static/icons/logo1.png'}
-                    style={{height: 50, width: 50}}
-                  />
-                </a>
-              </NextLink>
-              <Typography variant="h4">
-                Register
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                flexGrow: 1,
-                mt: 3
-              }}
-            >
-              <FirebaseRegister codes={props.codes} />
-            </Box>
-            <Divider sx={{ my: 3 }} />
-            <Typography variant="body2">Already have an account?&#160;
             <NextLink
-              href={disableGuard
-                ? `/authentication/login?disableGuard=${disableGuard}`
-                : '/authentication/login'}
+              href="/"
               passHref
             >
-              <Link
-                color="primary"
-                variant="body2"
-              >
-                Sign In
-              </Link>
+
+              <img
+                alt="Logo"
+                src={'/static/icons/logo1.png'}
+                style={{height: 50, width: 50}}
+              />
+
             </NextLink>
+            <Typography variant="h4">
+              Register
             </Typography>
-          </Card>
-        </Container>
-      </Box>
-    </>
-  );
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              mt: 3
+            }}
+          >
+            <FirebaseRegister codes={props.codes} />
+          </Box>
+          <Divider sx={{ my: 3 }} />
+          <Typography variant="body2">Already have an account?&#160;
+          <NextLink
+            href={disableGuard
+              ? `/authentication/login?disableGuard=${disableGuard}`
+              : '/authentication/login'}
+            passHref
+            legacyBehavior>
+            <Link
+              color="primary"
+              variant="body2"
+            >
+              Sign In
+            </Link>
+          </NextLink>
+          </Typography>
+        </Card>
+      </Container>
+    </Box>
+  </>;
 };
 
 Register.getLayout = (page) => (
