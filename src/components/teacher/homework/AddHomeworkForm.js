@@ -17,11 +17,12 @@ import {
     Slider,
     Stack
 } from "@mui/material";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers'
 import TimePicker from '@mui/lab/TimePicker';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+//import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers'
 import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LoadingButton from "@mui/lab/LoadingButton";
 import {db} from "../../../lib/firebase";

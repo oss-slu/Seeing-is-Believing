@@ -268,7 +268,7 @@ export const DashboardSidebar = (props) => {
 								justifyContent: "center",
 							}}
 						>
-							<NextLink href="/" passHref>
+							<NextLink href="/" passHref legacyBehavior>
 								<img
 									alt='Seeing is Believing'
 									src='/static/icons/logo.png'

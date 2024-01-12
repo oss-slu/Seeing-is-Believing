@@ -61,7 +61,7 @@ const Overview = () => {
 	}, []);
 
 	return (
-		<Box>
+        <Box>
 			<Head>
 				<title>Seeing is Believing</title>
 			</Head>
@@ -87,7 +87,7 @@ const Overview = () => {
 						<Grid item container spacing={6}>
 
 							<Grid item md={4} xs={12}>
-								<NextLink href="/teacher/wordlist" passHref>
+								<NextLink href="/teacher/wordlist" passHref legacyBehavior>
 									<HomeworkCard
 										sx={{borderRadius: 0.6}}
 										heightImg={"445px"}
@@ -160,7 +160,7 @@ const Overview = () => {
 				</Container>
 			</Box>
 		</Box>
-	);
+    );
 };
 
 Overview.getLayout = (page) => (
