@@ -31,7 +31,7 @@ const ClassPage = () => {
 		await collection.get().then((snapshot) => {
 			//results = snapshot.docs[0].data();
 			snapshot.docs.forEach((doc) => {
-				const newLanguage = doc.data();
+				var newLanguage = doc.data();
 				newLanguage={id:doc.id,...newLanguage}
 				results.push(newLanguage);
 			});
@@ -45,7 +45,7 @@ const ClassPage = () => {
 		await collection.get().then((snapshot) => {
 			//results = snapshot.docs[0].data();
 			snapshot.docs.forEach((doc) => {
-				const newTerm = doc.data();
+				var newTerm = doc.data();
 				newTerm={id:doc.id,...newTerm}
 				results.push(newTerm);
 			});

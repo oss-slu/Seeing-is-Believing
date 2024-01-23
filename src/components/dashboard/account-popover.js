@@ -117,10 +117,7 @@ export const AccountPopover = (props) => {
       </Box>
       <Divider />
       <Box sx={{ my: 1 }}>
-        <NextLink
-          href="/dashboard/social/profile"
-          passHref
-        >
+        <NextLink href="/dashboard/social/profile" passHref legacyBehavior>
           <MenuItem component="a">
             <ListItemIcon>
               <UserCircleIcon fontSize="small" />
@@ -134,10 +131,7 @@ export const AccountPopover = (props) => {
             />
           </MenuItem>
         </NextLink>
-        <NextLink
-          href="/dashboard/account"
-          passHref
-        >
+        <NextLink href="/dashboard/account" passHref legacyBehavior>
           <MenuItem component="a">
             <ListItemIcon>
               <CogIcon fontSize="small" />
@@ -219,10 +213,7 @@ export const AccountPopover = (props) => {
       </Box>
       <Divider />
       <Box sx={{ my: 1 }}>
-        <NextLink
-          href="/dashboard/social/profile"
-          passHref
-        >
+        <NextLink href="/dashboard/social/profile" passHref legacyBehavior>
           <MenuItem component="a">
             <ListItemIcon>
               <UserCircleIcon fontSize="small" />
@@ -236,10 +227,7 @@ export const AccountPopover = (props) => {
             />
           </MenuItem>
         </NextLink>
-        <NextLink
-          href="/dashboard/account"
-          passHref
-        >
+        <NextLink href="/dashboard/account" passHref legacyBehavior>
           <MenuItem component="a">
             <ListItemIcon>
               <CogIcon fontSize="small" />

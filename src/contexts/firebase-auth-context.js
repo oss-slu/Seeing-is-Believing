@@ -42,6 +42,7 @@ export const AuthProvider = (props) => {
       .where("email", "==", user.email)
       .get()
       .then((snapshot) => {
+        console.log("snapshot.docs[0]",snapshot,snapshot.docs[0])
         results = {id:snapshot.docs[0].id,...snapshot.docs[0].data()}
       });
 
