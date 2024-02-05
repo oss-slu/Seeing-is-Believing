@@ -31,12 +31,16 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
+  const [userFirstName, setUserFirstName] = useState(' ');
+  const [userLastName, setUserLastName] = useState(' ');
   const {createUserWithEmailAndPassword, getAuth} = useAuth();
   const {sendPasswordResetEmail} = useAuth();
 
   const handleInviteUser = async () => {
 
     const email = userEmail.trim();
+    const firstName = userFirstName.trim();
+    const lastName = userLastName.trim();
     const password = "setpassword"
       console.log("in try")
       const userCreated = await createUserWithEmailAndPassword(
@@ -56,6 +60,10 @@ export const AccountPopover = (props) => {
         .catch((err) => {
           console.log("Something went wrong",err)
         });
+      if (userCreated) {
+        
+      }
+        
       
     handleCloseInviteUserDialog();
   }
@@ -309,6 +317,26 @@ export const AccountPopover = (props) => {
       <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
         <TextField
+        label="First Name"
+        variant="outlined"
+        fullWidth
+        value={userFirstName}
+        onChange={(e) => setUserFirstName(e.target.value)}
+        sx={{
+          marginTop: '20px'
+        }}
+      />
+      <TextField
+        label="Last Name"
+        variant="outlined"
+        fullWidth
+        value={userLastName}
+        onChange={(e) => setUserLastName(e.target.value)}
+        sx={{
+          marginTop: '20px'
+        }}
+      />
+      <TextField
         label="User Email"
         variant="outlined"
         fullWidth
