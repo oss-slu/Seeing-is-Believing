@@ -33,6 +33,7 @@ export const AccountPopover = (props) => {
   const [userEmail, setUserEmail] = useState(' ');
   const [userFirstName, setUserFirstName] = useState(' ');
   const [userLastName, setUserLastName] = useState(' ');
+  const [userOrganization, setUserOrganization] = useState(' ');
   const {createUserWithEmailAndPassword, getAuth} = useAuth();
   const {sendPasswordResetEmail} = useAuth();
 
@@ -41,6 +42,7 @@ export const AccountPopover = (props) => {
     const email = userEmail.trim();
     const firstName = userFirstName.trim();
     const lastName = userLastName.trim();
+    const organization = userOrganization.trim();
     const password = "setpassword"
       console.log("in try")
       const userCreated = await createUserWithEmailAndPassword(
@@ -332,6 +334,16 @@ export const AccountPopover = (props) => {
         fullWidth
         value={userLastName}
         onChange={(e) => setUserLastName(e.target.value)}
+        sx={{
+          marginTop: '20px'
+        }}
+      />
+      <TextField
+        label="Organization"
+        variant="outlined"
+        fullWidth
+        value={userLastName}
+        onChange={(e) => setUserOrganization(e.target.value)}
         sx={{
           marginTop: '20px'
         }}
