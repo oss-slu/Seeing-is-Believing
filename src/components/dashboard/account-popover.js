@@ -63,10 +63,14 @@ export const AccountPopover = (props) => {
           console.log("Something went wrong",err)
         });
       if (userCreated) {
-        
+        await db.collection("users").add({
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          status: "Administrator",
+          organization: organization,
+        });
       }
-        
-      
     handleCloseInviteUserDialog();
   }
 
@@ -342,7 +346,7 @@ export const AccountPopover = (props) => {
         label="Organization"
         variant="outlined"
         fullWidth
-        value={userLastName}
+        value={userOrganization}
         onChange={(e) => setUserOrganization(e.target.value)}
         sx={{
           marginTop: '20px'
