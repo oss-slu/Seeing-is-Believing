@@ -135,7 +135,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <NextLink
-          href="/dashboard/account"
+          href="/settings"
           passHref
         >
           <MenuItem component="a">
@@ -237,7 +237,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <NextLink
-          href="/dashboard/account"
+          href="/settings"
           passHref
         >
           <MenuItem component="a">

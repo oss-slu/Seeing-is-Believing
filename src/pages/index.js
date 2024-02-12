@@ -12,7 +12,7 @@ const Home = () => {
       router.push("authentication/login");
     } else {
       //const url= (user.status=="Student")?'/student':'/teacher'
-      const url = "";
+      var url = "";
       //const url= (user.status=="Student")?'/student':'/teacher'
       if(user.status == "Student"){
         url = '/student';
