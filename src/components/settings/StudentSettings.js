@@ -1,5 +1,5 @@
 import React from 'react';
-import {Stack, Box, Card, Typography, Button } from '@mui/material';
+import {Stack, Box, Card, Typography, Button, Switch } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send'
 import Head from 'next/head';
 import { Cog as CogIcon } from '../../icons/cog';
@@ -172,7 +172,19 @@ const StudentSettings = () => {
 						</Stack>
 					</Card>
 					
-					
+					<Card elevation={16} variant = "outlined" sx={{p: 2}}>
+						<Stack direction="row" spacing={23}>
+							<Typography variant="h5">Responsive font sizes</Typography>
+							<Switch checked={values.responsiveFontSizes} name="direction" onChange={(event) => handleChange('responsiveFontSizes', event.target.checked)}/>
+						</Stack>
+					</Card>
+
+					<Card elevation={16} variant = "outlined" sx={{p: 2}}>
+						<Stack direction="row" spacing={24}>
+							<Typography variant="h5">Activate RTL content</Typography>
+							<Switch checked={values.direction === 'rtl'} name="direction" onChange={(event) => handleChange('direction', event.target.checked ? 'rtl' : 'ltr')}/>
+						</Stack>
+					</Card>
 
 				</Stack>
 			</Box>
