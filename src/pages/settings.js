@@ -26,7 +26,7 @@ const Settings = () => {
     }
   
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', flexGrow: 1}}>
         {SettingsComponent && <SettingsComponent />}
       </div>
     );
