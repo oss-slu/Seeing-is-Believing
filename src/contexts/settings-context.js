@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import firebase from '../lib/firebase'; // Make sure this is the correct path to your Firebase initialization
-import { useAuth } from '../hooks/use-auth'; // Make sure this is the correct path to your useAuth hook
+import firebase from '../lib/firebase';
+import { useAuth } from '../hooks/use-auth';
 
 const initialSettings = {
   direction: 'ltr',
