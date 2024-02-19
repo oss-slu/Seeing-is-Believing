@@ -31,9 +31,6 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const [userFirstName, setUserFirstName] = useState(' ');
-  const [userLastName, setUserLastName] = useState(' ');
-  const [userOrganization, setUserOrganization] = useState(' ');
   const {createUserWithEmailAndPassword, getAuth} = useAuth();
   const {sendPasswordResetEmail} = useAuth();
 
