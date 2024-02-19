@@ -40,9 +40,6 @@ export const AccountPopover = (props) => {
   const handleInviteUser = async () => {
 
     const email = userEmail.trim();
-    const firstName = userFirstName.trim();
-    const lastName = userLastName.trim();
-    const organization = userOrganization.trim();
     const password = "setpassword"
       console.log("in try")
       const userCreated = await createUserWithEmailAndPassword(
@@ -292,7 +289,7 @@ export const AccountPopover = (props) => {
             <ListItemText
               primary = {(
                 <Typography variant="body1">
-                  Invite Administrator
+                  Invite Admin
                 </Typography>
               )}
             />
@@ -322,36 +319,6 @@ export const AccountPopover = (props) => {
     >
       <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
-        <TextField
-        label="First Name"
-        variant="outlined"
-        fullWidth
-        value={userFirstName}
-        onChange={(e) => setUserFirstName(e.target.value)}
-        sx={{
-          marginTop: '20px'
-        }}
-      />
-      <TextField
-        label="Last Name"
-        variant="outlined"
-        fullWidth
-        value={userLastName}
-        onChange={(e) => setUserLastName(e.target.value)}
-        sx={{
-          marginTop: '20px'
-        }}
-      />
-      <TextField
-        label="Organization"
-        variant="outlined"
-        fullWidth
-        value={userOrganization}
-        onChange={(e) => setUserOrganization(e.target.value)}
-        sx={{
-          marginTop: '20px'
-        }}
-      />
       <TextField
         label="User Email"
         variant="outlined"
