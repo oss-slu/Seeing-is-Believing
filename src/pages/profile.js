@@ -34,11 +34,13 @@ const Profile = () => {
 	const [biography, setBiography] = useState('');
 
 	const [languages, setLanguages] = useState([]);
-	const [selectedLanguage, setSelectedLanguage] = useState("");
+	const [selectedLanguage, setSelectedLanguage] = useState('');
 
 	const [editOpen, setEditOpen] = useState(false);
 
 	const [pictureEntryOpen, setPictureEntryOpen] = useState(false);
+
+	const [isLoading,setIsLoading]=useState(false);
 	
 	// TODO: pull picture from database
 	const userPicture = "/static/images/placeholder.png"
@@ -59,6 +61,15 @@ const Profile = () => {
 	useEffect(() => {
 		fetchDataLanguages();
 	}, []);
+
+	useEffect(() => {
+		setSelectedPronoun(user.pronoun || '');
+		setBiography(user.biography || ''); 
+		setSelectedLanguage(user.langauge || ''); 
+		console.log(user.pronoun)
+		console.log(user.language)
+		console.log(user.biography)
+	  }, []);
 
 	const firstToUpperCase=(i)=>{
 		if(i){
@@ -83,10 +94,26 @@ const Profile = () => {
 		setEditOpen(false);
 	};
 
-	const handleProfileUpdate = () => {
-		// TODO: logic for updating Firebase profile fields
-		handleEditClose();
-	}
+	const handleProfileUpdate = async () => {
+		try {
+		  setIsLoading(true);
+	  
+		  const userRef = db.collection('users').doc(user.id);
+		  console.log(userRef)
+		  await userRef.update({
+			pronoun: selectedPronoun,
+			language: selectedLanguage,
+			biography: biography
+		  });
+	  
+		  console.log("Profile Information Updated!");
+		} catch (err) {
+		  console.error(err.message);
+		} finally {
+		  setIsLoading(false);
+		  handleEditClose();
+		}
+	  };
 
 	return(
 		<>
