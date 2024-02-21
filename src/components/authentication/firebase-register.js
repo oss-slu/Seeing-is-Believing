@@ -287,7 +287,12 @@ export const FirebaseRegister = (props) => {
 								fullWidth
 								name="status"
 								onBlur={formik.handleBlur}
-								onChange={formik.handleChange}
+								onChange={(event) => {
+									formik.handleChange(event);
+									if (isDisabled !== false) {
+										formik.setFieldValue("status", "Administrator");
+									}
+								}}
 								value={formik.values.status}
 							>
 								{status.map((item, pos) => {
