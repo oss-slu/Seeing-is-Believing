@@ -91,6 +91,7 @@ export const AccountPopover = (props) => {
         }}
       >
         <Avatar
+          src={user.profilePicture}
           sx={{
             bgcolor:'#7582EB',
             height: 40,

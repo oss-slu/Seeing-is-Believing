@@ -227,6 +227,7 @@ const AccountButton = () => {
         }}
       >
         <Avatar
+          src={user.profilePicture}
           sx={{
             bgcolor:"#7582EB",
             height: 40,
