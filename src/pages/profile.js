@@ -21,7 +21,7 @@ import { useAuth } from "../hooks/use-auth";
 import React, { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import { AuthGuard } from "../components/authentication/auth-guard";
-import {db} from "../lib/firebase"
+import {db,storage} from "../lib/firebase"
 
 
 const Profile = () => {
@@ -34,14 +34,14 @@ const Profile = () => {
 	const [biography, setBiography] = useState('');
 
 	const [languages, setLanguages] = useState([]);
-	const [selectedLanguage, setSelectedLanguage] = useState("");
+	const [selectedLanguage, setSelectedLanguage] = useState('');
 
 	const [editOpen, setEditOpen] = useState(false);
 
 	const [pictureEntryOpen, setPictureEntryOpen] = useState(false);
 	
-	// TODO: pull picture from database
-	const userPicture = "/static/images/placeholder.png"
+	const [userPicture, setUserPicture] = useState(null);
+	const [userFile, setUserFile] = useState(null);
 
 	const fetchDataLanguages = async () => {
 		const collection = await db.collection("languages");
@@ -59,6 +59,13 @@ const Profile = () => {
 	useEffect(() => {
 		fetchDataLanguages();
 	}, []);
+
+	useEffect(() => {
+		setSelectedPronoun(user.pronoun || '');
+		setBiography(user.biography || ''); 
+		setSelectedLanguage(user.language || ''); 
+		setUserPicture(user.profilePicture || ''); 
+	  }, []);
 
 	const firstToUpperCase=(i)=>{
 		if(i){
@@ -83,10 +90,47 @@ const Profile = () => {
 		setEditOpen(false);
 	};
 
-	const handleProfileUpdate = () => {
-		// TODO: logic for updating Firebase profile fields
-		handleEditClose();
-	}
+	const handleProfileUpdate = async () => {
+		try {
+		  const userRef = db.collection('users').doc(user.id);
+		  console.log(userRef)
+		  await userRef.update({
+			pronoun: selectedPronoun,
+			language: selectedLanguage,
+			biography: biography
+		  });
+		  console.log("Profile Information Updated!");
+		} catch (err) {
+			console.error(err.message);
+		} finally {
+			handleEditClose();
+		}
+	};
+
+	  const handleImageChange = (event) => {
+		const file = event.target.files[0];
+		if (file) {
+		  setUserPicture(URL.createObjectURL(file));
+		  setUserFile(file);
+		}
+	};
+
+	const handleImageSubmit = async () => {
+		try {
+			const userRef = db.collection('users').doc(user.id);
+			const storageRef = storage.ref(`profilePictures/${user.id}`);
+			await storageRef.put(userFile);
+			const downloadURL = await storageRef.getDownloadURL();
+			await userRef.update({
+				profilePicture: downloadURL,
+			});
+			console.log("Profile Information Updated!");
+		} catch (err) {
+			console.error(err.message);
+		} finally {
+			handlePictureEntryClose();
+		}
+	};
 
 	return(
 		<>
@@ -266,9 +310,14 @@ const Profile = () => {
 												Select Profile Picture
 											</DialogTitle>
 											<DialogContent>
-												Upload a Picture
-												{/* TODO: logic for allowing user to upload their own profile picture */}
-												
+												<input
+													type="file"
+													accept="image/*"
+													onChange={handleImageChange}
+												/>
+												<Button onClick={() => handleImageSubmit()}>
+													Save
+												</Button>
 											</DialogContent>
 										</Dialog>
 								</Box>
