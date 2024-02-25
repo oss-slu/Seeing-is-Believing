@@ -2,6 +2,10 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
+// import sendGridMail from '@sendgrid/mail';
+// const SENDGRID_API_KEY="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"
+// sendGridMail.setApiKey(SENDGRID_API_KEY);
+
 import {
   Avatar,
   Box,
@@ -31,16 +35,49 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const { passwordReset } = useAuth();
+  const {createUserWithEmailAndPassword, getAuth} = useAuth();
+  const {sendPasswordResetEmail} = useAuth();
 
   const handleInviteUser = async () => {
+
     const email = userEmail.trim();
-    try {
-      await passwordReset(email, '', '');
-    } catch(err) {
-      console.error(err);
-    }
-    handleCloseInviteUserDialog;
+    const password = "setpassword"
+      console.log("in try")
+      const sendMail = await firebase
+      .auth()
+      .sendPasswordResetEmail(email, {
+        url: `${window.location.origin}`+'/authentication/login?email='+`${email}`,
+        handleCodeInApp: false
+      })
+      
+      // const userCreated = await createUserWithEmailAndPassword(
+      //   email,
+      //   password
+      // )
+      //   .then((res) => {
+      //     console.log(res.user);
+      //     sendPasswordResetEmail(email).then((a) => {
+      //       console.log("Password reset email sent")
+      //     }).catch((error) => {
+      //       const errorCode = error.code;
+      //       const errorMessage = error.message;
+      //       console.log(errorCode,errorMessage)
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     console.log("Something went wrong",err)
+      //   });
+
+      // if (userCreated) {
+      //   await db.collection("users").add({
+      //     email: email,
+      //     firstName: firstName,
+      //     lastName: lastName,
+      //     status: "Administrator",
+      //     organization: organization,
+      //   });
+      // }
+    handleCloseInviteUserDialog();
   }
 
   const handleOpenInviteUserDialog = () => {
@@ -118,7 +155,7 @@ export const AccountPopover = (props) => {
       <Divider />
       <Box sx={{ my: 1 }}>
         <NextLink
-          href="/profile"
+          href="/dashboard/social/profile"
           passHref
         >
           <MenuItem component="a">
@@ -135,7 +172,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <NextLink
-          href="/settings"
+          href="/dashboard/account"
           passHref
         >
           <MenuItem component="a">
@@ -220,7 +257,7 @@ export const AccountPopover = (props) => {
       <Divider />
       <Box sx={{ my: 1 }}>
         <NextLink
-          href="/profile"
+          href="/dashboard/social/profile"
           passHref
         >
           <MenuItem component="a">
@@ -237,7 +274,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <NextLink
-          href="/settings"
+          href="/dashboard/account"
           passHref
         >
           <MenuItem component="a">
@@ -261,7 +298,7 @@ export const AccountPopover = (props) => {
             <ListItemText
               primary = {(
                 <Typography variant="body1">
-                  Invite Administrator
+                  Invite Admin
                 </Typography>
               )}
             />
@@ -291,7 +328,7 @@ export const AccountPopover = (props) => {
     >
       <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
-        <TextField
+      <TextField
         label="User Email"
         variant="outlined"
         fullWidth
