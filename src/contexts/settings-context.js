@@ -1,5 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import firebase from '../lib/firebase';
+import { useAuth } from '../hooks/use-auth';
 
 const initialSettings = {
   direction: 'ltr',
@@ -7,65 +9,61 @@ const initialSettings = {
   theme: 'light'
 };
 
-export const restoreSettings = () => {
-  let settings = null;
-
-  try {
-    const storedData = window.localStorage.getItem('settings');
-
-    if (storedData) {
-      settings = JSON.parse(storedData);
-    } else {
-      settings = {
-        direction: 'ltr',
-        responsiveFontSizes: true,
-        theme: window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light'
-      };
-    }
-  } catch (err) {
-    console.error(err);
-    // If stored data is not a strigified JSON this will fail,
-    // that's why we catch the error
-  }
-
-  return settings;
-};
-
-export const storeSettings = (settings) => {
-  window.localStorage.setItem('settings', JSON.stringify(settings));
-};
-
 export const SettingsContext = createContext({
   settings: initialSettings,
-  saveSettings: () => { }
+  saveSettings: () => {}
 });
 
-export const SettingsProvider = (props) => {
-  const { children } = props;
+export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState(initialSettings);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const restoredSettings = restoreSettings();
+    if (user) {
+      const restoreSettings = async () => {
+        let newSettings = initialSettings;
 
-    if (restoredSettings) {
-      setSettings(restoredSettings);
+        try {
+          const userDocRef = firebase.firestore().collection('users').doc(user.id);
+          const userDocSnap = await userDocRef.get();
+
+          if (userDocSnap.exists && userDocSnap.data().settings) {
+            newSettings = userDocSnap.data().settings;
+          } else {
+            newSettings = {
+              ...initialSettings,
+              theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            };
+            await userDocRef.set({ settings: newSettings }, { merge: true });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+
+        setSettings(newSettings);
+      };
+
+      restoreSettings();
     }
-  }, []);
+  }, [user]);
 
-  const saveSettings = (updatedSettings) => {
-    setSettings(updatedSettings);
-    storeSettings(updatedSettings);
+  const saveSettings = async (updatedSettings) => {
+    if (!user) {
+      console.log('No user logged in to save settings for.');
+      return;
+    }
+
+    try {
+      const userDocRef = firebase.firestore().collection('users').doc(user.id);
+      await userDocRef.set({ settings: updatedSettings }, { merge: true });
+      setSettings(updatedSettings);
+    } catch (error) {
+      console.error('Failed to save settings:', error);
+    }
   };
 
   return (
-    <SettingsContext.Provider
-      value={{
-        settings,
-        saveSettings
-      }}
-    >
+    <SettingsContext.Provider value={{ settings, saveSettings }}>
       {children}
     </SettingsContext.Provider>
   );
