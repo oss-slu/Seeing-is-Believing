@@ -28,8 +28,18 @@ export const FirebaseRegister = (props) => {
 	const {createUserWithEmailAndPassword, getAuth} = useAuth();
 	const [isUserCreated, setIsUserCreated] = useState(false)
 	const [emailInUse, setEmailInUse] = useState(false)
-
-
+	var [isDisabled, setIsDisabled] = useState(false);
+	var toggleDisable = () => {
+		setIsDisabled(!isDisabled); // Toggle the state to enable or disable the TextField
+	  };
+	  if(window.location.search !== "") {
+		if(window.location.search.split('=')[1].length > 0) { 
+			isDisabled = "none" 
+		}
+		else {
+			isDisabled = false
+		}
+	  }
 	const formik = useFormik({
 		initialValues: {
 			firstName: "",
@@ -90,11 +100,7 @@ export const FirebaseRegister = (props) => {
 					.catch((err) => {
 						if (err.code == "auth/email-already-in-use") {
 							setEmailInUse(true);
-							
-							
-							
 						}
-						
 					});
 				if (userCreated) {
 					setIsUserCreated(true);
@@ -273,14 +279,20 @@ export const FirebaseRegister = (props) => {
 								formik.touched.status && formik.errors.status
 							)}
 						>
-							<InputLabel id="status">Status</InputLabel>
+							<InputLabel id="status" style={{ display: isDisabled }}>Status</InputLabel>
 							<Select
+							style={{ display: isDisabled }}
 								displayEmpty
 								labelId="status"
 								fullWidth
 								name="status"
 								onBlur={formik.handleBlur}
-								onChange={formik.handleChange}
+								onChange={(event) => {
+									formik.handleChange(event);
+									if (isDisabled !== false) {
+										formik.setFieldValue("status", "Administrator");
+									}
+								}}
 								value={formik.values.status}
 							>
 								{status.map((item, pos) => {
