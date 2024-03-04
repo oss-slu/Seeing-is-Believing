@@ -20,7 +20,9 @@ export const RTL = (props) => {
   if (direction === 'rtl') {
     return (
       <CacheProvider value={styleCache()}>
+        <div css={css `direction: rtl;`}>
         {children}
+        </div>
       </CacheProvider>
     );
   }
