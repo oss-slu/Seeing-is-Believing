@@ -39,7 +39,7 @@ export const AccountPopover = (props) => {
   const {sendPasswordResetEmail} = useAuth();
 
   const handleInviteUser = async () => {
-
+    //RESEARCH UNDER PROGRESS TO FIX THIS FUNCTION
     const email = userEmail.trim();
     const password = "setpassword"
       console.log("in try")
@@ -77,6 +77,7 @@ export const AccountPopover = (props) => {
       //     organization: organization,
       //   });
       // }
+    console.log("Out try")
     handleCloseInviteUserDialog();
   }
 
@@ -156,7 +157,7 @@ export const AccountPopover = (props) => {
       <Divider />
       <Box sx={{ my: 1 }}>
         <NextLink
-          href="/dashboard/social/profile"
+          href="/profile"
           passHref
         >
           <MenuItem component="a">
@@ -173,7 +174,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <NextLink
-          href="/dashboard/account"
+          href="/settings"
           passHref
         >
           <MenuItem component="a">
@@ -258,7 +259,7 @@ export const AccountPopover = (props) => {
       <Divider />
       <Box sx={{ my: 1 }}>
         <NextLink
-          href="/dashboard/social/profile"
+          href="/profile"
           passHref
         >
           <MenuItem component="a">
@@ -275,7 +276,7 @@ export const AccountPopover = (props) => {
           </MenuItem>
         </NextLink>
         <NextLink
-          href="/dashboard/account"
+          href="/settings"
           passHref
         >
           <MenuItem component="a">
