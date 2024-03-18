@@ -2,9 +2,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
-// import sendGridMail from '@sendgrid/mail';
-// const SENDGRID_API_KEY="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"
-// sendGridMail.setApiKey(SENDGRID_API_KEY);
+import emailjs from '../../utils/email';
 
 import {
   Avatar,
@@ -39,46 +37,24 @@ export const AccountPopover = (props) => {
   const {sendPasswordResetEmail} = useAuth();
 
   const handleInviteUser = async () => {
-
-    const email = userEmail.trim();
-    const password = "setpassword"
-      console.log("in try")
-      const sendMail = await firebase
-      .auth()
-      .sendPasswordResetEmail(email, {
-        url: `${window.location.origin}`+'/authentication/login?email='+`${email}`,
-        handleCodeInApp: false
-      })
+    try {
+      const email = userEmail.trim();
+      const message = `${window.location.origin}/authentication/register?email=${email}`;
+  
+      // Prepare the template parameters
+      const templateParams = {
+        user_email: email, // User's email address
+        message: message, // Invitation message
+      };
+  
+      // Send email using EmailJS
+      const response = await emailjs.send('service_lbz6mka', 'template_aisa2ns', templateParams);
       
-      // const userCreated = await createUserWithEmailAndPassword(
-      //   email,
-      //   password
-      // )
-      //   .then((res) => {
-      //     console.log(res.user);
-      //     sendPasswordResetEmail(email).then((a) => {
-      //       console.log("Password reset email sent")
-      //     }).catch((error) => {
-      //       const errorCode = error.code;
-      //       const errorMessage = error.message;
-      //       console.log(errorCode,errorMessage)
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log("Something went wrong",err)
-      //   });
-
-      // if (userCreated) {
-      //   await db.collection("users").add({
-      //     email: email,
-      //     firstName: firstName,
-      //     lastName: lastName,
-      //     status: "Administrator",
-      //     organization: organization,
-      //   });
-      // }
-    handleCloseInviteUserDialog();
-  }
+      console.log('Email successfully sent!', response.text);
+    } catch (error) {
+      console.error('Failed to send email', error);
+    }
+  };
 
   const handleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
