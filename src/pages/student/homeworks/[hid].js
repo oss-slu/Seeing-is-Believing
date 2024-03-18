@@ -127,6 +127,7 @@ const Practice = () => {
 		tmp[obj.position] = {
 			answerAudioUrl: obj.answerAudioBlob,
 			word: obj.word,
+			count: obj.count,
 		};
 
 		function checkArr(arr) {
@@ -235,7 +236,11 @@ const Practice = () => {
 			console.log(tmp);
 			const updatedStudents = homework.students.map((std) => {
 				if (std.id === user.id) {
-					return { submitted: "yes", id: user.id };
+					return { 
+						submitted: "yes", 
+						id: user.id,
+						timeTaken: displayTime,
+					};
 				} else {
 					return std;
 				}
@@ -347,7 +352,6 @@ const Practice = () => {
 											Homework Description
 										</Typography>
 										
-										{/* TODO: Changes for tracking how long a student has been working on a homework */}
 										<Typography
 												variant="subtitle1"
 												sx={{
@@ -378,7 +382,7 @@ const Practice = () => {
 										setAnswer={handleSetAnswer}
 									/>
 								))}
-								<Grid item xs={8.5} mx={3}>
+								<Grid item xs={8.5} mx={3}>		
 									<LoadingButton
 										fullWidth
 										loading={isSubmitting}
@@ -568,6 +572,7 @@ const SubSection = (props) => {
 					answerAudioBlob: blob,
 					position,
 					word,
+					count: count,
 				});
 			}
 		};
