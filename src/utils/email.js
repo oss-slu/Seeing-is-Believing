@@ -1,7 +1,7 @@
 import emailjs from '@emailjs/browser';
 
 const emailjsConfig = {
-  publicKey: 'S8pa-Nt77zDWp6vNu',
+  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
   blockHeadless: true,
   limitRate: {
     id: 'app',

@@ -38,7 +38,6 @@ export const AccountPopover = (props) => {
 
   const handleInviteUser = async () => {
     try {
-      console.log("in try");
       const email = userEmail.trim();
       const message = `${window.location.origin}/authentication/register?email=${email}`;
   
