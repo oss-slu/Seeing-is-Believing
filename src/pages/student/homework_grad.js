@@ -11,7 +11,12 @@ import {
 	Chip,
 	TextField,
 	Slider,
+	Accordion,
+	AccordionDetails,
+	AccordionSummary,
+
 } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from "@mui/material/styles";
 import { AuthGuard } from "../../components/authentication/auth-guard";
 import { DashboardLayout } from "../../components/dashboard/dashboard-layout";
@@ -23,6 +28,13 @@ import * as COLORMAPS from "../../constants/colormaps";
 import { useReactMediaRecorder } from "react-media-recorder"; //Library used for recording
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SpectrogramPlugin from "../../utils/spectogramPlugin";
+import DOMPurify from "dompurify";
+
+const createMarkup = (html) => {
+	return {
+		__html: DOMPurify.sanitize(html),
+	};
+};
 
 const ChatInner = styled("div", {
 	shouldForwardProp: (prop) => prop !== "open",
@@ -74,6 +86,7 @@ const Page = () => {
 	const [grade, setGrade] = useState(0);
 	const [words, setWords] = useState(null);
 	const [studentId, setStudentId] = useState(null);
+	const [timeTaken, setTimeTaken] = useState(null);
 
 	const fetchHomeworkDetails = async (id) => {
 		try {
@@ -119,9 +132,13 @@ const Page = () => {
 
 	useEffect(() => {
 		if (homework) {
+			const std = homework.students.filter(
+				(el) => el.id === studentId
+			);
 			const std_assignment = homework.studentsAssignements.filter(
 				(el) => el.idStudent === studentId
 			);
+			setTimeTaken(std[0].timeTaken);
 			setWords(std_assignment);
 			std_assignment = std_assignment[0];
 			if (std_assignment.grade && std_assignment.feedback) {
@@ -198,6 +215,22 @@ const Page = () => {
 					/>
 					{view != "blank" && (
 						<ChatInner open={isSidebarOpen}>
+
+							<Typography
+								variant="subtitle1"
+								sx={{
+									display: "inline",
+									display: "flex",
+									pl: 3,
+									pt: 2,
+								}}
+							>
+								Student Time Spent on Assignment:&#160;
+								<Typography color="textSecondary" variant="subtitle1">
+									<em>{timeTaken} </em>
+								</Typography>
+							</Typography>
+
 							<Scrollbar sx={{ maxHeight: "100%", pb: 10 }}>
 								{words.map((word, pos) => (
 									<SubSection
@@ -424,7 +457,7 @@ const SubSection = (props) => {
 							mr: 4,
 						}}
 					>
-						Word :&#160;
+						Word:&#160;
 						<Typography color="textSecondary" variant="subtitle1">
 							{answer.word.name}
 						</Typography>
@@ -436,29 +469,29 @@ const SubSection = (props) => {
 							display: "flex",
 						}}
 					>
-						Dialect :&#160;
+						Dialect:&#160;
 						<Typography color="textSecondary" variant="subtitle1">
 							<em>{answer.word.dialect} </em>
 						</Typography>
 					</Typography>
 				</Grid>
+				
 				<Grid xs={12} px={3} mt={2} item>
-					<Typography variant="subtitle1" sx={{ display: "block" }}>
-						Description
-					</Typography>
-					<Grid md={10}>
-						<Typography
-							variant="body2"
-							color="textSecondary"
-							sx={{
-								display: "block",
-								mb: 1,
-							}}
-						>
-							{answer.word.description}
-						</Typography>
-					</Grid>
+					<Accordion>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							>
+							Word Description
+						</AccordionSummary>
+						<AccordionDetails>
+							<div
+								style={{ color: "#65748B" }}
+								dangerouslySetInnerHTML={createMarkup(answer.word.description)}
+							></div>
+						</AccordionDetails>
+					</Accordion>
 				</Grid>
+
 			</Grid>
 			<Grid item xs={6} pt={3} px={3}>
 				<Grid
@@ -552,6 +585,21 @@ const SubSection = (props) => {
 							label="Recorded Speech"
 						/>
 					</Typography>
+
+					
+					<Typography
+						variant="subtitle1"
+						sx={{
+							display: "inline",
+							display: "flex",
+						}}
+					>
+						Recording Attemps:&#160;
+						<Typography color="textSecondary" variant="subtitle1">
+							<em>{answer.count} </em>
+						</Typography>
+					</Typography>	
+
 					<Box
 						sx={{
 							maxWidth: "680px",

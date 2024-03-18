@@ -352,7 +352,6 @@ const Practice = () => {
 											Homework Description
 										</Typography>
 										
-										{/* TODO: Changes for tracking how long a student has been working on a homework */}
 										<Typography
 												variant="subtitle1"
 												sx={{
