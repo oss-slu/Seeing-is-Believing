@@ -40,7 +40,7 @@ export const AccountPopover = (props) => {
     try {
       console.log("in try");
       const email = userEmail.trim();
-      const message = `${window.location.origin}/authentication/login?email=${email}`;
+      const message = `${window.location.origin}/authentication/register?email=${email}`;
   
       // Prepare the template parameters
       const templateParams = {
