@@ -28,6 +28,7 @@
     ]
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/server": "^11.4.0",
