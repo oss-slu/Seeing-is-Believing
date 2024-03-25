@@ -42,6 +42,8 @@ export const AuthProvider = (props) => {
       .where("email", "==", user.email)
       .get()
       .then((snapshot) => {
+        //Here is the cause of an occasional runtime error upon registering a new account. I've been exploring the
+        //cause of this runtime error but am unable to consistently recreate the issue. Further research under way.
         results = {id:snapshot.docs[0].id,...snapshot.docs[0].data()}
       });
 
