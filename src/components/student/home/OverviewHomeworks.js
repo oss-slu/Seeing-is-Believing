@@ -36,6 +36,7 @@ const Content = (props) => {
                 const student=data.students.filter(std=>std.id==user.id);
                 const studentAssignement=data.studentsAssignements.filter(assignment=>assignment.idStudent==user.id);
 
+				// conducting research and assigning issue to myself to raise draft PR
                 const date=format(data.dueDate.toDate(),'MM/dd/yyyy');
                 results.push({
 					id: doc.id,

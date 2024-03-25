@@ -34,6 +34,7 @@ const Overview = () => {
 	const [languages,setLanguages]=useState(null)
 	const [isFetching,setIsFetching]=useState(true)
 	const [showHelpForm,setShowHelpForm]=useState(false);
+	const formatLTRText = (text) => `\u202A${text}\u202C`;
 
   const fetchDataClasses= async()=>{
     const collection = await db.collection("classes");
@@ -119,14 +120,13 @@ const Overview = () => {
 										</Typography>
 									</Box>
 									<Typography sx={{mt: 2}} variant="h6">
-										Need help figuring things out?
+										{formatLTRText("Need help figuring things out?")}
 									</Typography>
 									<Typography
 										color="textSecondary"
 										variant="body2"
 									>
-										In case there is something going wrong, please click below and let us know
-										what went wrong.
+										{formatLTRText("In case there is something going wrong, please click below and let us know what went wrong.")}
 									</Typography>
 								</CardContent>
 								<Divider />

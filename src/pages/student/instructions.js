@@ -40,6 +40,7 @@ const Overview = () => {
 		alignItems:"center",
 		margin:50,
 	};
+	const formatLTRText = (text) => `\u202A${text}\u202C`;
     const YoutubeEmbed = ({ embedId }) => (
         <div className="video-responsive">
           <iframe
@@ -121,14 +122,13 @@ const Overview = () => {
 										</Typography>
 									</Box>
 									<Typography sx={{mt: 2}} variant="h6">
-										Need help figuring things out?
+										{formatLTRText("Need help figuring things out?")}
 									</Typography>
 									<Typography
 										color="textSecondary"
 										variant="body2"
 									>
-										In case there is something going wrong, please click below and let us know
-										what went wrong.
+										{formatLTRText("In case there is something going wrong, please click below and let us know what went wrong.")}
 									</Typography>
 								</CardContent>
 								<Divider />
