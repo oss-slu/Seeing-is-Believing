@@ -151,7 +151,7 @@ const Practice = () => {
 				(el) => el.idStudent === studentId
 			);
 			setTimeTaken(std[0].timeTaken);
-			setWords(std_assignment);
+			setWords(std_assignment[0].answers);
 			std_assignment = std_assignment[0];
 			if (std_assignment.grade && std_assignment.feedback) {
 				setGrade(std_assignment.grade);
@@ -264,7 +264,7 @@ const Practice = () => {
 								{words.map((word, pos) => (
 									<SubSection
 										key={pos}
-										answer={word.answers[0]}
+										answer={word}
 										position={pos}
 									/>
 								))}
