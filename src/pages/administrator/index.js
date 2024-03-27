@@ -165,7 +165,6 @@ const Overview = () => {
 
 Overview.getLayout = (page) => (
 	<AuthGuard>
-
 		<DashboardLayout>{page}</DashboardLayout>
 	</AuthGuard>
 );

@@ -7,6 +7,10 @@ const Home = () => {
   const {isAuthenticated,user}=useAuth()
 
   useEffect(() => {
+
+    if(!isAuthenticated) {
+      router.push("authentication/login");
+    } else {
       //const url= (user.status=="Student")?'/student':'/teacher'
       var url = "";
       //const url= (user.status=="Student")?'/student':'/teacher'
@@ -17,10 +21,9 @@ const Home = () => {
       }else if(user.status == 'Administrator'){
         url = '/administrator';
       }
-      url = '/administrator';
       router.push(url);
     }
-  , []);
+  }, []);
 
   return (
     <>
