@@ -9,6 +9,7 @@ import { useAuth } from '../../hooks/use-auth';
 import LightThemeIcon from '../light-theme.svg';
 import DarkThemeIcon from '../dark-theme.svg';
 import { useSettings } from '../../hooks/use-settings';
+import toast from 'react-hot-toast';
 
 const getValues = (settings) => ({
 	direction: settings.direction,
@@ -59,6 +60,7 @@ const StudentSettings = () => {
         firebase.auth().sendPasswordResetEmail(user.email)
             .then(() => {
                 setDisabled(true);
+				toast.success("Password Reset Email Sent");
                 // Set a timeout for how long you want the button to remain disabled
                 const disableDuration = 10000; // 5 minutes in milliseconds
                 setTimeout(() => setDisabled(false), disableDuration);
@@ -67,6 +69,7 @@ const StudentSettings = () => {
             })
             .catch((error) => {
                 // Handle any errors here
+				toast.error("Failed to send Password Reset Email");
                 console.error(error);
             });
     };
