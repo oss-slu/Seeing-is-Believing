@@ -37,26 +37,43 @@ export const AuthProvider = (props) => {
   
   const fetchUserData = async (user) => {
     const collection = await db.collection("users");
-    let results;
+    let userFound = false; // Flag to check if user document exists
     await collection
       .where("email", "==", user.email)
       .get()
       .then((snapshot) => {
-        results = {id:snapshot.docs[0].id,...snapshot.docs[0].data()}
-      });
-
-    dispatch({
-      type: 'AUTH_STATE_CHANGED',
-      payload: {
-        isAuthenticated: true,
-        user: {
-          id: results.id,
-          avatar: user.photoURL,
-          ...results
+        if (snapshot.docs.length > 0) {
+          const userData = snapshot.docs[0].data();
+          dispatch({
+            type: 'AUTH_STATE_CHANGED',
+            payload: {
+              isAuthenticated: true,
+              user: {
+                id: snapshot.docs[0].id,
+                avatar: user.photoURL,
+                ...userData
+              }
+            }
+          });
+          userFound = true;
+        } else {
+          console.error('No user document found with this email');
         }
-      }
-    });
+      });
+  
+    if (!userFound) {
+      // Dispatch a different action or handle the "user not found" state
+      // For example, you might want to set isAuthenticated to false
+      dispatch({
+        type: 'AUTH_STATE_CHANGED',
+        payload: {
+          isAuthenticated: false,
+          user: null
+        }
+      });
+    }
   };
+  
   
   useEffect(() => firebase.auth().onAuthStateChanged((user) => {
     if (user) {
