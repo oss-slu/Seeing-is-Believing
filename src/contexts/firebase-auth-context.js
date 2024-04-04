@@ -63,7 +63,6 @@ export const AuthProvider = (props) => {
   
     if (!userFound) {
       // Dispatch a different action or handle the "user not found" state
-      // For example, you might want to set isAuthenticated to false
       dispatch({
         type: 'AUTH_STATE_CHANGED',
         payload: {
