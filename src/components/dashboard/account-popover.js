@@ -37,6 +37,8 @@ export const AccountPopover = (props) => {
   const {sendPasswordResetEmail} = useAuth();
 
   const handleInviteUser = async () => {
+
+    
     try {
       const email = userEmail.trim();
       const message = `${window.location.origin}/authentication/register?email=${email}`;
@@ -50,10 +52,12 @@ export const AccountPopover = (props) => {
       // Send email using EmailJS
       const response = await emailjs.send('service_lbz6mka', 'template_aisa2ns', templateParams);
       
-      console.log('Email successfully sent!', response.text);
+      toast.success('Admin successfully invited!');
     } catch (error) {
       console.error('Failed to send email', error);
+      toast.error('Failed to invite admin.')
     }
+    handleCloseInviteUserDialog();
   };
 
   const handleOpenInviteUserDialog = () => {
