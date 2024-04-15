@@ -25,7 +25,6 @@ import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import React, { useState } from 'react';
-import firebase from "../../lib/firebase";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -33,11 +32,18 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const {createUserWithEmailAndPassword, getAuth} = useAuth();
-  const {sendPasswordResetEmail} = useAuth();
+  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const validateEmail = (email) => {
+    const validDomain = '@example.com'; // Set the valid domain
+    const isValid = email.endsWith(validDomain);
+    setIsValidEmail(isValid);
+    return isValid;
+  };
 
   const handleInviteUser = async () => {
 
+    if (!validateEmail(userEmail.trim())) return;
     
     try {
       const email = userEmail.trim();
@@ -58,6 +64,11 @@ export const AccountPopover = (props) => {
       toast.error('Failed to invite admin.')
     }
     handleCloseInviteUserDialog();
+  };
+
+  const handleChangeEmail = (event) => {
+    setUserEmail(event.target.value);
+    validateEmail(event.target.value);
   };
 
   const handleOpenInviteUserDialog = () => {
@@ -310,21 +321,21 @@ export const AccountPopover = (props) => {
       <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
       <TextField
-        label="User Email"
-        variant="outlined"
-        fullWidth
-        value={userEmail}
-        onChange={(e) => setUserEmail(e.target.value)}
-        sx={{
-          marginTop: '20px'
-        }}
-        />
+            label="User Email"
+            variant="outlined"
+            fullWidth
+            value={userEmail}
+            onChange={handleChangeEmail}
+            error={!isValidEmail}
+            helperText={!isValidEmail && "Email must be valid"}
+            sx={{ marginTop: '20px', borderColor: !isValidEmail ? 'red' : 'default' }}
+          />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseInviteUserDialog} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleInviteUser} color="primary">
+        <Button onClick={handleInviteUser} color="primary" disabled={!isValidEmail}>
           Invite
         </Button>
       </DialogActions>
