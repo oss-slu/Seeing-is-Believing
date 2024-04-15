@@ -84,6 +84,7 @@ const WordList = () => {
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
 	const {status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl} =
 		useReactMediaRecorder({audio: true});
+	const formatLTRText = (text) => `\u202A${text}\u202C`;
 
 	useEffect(() => {
 		if (mediaBlobUrl && mediaBlobUrl != "") {
@@ -395,7 +396,7 @@ const WordList = () => {
 												<div
 													style={{ color: "#65748B" }}
 													dangerouslySetInnerHTML={createMarkup(
-														word.description
+														formatLTRText(word.description)
 													)}
 												></div>
 											</Grid>
