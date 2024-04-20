@@ -33,8 +33,25 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
+  const [validMail,setValidMail]=useState(false)
   const {createUserWithEmailAndPassword, getAuth} = useAuth();
   const {sendPasswordResetEmail} = useAuth();
+  const [error, setError] = useState(false);
+
+
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+  const handleInputChange = (e) => {
+    const email = e.target.value;
+    setUserEmail(email);
+
+    const isValidEmail = validateEmail(email)
+    setValidMail(isValidEmail)
+    setError(!isValidEmail);
+  };
 
   const handleInviteUser = async () => {
 
@@ -310,23 +327,33 @@ export const AccountPopover = (props) => {
       <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
       <TextField
-        label="User Email"
-        variant="outlined"
-        fullWidth
-        value={userEmail}
-        onChange={(e) => setUserEmail(e.target.value)}
-        sx={{
-          marginTop: '20px'
-        }}
-        />
+      label="User Email"
+      variant="outlined"
+      fullWidth
+      type="email"
+      value={userEmail}
+      onChange={handleInputChange}
+      error={error}
+      helperText={error ? 'Invalid email format' : ''}
+      sx={{
+        marginTop: '20px'
+      }}
+    />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseInviteUserDialog} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleInviteUser} color="primary">
-          Invite
-        </Button>
+        
+        {validMail ? (
+    <Button onClick={handleInviteUser} color="primary">
+      Invite
+    </Button>
+  ) : ( 
+    <Button disabled color="primary">
+      Invite
+    </Button>
+  )}
       </DialogActions>
     </Dialog>
     </div>
