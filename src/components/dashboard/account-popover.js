@@ -35,29 +35,22 @@ export const AccountPopover = (props) => {
   const [isValidEmail, setIsValidEmail] = useState(true);
 
   const validateEmail = (email) => {
-    const validDomain = '@example.com'; // Set the valid domain
-    const isValid = email.endsWith(validDomain);
-    setIsValidEmail(isValid);
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const isValid = regex.test(email); // Using .test() for a boolean return
+    setIsValidEmail(isValid); // Update the state based on the test result
     return isValid;
   };
+  
 
   const handleInviteUser = async () => {
-
-    if (!validateEmail(userEmail.trim())) return;
-    
     try {
       const email = userEmail.trim();
       const message = `${window.location.origin}/authentication/register?email=${email}`;
-  
-      // Prepare the template parameters
       const templateParams = {
-        user_email: email, // User's email address
-        message: message, // Invitation message
+        user_email: email,
+        message: message,
       };
-  
-      // Send email using EmailJS
       const response = await emailjs.send('service_lbz6mka', 'template_aisa2ns', templateParams);
-      
       toast.success('Admin successfully invited!');
     } catch (error) {
       console.error('Failed to send email', error);
@@ -65,11 +58,15 @@ export const AccountPopover = (props) => {
     }
     handleCloseInviteUserDialog();
   };
+  
+  
 
   const handleChangeEmail = (event) => {
-    setUserEmail(event.target.value);
-    validateEmail(event.target.value);
+    const email = event.target.value.trim(); // Trim whitespace
+    setUserEmail(email);
+    validateEmail(email); // This will set the isValidEmail state appropriately
   };
+  
 
   const handleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
@@ -326,9 +323,9 @@ export const AccountPopover = (props) => {
             fullWidth
             value={userEmail}
             onChange={handleChangeEmail}
-            error={!isValidEmail}
-            helperText={!isValidEmail && "Email must be valid"}
-            sx={{ marginTop: '20px', borderColor: !isValidEmail ? 'red' : 'default' }}
+            error={!isValidEmail && userEmail !== ''}
+            helperText={!isValidEmail ? "Invalid Email Format" :  " "}
+            sx={{ marginTop: '20px', borderColor: (!isValidEmail && userEmail !== '') ? 'red' : 'default' }}
           />
       </DialogContent>
       <DialogActions>
