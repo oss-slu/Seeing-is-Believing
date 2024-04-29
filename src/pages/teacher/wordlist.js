@@ -307,7 +307,7 @@ const WordList = () => {
 	if (!router.isReady) {
 		return null;
 	}
-
+// determining how to fix ltr format for description
 	return (
 		<>
 			<Head>
@@ -389,7 +389,7 @@ const WordList = () => {
 											</Typography>
 										</Grid>
 										<Grid xs={12} px={3} mt={2} item>
-											<Typography variant="subtitle1" sx={{ display: "block" }}>
+											<Typography variant="subtitle1" sx={{ display: "block" }}> 										
 												Description
 											</Typography>
 											<Grid md={10}>
