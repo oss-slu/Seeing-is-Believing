@@ -1,3 +1,5 @@
+//This file contains theme settings for the application
+
 export const baseThemeOptions = {
   breakpoints: {
     values: {

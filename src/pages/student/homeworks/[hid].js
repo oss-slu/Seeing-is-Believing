@@ -93,7 +93,6 @@ const Practice = () => {
 				.doc(homeworkId)
 				.get()
 				.then(async (docRef) => {
-					console.log(docRef.data());
 					setHomework(docRef.data());
 					const words = docRef.data().words;
 					setWordsIds(words);
@@ -233,7 +232,6 @@ const Practice = () => {
 				.then((snapshot) => {
 					homework = snapshot.data();
 				});
-			console.log(tmp);
 			const updatedStudents = homework.students.map((std) => {
 				if (std.id === user.id) {
 					return { 
@@ -424,7 +422,6 @@ const SubSection = (props) => {
 	const showSpectroMain = async () => {
 		try {
 			const container = specMainContainerRef.current;
-			console.log('hello Container:', container);
 			const wavesurfer = WaveSurfer.create({ // TODO: problem with wavesurfer creation 
 				container,
 				fillParent: true,
@@ -443,7 +440,6 @@ const SubSection = (props) => {
 					}),
 				],
 			});
-			console.log('hello WaveSurfer:', wavesurfer);
 			wavesurfer.empty();
 			wavesurfer.load(word.urlAudio);
 		} catch (err) {

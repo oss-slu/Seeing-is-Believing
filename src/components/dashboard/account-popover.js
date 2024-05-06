@@ -25,7 +25,6 @@ import { useAuth } from '../../hooks/use-auth';
 import { Cog as CogIcon } from '../../icons/cog';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import React, { useState } from 'react';
-import firebase from "../../lib/firebase";
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -33,28 +32,41 @@ export const AccountPopover = (props) => {
   const { user,logout } = useAuth();
   const [inviteUserDialogOpen, setInviteUserDialogOpen] = useState(false);
   const [userEmail, setUserEmail] = useState(' ');
-  const {createUserWithEmailAndPassword, getAuth} = useAuth();
-  const {sendPasswordResetEmail} = useAuth();
+  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const validateEmail = (email) => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const isValid = regex.test(email); // Using .test() for a boolean return
+    setIsValidEmail(isValid); // Update the state based on the test result
+    return isValid;
+  };
+  
 
   const handleInviteUser = async () => {
     try {
       const email = userEmail.trim();
       const message = `${window.location.origin}/authentication/register?email=${email}`;
-  
-      // Prepare the template parameters
       const templateParams = {
-        user_email: email, // User's email address
-        message: message, // Invitation message
+        user_email: email,
+        message: message,
       };
-  
-      // Send email using EmailJS
       const response = await emailjs.send('service_lbz6mka', 'template_aisa2ns', templateParams);
-      
-      console.log('Email successfully sent!', response.text);
+      toast.success('Admin successfully invited!');
     } catch (error) {
       console.error('Failed to send email', error);
+      toast.error('Failed to invite admin.')
     }
+    handleCloseInviteUserDialog();
   };
+  
+  
+
+  const handleChangeEmail = (event) => {
+    const email = event.target.value.trim(); // Trim whitespace
+    setUserEmail(email);
+    validateEmail(email); // This will set the isValidEmail state appropriately
+  };
+  
 
   const handleOpenInviteUserDialog = () => {
     setInviteUserDialogOpen(true);
@@ -306,21 +318,21 @@ export const AccountPopover = (props) => {
       <DialogTitle>Invite Admin</DialogTitle>
       <DialogContent>
       <TextField
-        label="User Email"
-        variant="outlined"
-        fullWidth
-        value={userEmail}
-        onChange={(e) => setUserEmail(e.target.value)}
-        sx={{
-          marginTop: '20px'
-        }}
-        />
+            label="User Email"
+            variant="outlined"
+            fullWidth
+            value={userEmail}
+            onChange={handleChangeEmail}
+            error={!isValidEmail && userEmail !== ''}
+            helperText={!isValidEmail ? "Invalid Email Format" :  " "}
+            sx={{ marginTop: '20px', borderColor: (!isValidEmail && userEmail !== '') ? 'red' : 'default' }}
+          />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseInviteUserDialog} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleInviteUser} color="primary">
+        <Button onClick={handleInviteUser} color="primary" disabled={!isValidEmail}>
           Invite
         </Button>
       </DialogActions>

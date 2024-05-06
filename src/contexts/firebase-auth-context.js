@@ -2,12 +2,18 @@ import { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import firebase,{db} from '../lib/firebase';
 
+//This context is used to check if users are authenticated and update that status to conditionally render elements
+//Throughout the application
+
+
+//We start with defaulting to false and not knowing the user
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
   user: ""
 };
 
+// This is a bit confusing but I believe it takes actions and will recognize if the auth changes and update accordingly
 const reducer = (state, action) => {
   if (action.type === 'AUTH_STATE_CHANGED') {
     const { isAuthenticated, user } = action.payload;
@@ -21,7 +27,7 @@ const reducer = (state, action) => {
 
   return state;
 };
-
+//This snippet uses the functions defined below and throws them into the context api of react
 export const AuthContext = createContext({
   ...initialState,
   platform: 'Firebase',
@@ -73,7 +79,10 @@ export const AuthProvider = (props) => {
     }
   };
   
-  
+
+  //The following functions provide an interface for our application to work using firebase's built in functions
+
+
   useEffect(() => firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       // Here you should extract the complete user profile to make it available in your entire app.
@@ -89,6 +98,7 @@ export const AuthProvider = (props) => {
       });
     }
   }), []);
+
 
   const signInWithEmailAndPassword = async (email,
     password) => {
@@ -109,6 +119,7 @@ export const AuthProvider = (props) => {
     await firebase.auth().signOut();
   };
 
+//Below we have the auth context provider which allows the context to work in a DOM environment.
   return (
     <AuthContext.Provider
       value={{

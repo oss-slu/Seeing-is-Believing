@@ -139,7 +139,7 @@ const Page = () => {
 				(el) => el.idStudent === studentId
 			);
 			setTimeTaken(std[0].timeTaken);
-			setWords(std_assignment);
+			setWords(std_assignment[0].answers);
 			std_assignment = std_assignment[0];
 			if (std_assignment.grade && std_assignment.feedback) {
 				setGrade(std_assignment.grade);
@@ -235,7 +235,7 @@ const Page = () => {
 								{words.map((word, pos) => (
 									<SubSection
 										key={pos}
-										answer={word.answers[0]}
+										answer={word}
 										position={pos}
 									/>
 								))}
@@ -432,7 +432,6 @@ const SubSection = (props) => {
 	useEffect(() => {
 		//update the component if a word is chosen
 		if (answer) {
-			console.log(answer);
 			showSpectroMain();
 			showSpectroMainNonNative();
 			showSpectroRecord();
