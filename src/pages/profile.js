@@ -22,6 +22,7 @@ import React, { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import { AuthGuard } from "../components/authentication/auth-guard";
 import {db,storage} from "../lib/firebase"
+import toast from 'react-hot-toast';
 
 
 const Profile = () => {
@@ -98,6 +99,7 @@ const Profile = () => {
 			language: selectedLanguage,
 			biography: biography
 		  });
+		  toast.success("Profile Information Updated!");
 		} catch (err) {
 			console.error(err.message);
 		} finally {
@@ -122,10 +124,12 @@ const Profile = () => {
 			await userRef.update({
 				profilePicture: downloadURL,
 			});
+      toast.success("Profile Information Updated!");
 		} catch (err) {
 			console.error(err.message);
 		} finally {
 			handlePictureEntryClose();
+      
 		}
 	};
 
