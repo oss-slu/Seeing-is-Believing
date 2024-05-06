@@ -84,6 +84,7 @@ const WordList = () => {
 	const [isRecordedPlaying, setIsRecordedPlaying] = useState(false);
 	const {status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl} =
 		useReactMediaRecorder({audio: true});
+	const formatLTRText = (text) => `\u202A${text}\u202C`;
 
 	useEffect(() => {
 		if (mediaBlobUrl && mediaBlobUrl != "") {
@@ -388,14 +389,14 @@ const WordList = () => {
 											</Typography>
 										</Grid>
 										<Grid xs={12} px={3} mt={2} item>
-											<Typography variant="subtitle1" sx={{ display: "block" }}>
+											<Typography variant="subtitle1" sx={{ display: "block" }}> 										
 												Description
 											</Typography>
 											<Grid md={10}>
 												<div
 													style={{ color: "#65748B" }}
 													dangerouslySetInnerHTML={createMarkup(
-														word.description
+														formatLTRText(word.description)
 													)}
 												></div>
 											</Grid>
