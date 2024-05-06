@@ -51,7 +51,6 @@ const LanguagePage = () => {
 			});
 		});
 		setLanguages(results);
-		console.log("Results", results);
 	};
 	const onStepBack = () => {
 		setIndex(0);

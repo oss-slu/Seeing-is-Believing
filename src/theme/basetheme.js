@@ -1,3 +1,5 @@
+//This will be the default theme options
+
 export const baseThemeOptions = {
   breakpoints: {
     values: {

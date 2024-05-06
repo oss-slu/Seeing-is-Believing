@@ -36,7 +36,6 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	console.log("props:", props)
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
 	const [dueDate, setDueDate] = useState(props.date);
@@ -67,7 +66,6 @@ const EditHomeworkForm = (props) => {
 			setIsLoading(true);
 			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
 			await fetchStudents();
-			console.log(students);
 			const collection = await db.collection("assignments");
 			await collection.add({
 				title,

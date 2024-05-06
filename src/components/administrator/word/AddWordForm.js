@@ -136,7 +136,6 @@ const AddWordForm = (props) => {
 
 	const handleChange_ = (e) => {
 		if (e.target.files[0]) {
-			console.log(e.target.files[0]);
 			setAudioNonNative(e.target.files[0]);
 		}
 	};

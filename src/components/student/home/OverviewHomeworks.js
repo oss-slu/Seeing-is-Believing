@@ -44,7 +44,6 @@ const Content = (props) => {
 				});
             })
         })
-		console.log(results);
         setHomeworks(results);
       }	
 

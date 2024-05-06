@@ -45,7 +45,6 @@ useEffect(() => {
 			return language.name === selectedLanguage;
 		});
 
-		console.log(language.dialects);
 		setDialectArray(language.dialects);
 	}
 }, [selectedLanguage,languages]);

@@ -3,6 +3,8 @@ import { baseThemeOptions } from './base-theme-options';
 import { darkThemeOptions } from './dark-theme-options';
 import { lightThemeOptions } from './light-theme-options';
 
+
+//This allows for the responsive switching between themes
 export const createTheme = (config) => {
   let theme = createMuiTheme(baseThemeOptions,
     config.mode === 'dark' ? darkThemeOptions : lightThemeOptions,

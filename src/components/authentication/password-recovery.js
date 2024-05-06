@@ -27,7 +27,6 @@ export const AmplifyPasswordRecovery = (props) => {
 		}),
 		onSubmit: async (values, helpers) => {
 			try {
-				console.log(values);
 				await firebase
 					.auth()
 					.sendPasswordResetEmail(values.email, {

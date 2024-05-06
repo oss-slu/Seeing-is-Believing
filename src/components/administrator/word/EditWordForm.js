@@ -266,13 +266,7 @@ const EditWordForm = (props) => {
 		//Load native audio
 		setIsLoading(false);
 		
-		console.log({
-			wordName,
-			selectedLanguage,
-			dialect,
-			audio,
-			audioNonNative,
-		});
+
 	};
 
 	return (

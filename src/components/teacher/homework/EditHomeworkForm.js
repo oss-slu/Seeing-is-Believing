@@ -36,7 +36,6 @@ const Editor = dynamic(
 );
 
 const EditHomeworkForm = (props) => {
-	//console.log("props:", props.class)
 	const { languages, classes, teacher, stepBack, ...other } = props;
 	const [title, setTitle] = useState(props.title);
 	const [score, setScore] = useState(props.score);
@@ -146,7 +145,6 @@ const EditHomeworkForm = (props) => {
 		setIsLoading(false);
 		setWords(words);
 		setDate(date);
-		console.log("selected class: ", date)
 	};
 
 	const onCancel = () => {

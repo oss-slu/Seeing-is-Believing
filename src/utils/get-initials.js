@@ -4,3 +4,4 @@ export const getInitials = (name = '') => name
   .slice(0, 2)
   .map((v) => v && v[0].toUpperCase())
   .join('');
+// Function for retrieving initials

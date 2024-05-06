@@ -432,7 +432,6 @@ const SubSection = (props) => {
 	useEffect(() => {
 		//update the component if a word is chosen
 		if (answer) {
-			console.log(answer);
 			showSpectroMain();
 			showSpectroMainNonNative();
 			showSpectroRecord();
