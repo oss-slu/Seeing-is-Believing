@@ -1,3 +1,4 @@
+//I wouldn't mess with this color map, I believe it is used for our spectrograms and is computer generated.
 export const hsv = [
   [1, 1, 1, 1],
   [1, 1, 1, 1],

@@ -94,7 +94,6 @@ const Profile = () => {
 	const handleProfileUpdate = async () => {
 		try {
 		  const userRef = db.collection('users').doc(user.id);
-		  console.log(userRef)
 		  await userRef.update({
 			pronoun: selectedPronoun,
 			language: selectedLanguage,
@@ -125,11 +124,12 @@ const Profile = () => {
 			await userRef.update({
 				profilePicture: downloadURL,
 			});
-			toast.success("Profile Information Updated!");
+      toast.success("Profile Information Updated!");
 		} catch (err) {
 			console.error(err.message);
 		} finally {
 			handlePictureEntryClose();
+      
 		}
 	};
 

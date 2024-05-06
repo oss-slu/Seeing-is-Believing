@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import firebase from '../lib/firebase';
 import { useAuth } from '../hooks/use-auth';
 
+//Default settings here
+
 const initialSettings = {
   direction: 'ltr',
   responsiveFontSizes: true,
   theme: 'light'
 };
+
+//Basic context that starts with default settings and updates with saveSettings function
 
 export const SettingsContext = createContext({
   settings: initialSettings,
@@ -49,7 +53,6 @@ export const SettingsProvider = ({ children }) => {
 
   const saveSettings = async (updatedSettings) => {
     if (!user) {
-      console.log('No user logged in to save settings for.');
       return;
     }
 
@@ -62,6 +65,7 @@ export const SettingsProvider = ({ children }) => {
     }
   };
 
+//Provider allows for DOM integration
   return (
     <SettingsContext.Provider value={{ settings, saveSettings }}>
       {children}

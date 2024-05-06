@@ -40,12 +40,10 @@ const Content = (props) => {
                 results.push({
 					id: doc.id,
 					...data,
-					status:student[0].submitted != "yes" ? "New" : studentAssignement[0].grade? "Graded":"Submitted",
-                    dueDate:date
+					status:student.submitted != "yes" ? "New" : studentAssignement.grade? "Graded":"Submitted", dueDate:date
 				});
             })
         })
-		console.log(results);
         setHomeworks(results);
       }	
 

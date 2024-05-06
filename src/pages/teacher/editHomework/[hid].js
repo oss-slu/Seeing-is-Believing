@@ -48,7 +48,6 @@ const Page = () => {
 					setScore(results.score);
 					setDate(results.dueDate);
 					setClass(results.class);
-					console.log(results.description);
 				});
 		} catch (err) {
 			console.log(err.message);
