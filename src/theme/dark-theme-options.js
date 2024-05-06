@@ -1,4 +1,5 @@
 // Colors
+//Dark theme options
 
 const neutral = {
   100: '#F3F4F6',

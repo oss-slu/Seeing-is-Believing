@@ -69,7 +69,6 @@ const AddHomeworkForm = (props) => {
 			setIsLoading(true);
 			const wordsIds = wordsArray.map((word) => word.id); //Retrieve words-Ids
 			await fetchStudents();
-			console.log(students);
 			const collection = await db.collection("assignments");
 			await collection.add({
 				title,

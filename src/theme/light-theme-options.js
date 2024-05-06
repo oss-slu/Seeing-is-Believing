@@ -1,5 +1,5 @@
 // Colors
-
+//Light mode theme options
 const neutral = {
   100: '#F3F4F6',
   200: '#E5E7EB',
