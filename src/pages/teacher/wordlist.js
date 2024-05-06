@@ -307,7 +307,7 @@ const WordList = () => {
 	if (!router.isReady) {
 		return null;
 	}
-// determining how to fix ltr format for description
+
 	return (
 		<>
 			<Head>
