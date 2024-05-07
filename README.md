@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Overview
 
-## Getting Started
+The objective of this project is to create an educational learning tool enabling teachers to showcase the pronunciation of Spanish words. Students can use this application to practice pronunciation. Students can observe their improvement through a compilation of spectrograms that compare their pronunciations with native speakers' pronunciations.
 
-First, run the development server:
+## Prerequisites
+Before cloning this React project with Next.js, you need to have the latest version of Node.js and npm (Node Package Manager) installed on your system. Node.js is a JavaScript runtime that allows you to run JavaScript code outside of a web browser. npm is a package manager that helps you install and manage packages (libraries, frameworks, etc.) for your Node.js projects.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+To install Node.js and npm, follow the instructions on the official Node.js website – [Node.js Installation](https://nodejs.org/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
+1. Clone the main branch of this repository.
+2. Navigate to the project directory in your terminal.
+3. Run the following command to install all dependencies:
+    ```
+    npm install --force
+    ```
+4. Once the dependencies are installed, to run the project on your local machine, use the following command:
+    ```
+    npm run dev
+    ```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Usage
+After following the installation steps, you can access the project by opening your web browser and navigating to [http://localhost:3000](http://localhost:3000)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Test Credentials
+This application has three roles: student, teacher, and admin. Use the following test credentials to log in and test each role:
+### Student
+- **Username:** hazel.gomez@yopmail.com
+- **Password:** hazel@123
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Teacher
+- **Username:** olive.smith@yopmail.com 
+- **Password:** olive@123
 
-## Learn More
+### Admin
+- **Username:** adminacct@yopmail.com
+- **Password:** admin123!
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you'd like to contribute to this project, please follow these guidelines:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Fork the repository on GitHub.
+2. Create a new branch from the main branch.
+3. Make your changes and commit them with clear messages.
+4. Push your changes to your fork.
+5. Submit a pull request to the main repository.
