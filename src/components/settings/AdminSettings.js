@@ -182,12 +182,12 @@ const AdminSettings = () => {
 						</Stack>
 					</Card>
 
-					<Card elevation={16} variant = "outlined" sx={{p: 2}}>
+					{/* <Card elevation={16} variant = "outlined" sx={{p: 2}}>
 						<Stack direction="row" spacing={24}>
 							<Typography variant="h5">Activate RTL content</Typography>
 							<Switch checked={values.direction === 'rtl'} name="direction" onChange={(event) => handleChange('direction', event.target.checked ? 'rtl' : 'ltr')}/>
 						</Stack>
-					</Card>
+					</Card> */}
 
 				</Stack>
 			</Box>
