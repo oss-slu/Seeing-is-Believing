@@ -180,7 +180,7 @@ const AdminSettings = () => {
 							<Typography variant="h5">Responsive font sizes</Typography>
 							<Switch checked={values.responsiveFontSizes} name="direction" onChange={(event) => handleChange('responsiveFontSizes', event.target.checked)}/>
 						</Stack>
-					</Card>
+					</Card> 
 
 					{/* <Card elevation={16} variant = "outlined" sx={{p: 2}}>
 						<Stack direction="row" spacing={24}>
